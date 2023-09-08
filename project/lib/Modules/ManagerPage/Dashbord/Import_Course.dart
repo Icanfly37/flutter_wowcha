@@ -29,7 +29,7 @@ class _MyWidgetState extends State<Import_View> {
           const Divider(height: 30),
           Container(
             child: orientation == Orientation.portrait //short if/else
-            ? const Column(
+            ? Column(
                 //is if
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
@@ -51,7 +51,7 @@ class _MyWidgetState extends State<Import_View> {
                   )
                 ],
               )
-          : const Row(
+          : Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Column(

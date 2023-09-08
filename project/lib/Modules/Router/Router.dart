@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:ku_t/Modules/Componemt/SideAppBar.dart';
+import 'package:ku_t/Modules/ManagerPage/ManagerImportPage.dart';
 import 'package:ku_t/Modules/ManagerPage/ManagerPageRoute.dart';
+import 'package:ku_t/Modules/ManagerPage/Teachingtime/tabletime.dart';
 import 'package:sidebarx/sidebarx.dart';
-import 'package:ku_t/Modules/Componemt/sidebar.dart';
 
 class router extends StatefulWidget {
   const router({Key? key, required SidebarXController controller})
@@ -23,8 +25,7 @@ class _router extends State<router> {
           return Scaffold(
             body: Row(
               children: [
-                if (!isSmallScreen)
-                  SideBarXExample(controller: widget._controller),
+                if (!isSmallScreen) SideBar(controller: widget._controller),
                 Expanded(
                     child: Center(
                   child: AnimatedBuilder(
@@ -42,25 +43,13 @@ class _router extends State<router> {
                         //----------------------------------------------------------------
                         case 1:
                           _key.currentState?.closeDrawer();
-                          return const ImportPage();
+                          return Tabletime();
                         case 2:
                           _key.currentState?.closeDrawer();
-                          return const Center(
-                            child: Text(
-                              'Settings',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 40),
-                            ),
-                          );
+                          return TextOne();
                         case 3:
                           _key.currentState?.closeDrawer();
-                          return const Center(
-                            child: Text(
-                              'Theme',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 40),
-                            ),
-                          );
+                          return Texte();
                         default:
                           return const Center(
                             child: Text(
@@ -79,5 +68,17 @@ class _router extends State<router> {
         },
       ),
     );
+  }
+
+  Center TextOne() {
+    return Center(child: Text("ข้อมูลส่วนตัว"));
+  }
+
+  Center TextOe() {
+    return Center(child: Text("e"));
+  }
+
+  Center Texte() {
+    return Center(child: Text("ว"));
   }
 }

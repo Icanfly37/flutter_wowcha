@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ku_t/Modules/Dropdown/BasicsubjectModel.dart';
-import 'package:ku_t/Modules/Dropdown/CraditModel.dart';
-import 'package:ku_t/Modules/Dropdown/TeachernameModel.dart';
+import 'package:ku_t/Friend/Dropdown/BasicsubjectModel.dart';
+import 'package:ku_t/Friend/Dropdown/CraditModel.dart';
+import 'package:ku_t/Friend/Dropdown/TeachernameModel.dart';
+import 'package:ku_t/Friend/modules/component/Header_web.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/Dashbord_Model.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/Dashbord_ViewModel.dart';
 
@@ -30,6 +31,7 @@ class _PopupManagerViewState extends State<PopupManagerView> {
       height: 500,
       width: 500,
       padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+      decoration: decorationpop(),
       child: Column(
         children: [
           _title(),
