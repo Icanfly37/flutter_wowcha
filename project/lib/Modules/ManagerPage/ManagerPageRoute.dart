@@ -22,8 +22,8 @@ class _MyWidgetState extends State<ManagerPageRoute> {
       title: "Dashboard",
       initialRoute: '/',
       routes: {
-        '/':(context) => _Page(() => const ManagerDashboard_View()),
-        '/import':(context) => _Page(() => const Import_View()),
+        '/': (context) => _Page(() => const ManagerDashboard_View()),
+        '/import': (context) => _Page(() => const ImportCourse()),
       },
     );
     // if (path == "Import") {

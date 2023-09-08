@@ -29,11 +29,11 @@ class _DashbordSmallState extends State<DashbordSmall> {
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(15.0),
       child: Column(
         children: [
           _header(),
-          const Divider(height: 30),
+          const Divider(height: 26),
           Container(
               child: orientation == Orientation.portrait //short if/else
                   ? Column(
@@ -43,19 +43,19 @@ class _DashbordSmallState extends State<DashbordSmall> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            
-                            _year(),
-                            _selectYear(),
+                            _textyear(),
+                            const SizedBox(height: 4),
+                            _DropdownSelectYear(),
                             const SizedBox(height: 10),
+                            _textSearchSubject(),
+                            const SizedBox(height: 4),
                             _SearchSubject(),
-                            const SizedBox(height: 10),
-                            _ButtonSubject(),
-                            const SizedBox(height: 10),
+                            const SizedBox(height: 18),
                             _ButtonAdd(),
                             const SizedBox(height: 10),
-                            _importSubject()
+                            _ButtonImportCourse()
                           ],
-                        )
+                        ),
                       ],
                     )
                   : Row(
@@ -64,37 +64,44 @@ class _DashbordSmallState extends State<DashbordSmall> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            _year(),
-                            const SizedBox(height: 2),
-                            _selectYear(),
+                            _textyear(),
+                            const SizedBox(height: 4),
+                            _DropdownSelectYear(),
                           ],
                         ),
-                        const SizedBox(width: 15),
+                        const SizedBox(width: 12),
                         Expanded(
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              _textSearchSubject(),
+                              const SizedBox(height: 4),
                               _SearchSubject(),
-                              Row(
-                                children: [
-                                  const Expanded(
-                                    flex: 3,
-                                    child: SizedBox(
-                                      height: 70,
-                                    )
-                                  ),
-                                  Expanded(child: _ButtonSubject()),
-                                  const SizedBox(width: 10),
-                                  Expanded(child: _ButtonAdd()),
-                                  const SizedBox(width: 10),
-                                  Expanded(child: _importSubject())
-                                ],
-                              )
                             ],
                           ),
-                        )
+                        ),
+                        Expanded(
+                            child: Container(
+                          padding: EdgeInsets.only(top: 25),
+                          child: Row(
+                            children: [
+                              const Expanded(
+                                  flex: 2,
+                                  child: SizedBox(
+                                      // height: 101,
+                                      )),
+                              Expanded(child: _ButtonAdd()),
+                              const SizedBox(width: 12),
+                              Expanded(child: _ButtonImportCourse())
+                            ],
+                          ),
+                        ))
                       ],
                     )),
+          Container(
+            child: _textCourseStructure(),
+          ),
+          Container(child: _notFoundCourse()),
         ],
       ),
     );
@@ -107,28 +114,30 @@ class _DashbordSmallState extends State<DashbordSmall> {
         "การจัดการข้อมูลหลักสูตร",
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: 28,
+          fontSize: 24,
         ),
       ),
     );
   }
 
-  Container _year() {
+  Container _textyear() {
     return Container(
       alignment: Alignment.topLeft,
       child: const Text(
-        "ปีการศึกษา",
+        "ปีหลักสูตร",
         style: TextStyle(
-          fontSize: 16,
+          fontSize: 14,
           fontWeight: FontWeight.bold,
         ),
       ),
     );
   }
 
-  Container _selectYear() {
+  Container _DropdownSelectYear() {
     return Container(
+      // width: MediaQuery.of(context).size.width,
       width: 100,
+      height: 50,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
         color: const Color.fromRGBO(230, 230, 230, 1),
@@ -149,15 +158,11 @@ class _DashbordSmallState extends State<DashbordSmall> {
         isExpanded: true,
         style: const TextStyle(fontSize: 14),
         items: [
-          "2562",
-          "2563",
-          "2564",
+          "2550",
+          "2555",
+          "2560",
           "2565",
-          "2566",
-          "2567",
-          "2568",
-          "2569",
-          "2570"
+          "2570",
         ].map<DropdownMenuItem<String?>>((e) {
           return DropdownMenuItem(
             value: e,
@@ -168,28 +173,33 @@ class _DashbordSmallState extends State<DashbordSmall> {
     );
   }
 
-    // ignore: non_constant_identifier_names
+  Container _textSearchSubject() {
+    return Container(
+      alignment: Alignment.topLeft,
+      child: const Text(
+        "ค้นหารายวิชา",
+        style: TextStyle(
+          fontSize: 14,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  // ignore: non_constant_identifier_names
   Column _SearchSubject() {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          alignment: Alignment.topLeft,
-          child: const Text(
-            "ค้นหารายวิชา",
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
         Row(
           children: [
             //ช่องใส่รหัส/วิชา
             Expanded(
               child: Container(
-                width: MediaQuery.of(context).size.height,
+                width: MediaQuery.of(context).size.width,
+                // width: 300,
+                height: 50,
                 decoration: BoxDecoration(
                     color: const Color.fromRGBO(230, 230, 230, 1),
                     borderRadius: BorderRadius.circular(15)),
@@ -206,12 +216,13 @@ class _DashbordSmallState extends State<DashbordSmall> {
               ),
             ),
             const SizedBox(
-              width: 10,
+              width: 12,
             ),
             Row(
               children: [
                 Container(
-                  width: 70,
+                  height: 50,
+                  width: 80,
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
@@ -234,23 +245,26 @@ class _DashbordSmallState extends State<DashbordSmall> {
     );
   }
 
-    // ignore: non_constant_identifier_names
-  Container _ButtonSubject() {
+  // ignore: non_constant_identifier_names
+  Container _ButtonImportCourse() {
     return Container(
-      width: MediaQuery.of(context).size.height,
+      // margin: EdgeInsets.only(top: 27),
+      width: MediaQuery.of(context).size.width,
+      height: 50,
       padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
       decoration: BoxDecoration(
         border:
-            Border.all(color: const Color.fromRGBO(0, 102, 94, 1), width: 2),
+            Border.all(color: const Color.fromRGBO(0, 102, 94, 1), width: 2.5),
         borderRadius: BorderRadius.circular(15),
         // color: Color.fromRGBO(0, 102, 94, 1)
       ),
       child: TextButton(
         onPressed: () {
-          print("จัดการรายวิชา");
+          print("นำเข้าหลักสูตร");
+          Navigator.pushNamed(context, '/import');
         },
         child: const Text(
-          'จัดการรายวิชา',
+          'นำเข้าหลักสูตร',
           style: TextStyle(
               color: Color.fromRGBO(0, 102, 94, 1),
               fontWeight: FontWeight.bold,
@@ -260,10 +274,13 @@ class _DashbordSmallState extends State<DashbordSmall> {
     );
   }
 
-    // ignore: non_constant_identifier_names
+  // ignore: non_constant_identifier_names
   Container _ButtonAdd() {
     return Container(
-      width: MediaQuery.of(context).size.height,
+      // margin: EdgeInsets.only(top: 27),
+      width: MediaQuery.of(context).size.width,
+      height: 50,
+      // width: 100,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(15),
@@ -281,22 +298,37 @@ class _DashbordSmallState extends State<DashbordSmall> {
     );
   }
 
-  Container _importSubject() {
+  Container _textCourseStructure() {
     return Container(
-      width: MediaQuery.of(context).size.height,
-      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      alignment: Alignment.topLeft,
+      margin: EdgeInsets.only(top: 10),
+      child: const Text(
+        "โครงสร้างรายวิชา",
+        style: TextStyle(
+          fontSize: 17,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
+    );
+  }
+
+  Container _notFoundCourse() {
+    return Container(
+      width: double.infinity,
+      margin: const EdgeInsets.only(top: 10),
+      height: 440,
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
-          color: Color.fromARGB(255, 0, 0, 0)),
-      child: TextButton(
-        onPressed: () {
-          //print("นำเข้าหลักสูตร");
-          Navigator.pushNamed(context, '/import');
-        },
-        child: const Text(
-          'นำเข้าหลักสูตร',
+        border: Border.all(
+            color: const Color.fromRGBO(157, 157, 157, 1), width: 0.5),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Center(
+        child: Text(
+          'ไม่พบโครงสร้างหลักสูตร!',
           style: TextStyle(
-              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+            color: Color.fromRGBO(110, 110, 110, 1),
+            fontSize: 14,
+          ),
         ),
       ),
     );
@@ -304,6 +336,5 @@ class _DashbordSmallState extends State<DashbordSmall> {
 
   Future openDialog() => showDialog(
       context: context,
-    builder: (context) => const Dialog(child: PopupManagerView())
-  );
+      builder: (context) => const Dialog(child: PopupManagerView()));
 }
