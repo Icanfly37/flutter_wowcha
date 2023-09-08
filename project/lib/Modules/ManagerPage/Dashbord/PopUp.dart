@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ku_t/Friend/Dropdown/BasicsubjectModel.dart';
-import 'package:ku_t/Friend/Dropdown/CraditModel.dart';
-import 'package:ku_t/Friend/Dropdown/TeachernameModel.dart';
+import 'package:ku_t/Modules/Dropdown/BasicsubjectModel.dart';
+import 'package:ku_t/Modules/Dropdown/CraditModel.dart';
+import 'package:ku_t/Modules/Dropdown/TeachernameModel.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/Dashbord_Model.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/Dashbord_ViewModel.dart';
 
