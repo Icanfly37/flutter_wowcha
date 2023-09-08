@@ -17,7 +17,8 @@ class _DashbordSmallState extends State<DashbordSmall> {
   //     FirebaseFirestore.instance.collection('subject');
   late TextEditingController controller;
   String? selectedValue; //N
-  String? yearValue;
+  bool isImport =
+      true; // ถ้า false จะเป็นไม่พบหลักสูตร ถ้า true คือมีข้อมูลหลักสูตรแล้ว
 
   //TextEditingController coursecodeC = TextEditingController(); //y
   //TextEditingController coursenameC = TextEditingController();
@@ -105,7 +106,13 @@ class _DashbordSmallState extends State<DashbordSmall> {
           Container(
             child: _textCourseStructure(),
           ),
-          Container(child: _notFoundCourse()),
+          // if (isImport==true) {
+          //   Container(child: _foundCourse()),
+          // }
+          Container(
+              child: isImport
+                  ? _foundCourse()
+                  : _notFoundCourse()), // เงื่อนไขในการขึ้นตารางข้อมูลหลักสูตร
         ],
       ),
     );
@@ -334,6 +341,12 @@ class _DashbordSmallState extends State<DashbordSmall> {
           ),
         ),
       ),
+    );
+  }
+
+  Container _foundCourse() {
+    return Container(
+      child: Text("พบหลักสูตร"),
     );
   }
 
