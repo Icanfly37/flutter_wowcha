@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:ku_t/Modules/Componemt/SideAppBar.dart';
 import 'package:ku_t/Modules/ManagerPage/ManagerImportPage.dart';
 import 'package:ku_t/Modules/ManagerPage/ManagerPageRoute.dart';
+import 'package:ku_t/Modules/ManagerPage/Teachingtime/tabletime.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class router extends StatefulWidget {
@@ -42,7 +43,7 @@ class _router extends State<router> {
                         //----------------------------------------------------------------
                         case 1:
                           _key.currentState?.closeDrawer();
-                          return TextOe();
+                          return Tabletime();
                         case 2:
                           _key.currentState?.closeDrawer();
                           return TextOne();

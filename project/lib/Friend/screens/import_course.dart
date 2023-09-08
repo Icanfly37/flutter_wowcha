@@ -281,18 +281,16 @@ class _ImportPageState extends State<ImportPage> {
                         )
                       //---------------------------------------------------end สำหรับจอแนวนอน----------------------------------------------------------
                       //------------------------------------------------สำหรับหน้าจอแนวนอน-----------------------------------------------------------
-                      : const Row(
+                      : Row(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
                             SizedBox(width: 15),
-                            Expanded(
-                              child: Column(
-                                mainAxisSize: MainAxisSize.min,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(),
-                                ],
-                              ),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(),
+                              ],
                             ),
                           ],
                         )
