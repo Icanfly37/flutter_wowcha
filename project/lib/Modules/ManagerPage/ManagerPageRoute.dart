@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:ku_t/Modules/Componemt/TabAppBar.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/Import_Course.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/ManagerDashboard_View.dart';
+import 'package:ku_t/Modules/ManagerPage/Dashbord/Process_Import_Course.dart';
 import 'package:ku_t/Modules/ManagerPage/ManagerImportPage.dart';
 import 'package:ku_t/Modules/ManagerPage/Test.dart';
 
@@ -24,6 +25,7 @@ class _MyWidgetState extends State<ManagerPageRoute> {
       routes: {
         '/': (context) => _Page(() => const ManagerDashboard_View()),
         '/import': (context) => _Page(() => const ImportCourse()),
+        '/importcourse': (context) => _Page(() => const ProcessImportCourse()),
       },
     );
     // if (path == "Import") {

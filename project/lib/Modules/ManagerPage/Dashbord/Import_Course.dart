@@ -28,53 +28,29 @@ class _ImportCourseState extends State<ImportCourse> {
           _headerImportCourse(),
           const Divider(height: 26),
           Container(
+              alignment: Alignment.topLeft,
               child: orientation == Orientation.portrait //short if/else
                   ? Column(
                       //is if
                       mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _ButtonDownloadFile(),
-                            const SizedBox(height: 10),
-                          ],
-                        )
+                        _ButtonDownloadFile(),
+                        const SizedBox(height: 10),
                       ],
                     )
                   : Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             _ButtonDownloadFile(),
                             const SizedBox(height: 10),
                           ],
                         ),
-                        // const SizedBox(width: 15),
-                        // Expanded(
-                        //   child: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       //_SearchSubject(),
-                        //       Row(
-                        //         children: [
-                        //           const Expanded(
-                        //               flex: 3,
-                        //               child: SizedBox(
-                        //                 height: 70,
-                        //               )),
-                        //           /*Expanded(child: _ButtonSubject()),
-                        //   const SizedBox(width: 10),
-                        //   Expanded(child: _ButtonAdd()),
-                        //   const SizedBox(width: 10),
-                        //   Expanded(child: _importSubject())*/
-                        //         ],
-                        //       )
-                        //     ],
-                        //   ),
-                        // )
                       ],
                     )),
           _AddCourseFile(),
@@ -90,7 +66,7 @@ class _ImportCourseState extends State<ImportCourse> {
         "การนำเข้าข้อมูลหลักสูตร",
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: 24,
+          fontSize: 22,
         ),
       ),
     );
@@ -101,6 +77,7 @@ class _ImportCourseState extends State<ImportCourse> {
     return Container(
       margin: const EdgeInsets.only(top: 10),
       width: 150,
+      height: 50,
       // alignment: Alignment.topLeft,
       padding: const EdgeInsets.symmetric(vertical: 10),
       decoration: BoxDecoration(
@@ -135,12 +112,9 @@ class _ImportCourseState extends State<ImportCourse> {
         children: [
           TextButton(
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //       builder: (context) => const ProcessImportCourse()),
-              // );
               // print('เจ๋งแจ๋ว');
+              print("นำเข้าหลักสูตร");
+              Navigator.pushNamed(context, '/importcourse');
             },
             child: const Text(
               'คลิกที่นี่เพื่อเพิ่มไฟล์',
@@ -161,12 +135,9 @@ class _ImportCourseState extends State<ImportCourse> {
               ),
             ),
             onPressed: () {
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //       builder: (context) => const ProcessImportCourse()),
-              // );
               // print('เจ๋งแจ๋ว');
+              print("นำเข้าหลักสูตร");
+              Navigator.pushNamed(context, '/importcourse');
             },
           ),
         ],
