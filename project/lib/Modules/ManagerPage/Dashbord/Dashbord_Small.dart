@@ -1,8 +1,6 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ku_t/Friend/Dropdown/YearModel.dart';
-import 'package:ku_t/Friend/modules/component/Header_web.dart';
-import 'package:ku_t/Friend/widget/search_bar_widget.dart';
+import 'package:ku_t/Modules/Componemt/CustomDataTable.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/PopUp.dart';
 
 class DashbordSmall extends StatefulWidget {
@@ -18,7 +16,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
   late TextEditingController controller;
   String? selectedValue; //N
   bool isImport =
-      true; // ถ้า false จะเป็นไม่พบหลักสูตร ถ้า true คือมีข้อมูลหลักสูตรแล้ว
+      false; // ถ้า false จะเป็นไม่พบหลักสูตร ถ้า true คือมีข้อมูลหลักสูตรแล้ว (ข้อมูลจะขึ้นในตาราง)
 
   //TextEditingController coursecodeC = TextEditingController(); //y
   //TextEditingController coursenameC = TextEditingController();
@@ -106,13 +104,11 @@ class _DashbordSmallState extends State<DashbordSmall> {
           Container(
             child: _textCourseStructure(),
           ),
-          // if (isImport==true) {
-          //   Container(child: _foundCourse()),
-          // }
+
           Container(
               child: isImport
                   ? _foundCourse()
-                  : _notFoundCourse()), // เงื่อนไขในการขึ้นตารางข้อมูลหลักสูตร
+                  : _notFoundCourse()), // เงื่อนไขในการขึ้นตารางข้อมูลหลักสูตร (?จะขึ้นตาราง และ :จะขึ้นไม่พบหลักสูตร)
         ],
       ),
     );
@@ -125,7 +121,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
         "การจัดการข้อมูลหลักสูตร",
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          fontSize: 24,
+          fontSize: 22,
         ),
       ),
     );
@@ -145,9 +141,10 @@ class _DashbordSmallState extends State<DashbordSmall> {
   }
 
   Container _DropdownSelectYear() {
+    final orientation = MediaQuery.of(context).orientation;
     return Container(
       // width: MediaQuery.of(context).size.width,
-      width: 100,
+      width: orientation == Orientation.portrait ? double.infinity : 100,
       height: 50,
       padding: const EdgeInsets.symmetric(horizontal: 10),
       decoration: BoxDecoration(
@@ -157,7 +154,9 @@ class _DashbordSmallState extends State<DashbordSmall> {
       child: DropdownButton<String?>(
         hint: const Text(
           "เลือก",
+          // style: textStylehint()
         ),
+        borderRadius: BorderRadius.all(Radius.circular(10)),
         dropdownColor: Colors.white,
         value: selectedValue,
         onChanged: (value) {
@@ -315,7 +314,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
       child: const Text(
         "โครงสร้างรายวิชา",
         style: TextStyle(
-          fontSize: 17,
+          fontSize: 16,
           fontWeight: FontWeight.bold,
         ),
       ),
@@ -346,7 +345,151 @@ class _DashbordSmallState extends State<DashbordSmall> {
 
   Container _foundCourse() {
     return Container(
-      child: Text("พบหลักสูตร"),
+      // width: MediaQuery.of(context).size.width,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Container(
+              padding: const EdgeInsets.only(top: 4),
+              child: CustomDataTable(
+                  borderRadius: 10.0,
+                  columns: [
+                    DataColumn(
+                        label: Text(
+                      'ลำดับ',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    )),
+                    DataColumn(
+                        label: Text(
+                      'รหัสวิชา',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    )),
+                    DataColumn(
+                        label: Text(
+                      'ชื่อรายวิชา',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    )),
+                    DataColumn(
+                        label: Text(
+                      'หน่วยกิต',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    )),
+                    DataColumn(
+                        label: Text(
+                      'วิชาพื้นฐาน',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    )),
+                    DataColumn(
+                        label: Text(
+                      'จัดการข้อมูล',
+                      style:
+                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    )),
+                  ],
+                  rows: List.generate(
+                      10, // กำหนดให้ตารางขึ้น 10 rows
+                      (index) => DataRow(
+                            color: MaterialStateColor.resolveWith((states) {
+                              // กำหนดสีแต่ละแถวตาม index
+                              if (index % 2 == 0) {
+                                return Colors.white; // สีขาวสลับกับสีเขียวอ่อน
+                              } else {
+                                return Color.fromRGBO(240, 249, 241, 1);
+                              }
+                            }),
+                            cells: [
+                              DataCell(Text('ข้อมูล ${index + 1}')),
+                              DataCell(Text('ข้อมูล ${index + 1}')),
+                              DataCell(Text('ข้อมูล ${index + 1}')),
+                              DataCell(Text('ข้อมูล ${index + 1}')),
+                              DataCell(Text('ข้อมูล ${index + 1}')),
+                              DataCell(
+                                Row(
+                                  children: [
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.edit,
+                                        size: 18,
+                                        color: Color.fromRGBO(114, 114, 114, 1),
+                                      ),
+                                      // iconSize: 10,
+                                      onPressed: () {
+                                        // แก้ไขข้อมูล
+                                        print('แก้ไขแถวที่ $index');
+                                      },
+                                    ),
+                                    IconButton(
+                                      icon: Icon(
+                                        Icons.delete,
+                                        size: 18,
+                                        color: Color.fromRGBO(114, 114, 114, 1),
+                                      ),
+                                      // iconSize: 10,
+                                      onPressed: () {
+                                        // ลบข้อมูล
+                                        print('ลบแถวที่ $index');
+                                      },
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )))),
+          // ส่วนปุ่มกดเปลี่ยนหน้าของตาราง
+          Container(
+            padding: const EdgeInsets.only(top: 4),
+            // alignment: Alignment.topRight,
+            // mainAxisAlignment: MainAxisAlignment.end,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  child: Text(
+                    "หน้า",
+                    style: TextStyle(
+                      fontSize: 14,
+                      // fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "1",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "2",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "3",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    "See All",
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
