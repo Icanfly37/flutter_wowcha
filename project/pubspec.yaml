@@ -31,6 +31,8 @@ dependencies:
   flutter:
     sdk: flutter
   firebase_core:
+  network_request: ^0.0.2
+  numberpicker: ^2.1.2
 
 
   # The following adds the Cupertino Icons font to your application.

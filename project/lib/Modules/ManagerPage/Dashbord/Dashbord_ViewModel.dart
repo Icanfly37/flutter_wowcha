@@ -4,7 +4,7 @@ import 'package:ku_t/Modules/ManagerPage/Dashbord/Dashbord_Model.dart';
 
 class DashboardViewModel {
   CollectionReference addsubject =
-      FirebaseFirestore.instance.collection('subject');
+      FirebaseFirestore.instance.collection('subjectt');
   late TextEditingController controller;
 
   void adddata(

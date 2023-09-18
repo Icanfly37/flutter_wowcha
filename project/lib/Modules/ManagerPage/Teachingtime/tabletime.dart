@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ku_t/Friend/Dropdown/SemesterModel.dart';
-import 'package:ku_t/Friend/Dropdown/YearSModel.dart';
-import 'package:ku_t/Friend/modules/component/Header_web.dart';
-import 'package:ku_t/Friend/widget/search_bar_widget.dart';
+import 'package:ku_t/Modules/Componemt/Header_web.dart';
+import 'package:ku_t/Modules/Dropdown/SemesterModel.dart';
+import 'package:ku_t/Modules/Dropdown/YearSModel.dart';
+
+import 'package:ku_t/Modules/ManagerPage/Teachingtime/timesubject.dart';
+import 'package:ku_t/Modules/widget/search_bar_widget.dart';
 
 class Tabletime extends StatefulWidget {
   const Tabletime({Key? key}) : super(key: key);
@@ -14,6 +16,7 @@ class _TabletimeState extends State<Tabletime> {
   String? semesterValue;
   String? yearsValue;
   
+
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
@@ -46,18 +49,26 @@ class _TabletimeState extends State<Tabletime> {
                     ),
                 ],
               )
-              : Row(
+              : Column(
                 children: [
-                  _selectSemester(),
-                  SizedBox(width: 10,),
-                  _selectYearS(),
-                  SizedBox(width: 10,),
-                  Expanded(
-                    child: SearchBarWidget(
-                      isReadOnly: true,
-                      hasBackButton: false, 
-                    ),
-                    )           
+                  Row(
+                    children: [
+                      _selectSemester(),
+                      SizedBox(width: 10,),
+                      _selectYearS(),
+                      SizedBox(width: 10,),
+                      Expanded(
+                        child: SearchBarWidget(
+                          isReadOnly: true,
+                          hasBackButton: false, 
+                        ),
+                        )           
+                    ],
+                  ),
+                  SizedBox(height: 10,),
+                  Container(
+                    height: 450,
+                    child: Addtime())
                 ],
               )
             ),
@@ -149,4 +160,5 @@ class _TabletimeState extends State<Tabletime> {
 
     );
   }
+  
 }

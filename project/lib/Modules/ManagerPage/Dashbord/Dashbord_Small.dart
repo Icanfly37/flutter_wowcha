@@ -1,9 +1,8 @@
-//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ku_t/Friend/Dropdown/YearModel.dart';
-import 'package:ku_t/Friend/modules/component/Header_web.dart';
-import 'package:ku_t/Friend/widget/search_bar_widget.dart';
+import 'package:ku_t/Modules/Componemt/Header_web.dart';
+import 'package:ku_t/Modules/Dropdown/YearModel.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/PopUp.dart';
+import 'package:ku_t/Modules/widget/search_bar_widget.dart';
 
 class DashbordSmall extends StatefulWidget {
   const DashbordSmall({super.key});
@@ -25,7 +24,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
   @override
   void dispose() {
     controller.dispose();
-
+    
     super.dispose();
   }
 

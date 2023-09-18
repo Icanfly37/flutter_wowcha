@@ -30,6 +30,13 @@ TextStyle textStyleHeadDrop() {
   );
 }
 
+TextStyle textStylehintbold() {
+  return TextStyle(
+    fontWeight: FontWeight.bold,
+    fontSize: 14,
+  );
+}
+
 TextStyle textStylehint() {
   return TextStyle(
     fontSize: 14,
@@ -52,10 +59,32 @@ TextStyle textStylewhite() {
     fontSize: 14);
 }
 
+TextStyle textStylered() {
+  return TextStyle(
+    fontWeight: FontWeight.bold,
+    color: Color.fromRGBO(255, 93, 93, 1),
+    fontSize: 14);
+}
+
+
 BoxDecoration decoration() {
   return BoxDecoration(
     color: Color.fromRGBO(230, 230, 230, 1),
     borderRadius: BorderRadius.circular(15)
+    );
+}
+
+BoxDecoration decorationadd() {
+  return BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(15),
+    boxShadow: [
+      BoxShadow(
+        color: Color.fromRGBO(230, 230, 230, 1),
+        blurRadius: 15,
+        offset: Offset(4,4)
+      )
+    ]
     );
 }
 
@@ -73,6 +102,21 @@ BoxDecoration decorationgreen() {
     );
 }
 
+BoxDecoration decorationred() {
+  return BoxDecoration(
+    borderRadius: BorderRadius.circular(15),
+          color: const Color.fromRGBO(255, 93, 93, 1)
+    );
+}
+
+BoxDecoration decorationredborder() {
+  return BoxDecoration(
+    borderRadius: BorderRadius.circular(15),
+    border: Border.all(
+    color: const Color.fromRGBO(255, 93, 93, 1), width: 2),
+  );
+}
+
 BoxDecoration decorationblack() {
   return BoxDecoration(
     borderRadius: BorderRadius.circular(15),
@@ -85,4 +129,43 @@ BoxDecoration decorationborder() {
         Border.all(color: const Color.fromRGBO(0, 102, 94, 1), width: 2),
         borderRadius: BorderRadius.circular(15),
     );
+}
+BoxDecoration decorationradius() {
+  return BoxDecoration(
+    color: Colors.white,
+   borderRadius: BorderRadius.circular(15),
+    );
+}
+
+InputDecoration inputdecoration() {
+  return InputDecoration(
+    isDense: true,
+    filled: true,
+    
+    fillColor: Color.fromRGBO(230, 230, 230, 1),
+    focusedErrorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(15),
+      borderSide: BorderSide(
+        color: Colors.transparent
+      ),
+    ),
+    focusedBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(15),
+      borderSide: BorderSide(
+        color: Colors.transparent
+      ),
+    ),
+    enabledBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(15),
+      borderSide: BorderSide(
+        color: Colors.transparent
+      ),
+    ),
+    errorBorder: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(15),
+      borderSide: BorderSide(
+        color: Colors.transparent
+      ),
+    )
+  );
 }
