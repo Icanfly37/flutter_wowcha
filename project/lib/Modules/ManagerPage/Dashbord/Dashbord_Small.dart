@@ -1,6 +1,7 @@
-//import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ku_t/Modules/Componemt/CustomDataTable.dart';
+import 'package:ku_t/Modules/Componemt/Header_web.dart';
+import 'package:ku_t/Modules/Dropdown/YearModel.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/PopUp.dart';
 
 class DashbordSmall extends StatefulWidget {
@@ -24,7 +25,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
   @override
   void dispose() {
     controller.dispose();
-
+    
     super.dispose();
   }
 
@@ -46,12 +47,9 @@ class _DashbordSmallState extends State<DashbordSmall> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            _textyear(),
                             const SizedBox(height: 4),
                             _DropdownSelectYear(),
                             const SizedBox(height: 10),
-                            _textSearchSubject(),
-                            const SizedBox(height: 4),
                             _SearchSubject(),
                             const SizedBox(height: 18),
                             _ButtonAdd(),
@@ -62,43 +60,18 @@ class _DashbordSmallState extends State<DashbordSmall> {
                       ],
                     )
                   : Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      // mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            _textyear(),
-                            const SizedBox(height: 4),
-                            _DropdownSelectYear(),
-                          ],
-                        ),
-                        const SizedBox(width: 12),
+                        _DropdownSelectYear(),
+                        const SizedBox(width: 10),
                         Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _textSearchSubject(),
-                              const SizedBox(height: 4),
-                              _SearchSubject(),
-                            ],
-                          ),
-                        ),
-                        Expanded(
-                            child: Container(
-                          padding: EdgeInsets.only(top: 25),
-                          child: Row(
-                            children: [
-                              const Expanded(
-                                  flex: 2,
-                                  child: SizedBox(
-                                      // height: 101,
-                                      )),
-                              Expanded(child: _ButtonAdd()),
-                              const SizedBox(width: 12),
-                              Expanded(child: _ButtonImportCourse())
-                            ],
-                          ),
-                        ))
+                          flex: 3,
+                          child: _SearchSubject()),
+                          const SizedBox(width: 50),
+                        Expanded(child: _ButtonAdd()),
+                        const SizedBox(width: 10),
+                        Expanded(child: _ButtonImportCourse())
                       ],
                     )),
           Container(
@@ -127,74 +100,57 @@ class _DashbordSmallState extends State<DashbordSmall> {
     );
   }
 
-  Container _textyear() {
-    return Container(
-      alignment: Alignment.topLeft,
-      child: const Text(
-        "ปีหลักสูตร",
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
 
-  Container _DropdownSelectYear() {
+  Column _DropdownSelectYear() {
     final orientation = MediaQuery.of(context).orientation;
-    return Container(
-      // width: MediaQuery.of(context).size.width,
-      width: orientation == Orientation.portrait ? double.infinity : 100,
-      height: 50,
-      padding: const EdgeInsets.symmetric(horizontal: 10),
-      decoration: BoxDecoration(
-        color: const Color.fromRGBO(230, 230, 230, 1),
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: DropdownButton<String?>(
-        hint: const Text(
-          "เลือก",
-          // style: textStylehint()
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          alignment: Alignment.bottomLeft,
+          child: Text(
+            "ปีหลักสูตร",
+            style: textStylehintbold(),
+          ),
         ),
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-        dropdownColor: Colors.white,
-        value: selectedValue,
-        onChanged: (value) {
-          setState(() {
-            selectedValue = value;
-          });
-        },
-        underline: const SizedBox(),
-        isExpanded: true,
-        style: const TextStyle(fontSize: 14),
-        items: [
-          "2550",
-          "2555",
-          "2560",
-          "2565",
-          "2570",
-        ].map<DropdownMenuItem<String?>>((e) {
-          return DropdownMenuItem(
-            value: e,
-            child: Text(e.toString()),
-          );
-        }).toList(),
-      ),
+        Container(
+          width: orientation == Orientation.portrait ? double.infinity : 100,
+          height: 50,
+          decoration: decoration(),
+          child: DropdownButtonFormField(
+              hint: Text(
+                "เลือก",
+                style: textStylehint(),
+              ),
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.all(15),
+              ),
+              validator: (value) {
+                if (value == null) {
+                  return "";
+                }
+                return null;
+              },
+              focusColor: Colors.white,
+              dropdownColor: Colors.white,
+              isExpanded: false,
+              value: selectedValue,
+              items: year //แก้
+                  .map((e) => DropdownMenuItem<String>(
+                      value: e.title, child: Text(e.title!,
+                      style: textStylehint(),)))
+                  .toList(),
+              onChanged: (value) {
+                setState(() {
+                  selectedValue = value.toString();
+                });
+              }),
+        ),
+      ],
     );
   }
 
-  Container _textSearchSubject() {
-    return Container(
-      alignment: Alignment.topLeft,
-      child: const Text(
-        "ค้นหารายวิชา",
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
-        ),
-      ),
-    );
-  }
 
   // ignore: non_constant_identifier_names
   Column _SearchSubject() {
@@ -202,6 +158,13 @@ class _DashbordSmallState extends State<DashbordSmall> {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Container(
+      alignment: Alignment.topLeft,
+      child: Text(
+        "ค้นหารายวิชา",
+        style: textStylehintbold()
+      ),
+    ),
         Row(
           children: [
             //ช่องใส่รหัส/วิชา
@@ -210,9 +173,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
                 width: MediaQuery.of(context).size.width,
                 // width: 300,
                 height: 50,
-                decoration: BoxDecoration(
-                    color: const Color.fromRGBO(230, 230, 230, 1),
-                    borderRadius: BorderRadius.circular(15)),
+                decoration: decoration(),
                 child: const TextField(
                   cursorColor: Color.fromRGBO(172, 173, 191, 1),
                   decoration: InputDecoration(
@@ -226,7 +187,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
               ),
             ),
             const SizedBox(
-              width: 12,
+              width: 10,
             ),
             Row(
               children: [
@@ -234,16 +195,14 @@ class _DashbordSmallState extends State<DashbordSmall> {
                   height: 50,
                   width: 80,
                   padding: const EdgeInsets.symmetric(vertical: 10),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: const Color.fromRGBO(0, 102, 94, 1)),
+                  decoration: decorationgreen(),
                   child: TextButton(
                     onPressed: () {
                       print("hit!");
                     },
-                    child: const Text(
+                    child: Text(
                       'ค้นหา',
-                      style: TextStyle(color: Colors.white, fontSize: 14),
+                      style: textStylewhite(),
                     ),
                   ),
                 ),
@@ -257,28 +216,21 @@ class _DashbordSmallState extends State<DashbordSmall> {
 
   // ignore: non_constant_identifier_names
   Container _ButtonImportCourse() {
+    final orientation = MediaQuery.of(context).orientation;
     return Container(
-        // margin: EdgeInsets.only(top: 27),
+        margin:  orientation == Orientation.portrait ? null : EdgeInsets.only(top: 20),
         width: MediaQuery.of(context).size.width,
         height: 50,
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-        decoration: BoxDecoration(
-          border: Border.all(
-              color: const Color.fromRGBO(0, 102, 94, 1), width: 2.5),
-          borderRadius: BorderRadius.circular(15),
-          // color: Color.fromRGBO(0, 102, 94, 1)
-        ),
+        decoration: decorationborder(),
         child: TextButton(
           onPressed: () {
             print("นำเข้าหลักสูตร");
             Navigator.pushNamed(context, '/import');
           },
-          child: const Text(
+          child: Text(
             'นำเข้าหลักสูตร',
-            style: TextStyle(
-                color: Color.fromRGBO(0, 102, 94, 1),
-                fontWeight: FontWeight.bold,
-                fontSize: 14),
+            style: textStylegreen(),
           ),
         ));
   }
@@ -287,22 +239,19 @@ class _DashbordSmallState extends State<DashbordSmall> {
   Container _ButtonAdd() {
     final orientation = MediaQuery.of(context).orientation;
     return Container(
-        // margin: EdgeInsets.only(top: 27),
+        margin:  orientation == Orientation.portrait ? null : EdgeInsets.only(top: 20),
         width: MediaQuery.of(context).size.width,
         height: 50,
         // width: 100,
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: const Color.fromRGBO(0, 102, 94, 1)),
+        decoration: decorationgreen(),
         child: TextButton(
           onPressed: () {
             openDialog();
           },
-          child: const Text(
+          child: Text(
             'เพิ่มรายวิชา',
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
+            style: textStylewhite(),
           ),
         ));
   }
@@ -311,33 +260,24 @@ class _DashbordSmallState extends State<DashbordSmall> {
     return Container(
       alignment: Alignment.topLeft,
       margin: EdgeInsets.only(top: 10),
-      child: const Text(
+      child: Text(
         "โครงสร้างรายวิชา",
-        style: TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.bold,
-        ),
+        style: textStyleHeadDrop(),
       ),
     );
   }
 
   Container _notFoundCourse() {
+    final orientation = MediaQuery.of(context).orientation;
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(top: 10),
-      height: 440,
-      decoration: BoxDecoration(
-        border: Border.all(
-            color: const Color.fromRGBO(157, 157, 157, 1), width: 0.5),
-        borderRadius: BorderRadius.circular(15),
-      ),
+      height: orientation == Orientation.portrait ? 250 : 440,
+      decoration: decorationbordergray(),
       child: Center(
         child: Text(
           'ไม่พบโครงสร้างหลักสูตร!',
-          style: TextStyle(
-            color: Color.fromRGBO(110, 110, 110, 1),
-            fontSize: 14,
-          ),
+          style: textStylegray(),
         ),
       ),
     );
@@ -357,38 +297,32 @@ class _DashbordSmallState extends State<DashbordSmall> {
                     DataColumn(
                         label: Text(
                       'ลำดับ',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                      style: textStylehintbold(),
                     )),
                     DataColumn(
                         label: Text(
                       'รหัสวิชา',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                      style: textStylehintbold(),
                     )),
                     DataColumn(
                         label: Text(
                       'ชื่อรายวิชา',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                      style: textStylehintbold(),
                     )),
                     DataColumn(
                         label: Text(
                       'หน่วยกิต',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                      style: textStylehintbold(),
                     )),
                     DataColumn(
                         label: Text(
                       'วิชาพื้นฐาน',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                      style: textStylehintbold(),
                     )),
                     DataColumn(
                         label: Text(
                       'จัดการข้อมูล',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                      style: textStylehintbold(),
                     )),
                   ],
                   rows: List.generate(

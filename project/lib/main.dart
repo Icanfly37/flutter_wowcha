@@ -19,8 +19,9 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
+        // hintColor: Colors.white,
         colorScheme: ColorScheme.fromSeed(
-            seedColor: const Color.fromARGB(255, 18, 175, 84)),
+            seedColor: const Color.fromARGB(255, 255, 255, 255)),
         useMaterial3: true,
       ),
       home: FutureBuilder<void>(

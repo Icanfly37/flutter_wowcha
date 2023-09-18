@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ku_t/Friend/Dropdown/BasicsubjectModel.dart';
-import 'package:ku_t/Friend/Dropdown/CraditModel.dart';
-import 'package:ku_t/Friend/Dropdown/TeachernameModel.dart';
-import 'package:ku_t/Friend/modules/component/Header_web.dart';
+import 'package:ku_t/Modules/Componemt/Header_web.dart';
+import 'package:ku_t/Modules/Dropdown/BasicsubjectModel.dart';
+import 'package:ku_t/Modules/Dropdown/CraditModel.dart';
+import 'package:ku_t/Modules/Dropdown/TeachernameModel.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/Dashbord_Model.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/Dashbord_ViewModel.dart';
 
@@ -23,6 +23,14 @@ class _PopupManagerViewState extends State<PopupManagerView> {
       coursenameCText: null,
       creditValue: null,
       teachernameValue: null);
+
+  @override
+  void dispose() {
+    coursecodeC.dispose();
+    coursenameC.dispose();
+    
+    super.dispose();
+  }
 
   DashboardViewModel _viewModel = new DashboardViewModel();
   @override
@@ -68,26 +76,21 @@ class _PopupManagerViewState extends State<PopupManagerView> {
         children: [
           Container(
             alignment: Alignment.topLeft,
-            child: const Text(
+            child: Text(
               "รหัสวิชา",
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
+              style: textStyleHeadDrop()
             ),
           ),
           Container(
             width: MediaQuery.of(context).size.height,
-            decoration: BoxDecoration(
-                color: const Color.fromRGBO(230, 230, 230, 1),
-                borderRadius: BorderRadius.circular(15)),
+            decoration: decoration(),
             child: TextFormField(
               controller: coursecodeC,
               keyboardType: TextInputType.number,
               cursorColor: const Color.fromRGBO(172, 173, 191, 1),
-              decoration: const InputDecoration(
+              decoration: InputDecoration(
                 border: InputBorder.none,
-                hintStyle: TextStyle(fontSize: 14),
+                hintStyle: textStylehint(),
                 hintText: "รหัสวิชา",
                 // hintStyle: textStyle16(),
                 contentPadding: EdgeInsets.all(15),
@@ -106,25 +109,17 @@ class _PopupManagerViewState extends State<PopupManagerView> {
         children: [
           Container(
             alignment: Alignment.bottomLeft,
-            child: const Text(
+            child: Text(
               "หน่วยกิต",
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
+              style: textStyleHeadDrop()
             ),
           ),
           Container(
-            decoration: BoxDecoration(
-                color: const Color.fromRGBO(230, 230, 230, 1),
-                borderRadius: BorderRadius.circular(15)),
+            decoration: decoration(),
             child: DropdownButtonFormField(
-                hint: const Text(
+                hint: Text(
                   "เลือก",
-                  style: TextStyle(
-                    // color: Color.fromRGBO(172, 173, 191, 1),
-                    fontSize: 14,
-                  ),
+                  style: textStylehint(),
                 ),
                 decoration: const InputDecoration(
                   border: InputBorder.none,
@@ -142,7 +137,8 @@ class _PopupManagerViewState extends State<PopupManagerView> {
                 value: model.creditValue,
                 items: credit
                     .map((e) => DropdownMenuItem<String>(
-                        value: e.title, child: Text(e.title!)))
+                        value: e.title, child: Text(e.title!,
+                        style: textStylehint(),)))
                     .toList(),
                 onChanged: (value) {
                   setState(() {
@@ -160,28 +156,22 @@ class _PopupManagerViewState extends State<PopupManagerView> {
       children: [
         Container(
           alignment: Alignment.topLeft,
-          child: const Text(
+          child: Text(
             "ชื่อรายวิชา",
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+            style: textStyleHeadDrop(),
           ),
         ),
         Container(
           // width: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-              color: const Color.fromRGBO(230, 230, 230, 1),
-              borderRadius: BorderRadius.circular(15)),
+          decoration: decoration(),
           child: TextFormField(
             controller: coursenameC,
             keyboardType: TextInputType.number,
             cursorColor: const Color.fromRGBO(172, 173, 191, 1),
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               border: InputBorder.none,
-              hintStyle: TextStyle(fontSize: 14),
+              hintStyle: textStylehint(),
               hintText: "ชื่อรายวิชา",
-              // hintStyle: textStyle16(),
               contentPadding: EdgeInsets.all(15),
             ),
           ),
@@ -196,25 +186,17 @@ class _PopupManagerViewState extends State<PopupManagerView> {
       children: [
         Container(
           alignment: Alignment.bottomLeft,
-          child: const Text(
+          child: Text(
             "อาจารย์ผู้สอน",
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+            style: textStyleHeadDrop(),
           ),
         ),
         Container(
-          decoration: BoxDecoration(
-              color: const Color.fromRGBO(230, 230, 230, 1),
-              borderRadius: BorderRadius.circular(15)),
+          decoration: decoration(),
           child: DropdownButtonFormField(
-              hint: const Text(
+              hint: Text(
                 "อาจารย์ผู้สอน",
-                style: TextStyle(
-                  // color: Color.fromRGBO(172, 173, 191, 1),
-                  fontSize: 14,
-                ),
+                style: textStylehint(),
               ),
               decoration: const InputDecoration(
                 border: InputBorder.none,
@@ -232,7 +214,8 @@ class _PopupManagerViewState extends State<PopupManagerView> {
               value: model.teachernameValue,
               items: teachername
                   .map((e) => DropdownMenuItem<String>(
-                      value: e.title, child: Text(e.title!)))
+                      value: e.title, child: Text(e.title!,
+                      style: textStylehint(),)))
                   .toList(),
               onChanged: (value) {
                 setState(() {
@@ -250,25 +233,17 @@ class _PopupManagerViewState extends State<PopupManagerView> {
       children: [
         Container(
           alignment: Alignment.bottomLeft,
-          child: const Text(
+          child: Text(
             "วิชาพื้นฐาน",
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
+            style: textStyleHeadDrop(),
           ),
         ),
         Container(
-          decoration: BoxDecoration(
-              color: const Color.fromRGBO(230, 230, 230, 1),
-              borderRadius: BorderRadius.circular(15)),
+          decoration: decoration(),
           child: DropdownButtonFormField(
-              hint: const Text(
+              hint: Text(
                 "วิชาพื้นฐาน",
-                style: TextStyle(
-                  // color: Color.fromRGBO(172, 173, 191, 1),
-                  fontSize: 14,
-                ),
+                style: textStylehint(),
               ),
               decoration: const InputDecoration(
                 border: InputBorder.none,
@@ -286,7 +261,8 @@ class _PopupManagerViewState extends State<PopupManagerView> {
               value: model.basicsubjectValue,
               items: basicsubject //แก้
                   .map((e) => DropdownMenuItem<String>(
-                      value: e.title, child: Text(e.title!)))
+                      value: e.title, child: Text(e.title!,
+                      style: textStylehint(),)))
                   .toList(),
               onChanged: (value) {
                 setState(() {
@@ -304,21 +280,16 @@ class _PopupManagerViewState extends State<PopupManagerView> {
         Expanded(
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 10),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: const Color.fromRGBO(0, 102, 94, 1)),
+            decoration: decorationgreen(),
             child: TextButton(
               onPressed: () {
-                model.coursecodeCText = coursenameC.text;
+                model.coursecodeCText = coursecodeC.text;
                 model.coursenameCText = coursenameC.text;
                 _viewModel.adddata(model: model, context: context);
               },
-              child: const Text(
+              child: Text(
                 "ตกลง",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontSize: 14),
+                style: textStylewhite(),
               ),
             ),
           ),
@@ -329,21 +300,14 @@ class _PopupManagerViewState extends State<PopupManagerView> {
         Expanded(
           child: Container(
             padding: const EdgeInsets.symmetric(vertical: 8),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(15),
-              border: Border.all(
-                  color: const Color.fromRGBO(255, 93, 93, 1), width: 2),
-            ),
+            decoration: decorationredborder(),
             child: TextButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              child: const Text(
+              child: Text(
                 "ยกเลิก",
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Color.fromRGBO(255, 93, 93, 1),
-                    fontSize: 14),
+                style: textStylered(),
               ),
             ),
           ),

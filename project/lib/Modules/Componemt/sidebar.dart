@@ -29,8 +29,9 @@ class SideBarXExample extends StatelessWidget {
         iconTheme: IconThemeData(
           color: Colors.white,
         ),
+        
         selectedIconTheme: IconThemeData(color: Color.fromRGBO(0, 102, 94, 1)),
-        selectedTextStyle: TextStyle(color: Color.fromRGBO(0, 102, 94, 1)),
+        selectedTextStyle: TextStyle(color: Color.fromRGBO(255, 255, 255, 1)),
       ),
       extendedTheme: const SidebarXTheme(width: 250),
 
