@@ -43,6 +43,13 @@ TextStyle textStylehint() {
   );
 }
 
+TextStyle textStylegray() {
+  return TextStyle(
+    color: Color.fromRGBO(110, 110, 110, 1),
+    fontSize: 14,
+  );
+}
+
 TextStyle textStylegreen() {
   return TextStyle(
     color: Color.fromRGBO(0, 102, 94, 1),
@@ -121,6 +128,13 @@ BoxDecoration decorationblack() {
   return BoxDecoration(
     borderRadius: BorderRadius.circular(15),
     color: Color.fromRGBO(47, 51, 55, 1));
+}
+BoxDecoration decorationbordergray() {
+  return BoxDecoration(
+        border: Border.all(
+            color: const Color.fromRGBO(157, 157, 157, 1), width: 0.5),
+        borderRadius: BorderRadius.circular(15),
+      );
 }
 
 BoxDecoration decorationborder() {

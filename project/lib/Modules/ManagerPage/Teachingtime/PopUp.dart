@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 500,
+      height: 700,
       width: 500,
       
       decoration: decorationradius(),
