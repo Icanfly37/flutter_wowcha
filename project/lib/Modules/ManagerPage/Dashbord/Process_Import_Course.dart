@@ -1,30 +1,23 @@
 import 'package:flutter/material.dart';
-import 'package:ku_t/Modules/Componemt/CustomDataTable.dart';
-import 'package:ku_t/Modules/ManagerPage/Dashbord/PopUp.dart';
-import 'package:ku_t/Modules/widget/search_bar_widget.dart';
+// import 'package:unicons/unicons.dart';
 
-class DashbordSmall extends StatefulWidget {
-  const DashbordSmall({super.key});
+class ProcessImportCourse extends StatefulWidget {
+  const ProcessImportCourse({super.key});
 
   @override
-  State<DashbordSmall> createState() => _DashbordSmallState();
+  State<ProcessImportCourse> createState() => _ProcessImportCourseState();
 }
 
-class _DashbordSmallState extends State<DashbordSmall> {
-  // CollectionReference addsubject =
-  //     FirebaseFirestore.instance.collection('subject');
+class _ProcessImportCourseState extends State<ProcessImportCourse> {
   late TextEditingController controller;
   String? selectedValue; //N
-  bool isImport =
-      false; // ถ้า false จะเป็นไม่พบหลักสูตร ถ้า true คือมีข้อมูลหลักสูตรแล้ว (ข้อมูลจะขึ้นในตาราง)
-
-  //TextEditingController coursecodeC = TextEditingController(); //y
-  //TextEditingController coursenameC = TextEditingController();
+  // bool isImport =
+  //     false;
 
   @override
   void dispose() {
     controller.dispose();
-    
+
     super.dispose();
   }
 
@@ -35,7 +28,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
       padding: const EdgeInsets.all(15.0),
       child: Column(
         children: [
-          _header(),
+          _headerImportCourse(),
           const Divider(height: 26),
           Container(
               child: orientation == Orientation.portrait //short if/else
@@ -49,14 +42,10 @@ class _DashbordSmallState extends State<DashbordSmall> {
                             _textyear(),
                             const SizedBox(height: 4),
                             _DropdownSelectYear(),
-                            const SizedBox(height: 10),
-                            _textSearchSubject(),
-                            const SizedBox(height: 4),
-                            _SearchSubject(),
                             const SizedBox(height: 18),
-                            _ButtonAdd(),
+                            _ButtonImportCourse(),
                             const SizedBox(height: 10),
-                            _ButtonImportCourse()
+                            _ButtonCancel()
                           ],
                         ),
                       ],
@@ -74,16 +63,6 @@ class _DashbordSmallState extends State<DashbordSmall> {
                         ),
                         const SizedBox(width: 12),
                         Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              _textSearchSubject(),
-                              const SizedBox(height: 4),
-                              _SearchSubject(),
-                            ],
-                          ),
-                        ),
-                        Expanded(
                             child: Container(
                           padding: EdgeInsets.only(top: 25),
                           child: Row(
@@ -93,32 +72,36 @@ class _DashbordSmallState extends State<DashbordSmall> {
                                   child: SizedBox(
                                       // height: 101,
                                       )),
-                              Expanded(child: _ButtonAdd()),
+                              Expanded(child: _ButtonImportCourse()),
                               const SizedBox(width: 12),
-                              Expanded(child: _ButtonImportCourse())
+                              Expanded(child: _ButtonCancel())
                             ],
                           ),
                         ))
                       ],
                     )),
-          Container(
-            child: _textCourseStructure(),
-          ),
-
-          Container(
-              child: isImport
-                  ? _foundCourse()
-                  : _notFoundCourse()), // เงื่อนไขในการขึ้นตารางข้อมูลหลักสูตร (?จะขึ้นตาราง และ :จะขึ้นไม่พบหลักสูตร)
+          // Container(
+          //   child: _textCourseStructure(),
+          // ),
+          const SizedBox(height: 15),
+          Container(child: _TableCourseData()),
+          // if (isImport==true) {
+          //   Container(child: _foundCourse()),
+          // }
+          // Container(
+          //     child: isImport
+          //         ? _foundCourse()
+          //         : _notFoundCourse()), // เงื่อนไขในการขึ้นตารางข้อมูลหลักสูตร
         ],
       ),
     );
   }
 
-  Container _header() {
+  Container _headerImportCourse() {
     return Container(
       alignment: Alignment.topLeft,
       child: const Text(
-        "การจัดการข้อมูลหลักสูตร",
+        "การนำเข้าข้อมูลหลักสูตร",
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 22,
@@ -154,9 +137,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
       child: DropdownButton<String?>(
         hint: const Text(
           "เลือก",
-          // style: textStylehint()
         ),
-        borderRadius: BorderRadius.all(Radius.circular(10)),
         dropdownColor: Colors.white,
         value: selectedValue,
         onChanged: (value) {
@@ -183,128 +164,54 @@ class _DashbordSmallState extends State<DashbordSmall> {
     );
   }
 
-  Container _textSearchSubject() {
+  // ignore: non_constant_identifier_names
+  Container _ButtonImportCourse() {
     return Container(
-      alignment: Alignment.topLeft,
-      child: const Text(
-        "ค้นหารายวิชา",
-        style: TextStyle(
-          fontSize: 14,
-          fontWeight: FontWeight.bold,
+      // margin: EdgeInsets.only(top: 27),
+      height: 50,
+      width: MediaQuery.of(context).size.width,
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          color: const Color.fromRGBO(0, 102, 94, 1)),
+      child: TextButton(
+        onPressed: () {},
+        child: const Text(
+          'นำเข้าหลักสูตร',
+          style: TextStyle(
+              color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
         ),
       ),
     );
   }
 
-  // ignore: non_constant_identifier_names
-  Column _SearchSubject() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            //ช่องใส่รหัส/วิชา
-            Expanded(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                // width: 300,
-                height: 50,
-                decoration: BoxDecoration(
-                    color: const Color.fromRGBO(230, 230, 230, 1),
-                    borderRadius: BorderRadius.circular(15)),
-                child: const TextField(
-                  cursorColor: Color.fromRGBO(172, 173, 191, 1),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintStyle: TextStyle(fontSize: 14),
-                    hintText: "รหัสวิชา / ชื่อรายวิชา",
-                    // hintStyle: textStyle16(),
-                    contentPadding: EdgeInsets.all(15),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 12,
-            ),
-            Row(
-              children: [
-                Container(
-                  height: 50,
-                  width: 80,
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(15),
-                      color: const Color.fromRGBO(0, 102, 94, 1)),
-                  child: TextButton(
-                    onPressed: () {
-                      print("hit!");
-                    },
-                    child: const Text(
-                      'ค้นหา',
-                      style: TextStyle(color: Colors.white, fontSize: 14),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ],
+  Container _ButtonCancel() {
+    return Container(
+      // margin: EdgeInsets.only(top: 27),
+      width: MediaQuery.of(context).size.width,
+      height: 50,
+      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+      decoration: BoxDecoration(
+        border:
+            Border.all(color: const Color.fromRGBO(255, 93, 93, 1), width: 2.5),
+        borderRadius: BorderRadius.circular(15),
+        // color: Color.fromRGBO(0, 102, 94, 1)
+      ),
+      child: TextButton(
+        onPressed: () {
+          // print('เจ๋งแจ๋ว');
+          print("นำเข้าหลักสูตร");
+          Navigator.pop(context, '/importcourse');
+        },
+        child: const Text(
+          'ยกเลิก',
+          style: TextStyle(
+              color: Color.fromRGBO(255, 93, 93, 1),
+              fontWeight: FontWeight.bold,
+              fontSize: 14),
         ),
-      ],
+      ),
     );
-  }
-
-  // ignore: non_constant_identifier_names
-  Container _ButtonImportCourse() {
-    return Container(
-        // margin: EdgeInsets.only(top: 27),
-        width: MediaQuery.of(context).size.width,
-        height: 50,
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
-        decoration: BoxDecoration(
-          border: Border.all(
-              color: const Color.fromRGBO(0, 102, 94, 1), width: 2.5),
-          borderRadius: BorderRadius.circular(15),
-          // color: Color.fromRGBO(0, 102, 94, 1)
-        ),
-        child: TextButton(
-          onPressed: () {
-            print("นำเข้าหลักสูตร");
-            Navigator.pushNamed(context, '/import');
-          },
-          child: const Text(
-            'นำเข้าหลักสูตร',
-            style: TextStyle(
-                color: Color.fromRGBO(0, 102, 94, 1),
-                fontWeight: FontWeight.bold,
-                fontSize: 14),
-          ),
-        ));
-  }
-
-  // ignore: non_constant_identifier_names
-  Container _ButtonAdd() {
-    final orientation = MediaQuery.of(context).orientation;
-    return Container(
-        // margin: EdgeInsets.only(top: 27),
-        width: MediaQuery.of(context).size.width,
-        height: 50,
-        // width: 100,
-        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            color: const Color.fromRGBO(0, 102, 94, 1)),
-        child: TextButton(
-          onPressed: () {
-            openDialog();
-          },
-          child: const Text(
-            'เพิ่มรายวิชา',
-            style: TextStyle(
-                color: Colors.white, fontWeight: FontWeight.bold, fontSize: 14),
-          ),
-        ));
   }
 
   Container _textCourseStructure() {
@@ -314,45 +221,28 @@ class _DashbordSmallState extends State<DashbordSmall> {
       child: const Text(
         "โครงสร้างรายวิชา",
         style: TextStyle(
-          fontSize: 16,
+          fontSize: 6,
           fontWeight: FontWeight.bold,
         ),
       ),
     );
   }
 
-  Container _notFoundCourse() {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(top: 10),
-      height: 440,
-      decoration: BoxDecoration(
-        border: Border.all(
-            color: const Color.fromRGBO(157, 157, 157, 1), width: 0.5),
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Center(
-        child: Text(
-          'ไม่พบโครงสร้างหลักสูตร!',
-          style: TextStyle(
-            color: Color.fromRGBO(110, 110, 110, 1),
-            fontSize: 14,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Container _foundCourse() {
+  Container _TableCourseData() {
     return Container(
       // width: MediaQuery.of(context).size.width,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-              padding: const EdgeInsets.only(top: 4),
-              child: CustomDataTable(
-                  borderRadius: 10.0,
+              padding: const EdgeInsets.only(top: 10),
+              child: DataTable(
+                  dataRowHeight: 40,
+                  headingRowHeight: 40,
+                  headingRowColor: MaterialStateProperty.resolveWith(
+                    (states) => const Color.fromRGBO(
+                        227, 227, 227, 1), // สีของ headingRow
+                  ),
                   columns: [
                     DataColumn(
                         label: Text(
@@ -397,9 +287,9 @@ class _DashbordSmallState extends State<DashbordSmall> {
                             color: MaterialStateColor.resolveWith((states) {
                               // กำหนดสีแต่ละแถวตาม index
                               if (index % 2 == 0) {
-                                return Colors.white; // สีขาวสลับกับสีเขียวอ่อน
+                                return Colors.white; // สีขาวสลับกับสีเทา
                               } else {
-                                return Color.fromRGBO(240, 249, 241, 1);
+                                return Color.fromRGBO(246, 246, 246, 1);
                               }
                             }),
                             cells: [
@@ -442,7 +332,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
                           )))),
           // ส่วนปุ่มกดเปลี่ยนหน้าของตาราง
           Container(
-            padding: const EdgeInsets.only(top: 4),
+            padding: const EdgeInsets.only(top: 10),
             // alignment: Alignment.topRight,
             // mainAxisAlignment: MainAxisAlignment.end,
             child: Row(
@@ -492,8 +382,5 @@ class _DashbordSmallState extends State<DashbordSmall> {
       ),
     );
   }
-
-  Future openDialog() => showDialog(
-      context: context,
-      builder: (context) => const Dialog(child: PopupManagerView()));
 }
+// }
