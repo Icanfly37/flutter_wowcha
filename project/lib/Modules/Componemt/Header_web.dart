@@ -39,6 +39,7 @@ TextStyle textStylehintbold() {
 
 TextStyle textStylehint() {
   return TextStyle(
+    overflow: TextOverflow.ellipsis,
     fontSize: 14,
   );
 }
@@ -78,6 +79,13 @@ BoxDecoration decoration() {
   return BoxDecoration(
     color: Color.fromRGBO(230, 230, 230, 1),
     borderRadius: BorderRadius.circular(15)
+    );
+}
+
+BoxDecoration decorationgc() {
+  return BoxDecoration(
+    color: Color.fromRGBO(223, 241, 223, 1),
+    borderRadius: BorderRadius.circular(20)
     );
 }
 
