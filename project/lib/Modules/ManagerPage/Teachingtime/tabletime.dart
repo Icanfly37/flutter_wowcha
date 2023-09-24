@@ -16,6 +16,10 @@ class _TabletimeState extends State<Tabletime> {
   String? semesterValue;
   String? yearsValue;
   
+  bool firstValue = false;
+  bool secondValue = false;
+  bool thirdValue = false;
+  bool fourthValue = false;
 
   @override
   Widget build(BuildContext context) {
@@ -57,12 +61,15 @@ class _TabletimeState extends State<Tabletime> {
                       SizedBox(width: 10,),
                       _selectYearS(),
                       SizedBox(width: 10,),
+                      Expanded(child: _checkBox()),
+                      SizedBox(width: 10,),
                       Expanded(
                         child: SearchBarWidget(
                           isReadOnly: true,
                           hasBackButton: false, 
                         ),
-                        )           
+                        )       ,
+                            
                     ],
                   ),
                   SizedBox(height: 10,),
@@ -158,6 +165,118 @@ class _TabletimeState extends State<Tabletime> {
                   ),
         ],)
 
+    );
+  }
+
+  Column _checkBox() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          alignment: Alignment.bottomLeft,
+          child: Text(
+            "ชั้นปี",
+            style: textStylehintbold(),
+          ),
+        ),
+        Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 48,
+                    decoration: decorationgc(),
+                    child: Row(
+                      children: [
+                        Checkbox(
+                            value: firstValue,
+                            onChanged: (value) {
+                              setState(() {
+                                firstValue = value!;
+                              });
+                            }),
+                        Text(
+                          "T12-1",
+                          style: textStylehint(),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10,),
+                Expanded(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 48,
+                    decoration: decorationgc(),
+                    child: Row(
+                      children: [
+                        Checkbox(
+                            value: secondValue,
+                            onChanged: (value) {
+                              setState(() {
+                                secondValue = value!;
+                              });
+                            }),
+                        Text(
+                          "T12-2",
+                          style: textStylehint(),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10,),
+                Expanded(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    height: 48,
+                    decoration: decorationgc(),
+                    child: Row(
+                      children: [
+                        Checkbox(
+                            value: thirdValue,
+                            onChanged: (value) {
+                              setState(() {
+                                thirdValue = value!;
+                              });
+                            }),
+                        Text(
+                          "T12-3",
+                          style: textStylehint(),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(width: 10,),
+                Expanded(
+                  child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    width: MediaQuery.of(context).size.width,
+                    height: 48,
+                    decoration: decorationgc(),
+                    child: Row(
+                      children: [
+                        Checkbox(
+                            value: fourthValue,
+                            onChanged: (value) {
+                              setState(() {
+                                fourthValue = value!;
+                              });
+                            }),
+                        Text(
+                          "T12-4",
+                          style: textStylehint(),
+                        )
+                      ],
+                    ),
+                  ),
+                )
+              ],
+            ),
+      ],
     );
   }
   
