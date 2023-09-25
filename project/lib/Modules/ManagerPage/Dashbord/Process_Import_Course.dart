@@ -274,12 +274,12 @@ class _ProcessImportCourseState extends State<ProcessImportCourse> {
                       style:
                           TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
                     )),
-                    DataColumn(
-                        label: Text(
-                      'จัดการข้อมูล',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                    )),
+                    // DataColumn(
+                    //     label: Text(
+                    //   'จัดการข้อมูล',
+                    //   style:
+                    //       TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                    // )),
                   ],
                   rows: List.generate(
                       10, // กำหนดให้ตารางขึ้น 10 rows
@@ -298,36 +298,36 @@ class _ProcessImportCourseState extends State<ProcessImportCourse> {
                               DataCell(Text('ข้อมูล ${index + 1}')),
                               DataCell(Text('ข้อมูล ${index + 1}')),
                               DataCell(Text('ข้อมูล ${index + 1}')),
-                              DataCell(
-                                Row(
-                                  children: [
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.edit,
-                                        size: 18,
-                                        color: Color.fromRGBO(114, 114, 114, 1),
-                                      ),
-                                      // iconSize: 10,
-                                      onPressed: () {
-                                        // แก้ไขข้อมูล
-                                        print('แก้ไขแถวที่ $index');
-                                      },
-                                    ),
-                                    IconButton(
-                                      icon: Icon(
-                                        Icons.delete,
-                                        size: 18,
-                                        color: Color.fromRGBO(114, 114, 114, 1),
-                                      ),
-                                      // iconSize: 10,
-                                      onPressed: () {
-                                        // ลบข้อมูล
-                                        print('ลบแถวที่ $index');
-                                      },
-                                    ),
-                                  ],
-                                ),
-                              ),
+                              // DataCell(
+                              //   Row(
+                              //     children: [
+                              //       IconButton(
+                              //         icon: Icon(
+                              //           Icons.edit,
+                              //           size: 18,
+                              //           color: Color.fromRGBO(114, 114, 114, 1),
+                              //         ),
+                              //         // iconSize: 10,
+                              //         onPressed: () {
+                              //           // แก้ไขข้อมูล
+                              //           print('แก้ไขแถวที่ $index');
+                              //         },
+                              //       ),
+                              //       IconButton(
+                              //         icon: Icon(
+                              //           Icons.delete,
+                              //           size: 18,
+                              //           color: Color.fromRGBO(114, 114, 114, 1),
+                              //         ),
+                              //         // iconSize: 10,
+                              //         onPressed: () {
+                              //           // ลบข้อมูล
+                              //           print('ลบแถวที่ $index');
+                              //         },
+                              //       ),
+                              //     ],
+                              //   ),
+                              // ),
                             ],
                           )))),
           // ส่วนปุ่มกดเปลี่ยนหน้าของตาราง

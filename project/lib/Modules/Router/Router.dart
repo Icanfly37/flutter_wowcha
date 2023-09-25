@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ku_t/Modules/Componemt/SideAppBar.dart';
-import 'package:ku_t/Modules/ManagerPage/ManagerImportPage.dart';
+import 'package:ku_t/Modules/Component/SideAppBar.dart';
+// import 'package:ku_t/Modules/ManagerPage/ManagerImportPage.dart';
 import 'package:ku_t/Modules/ManagerPage/ManagerPageRoute.dart';
+import 'package:ku_t/Modules/ManagerPage/Timetable/TimetablePage.dart';
 import 'package:sidebarx/sidebarx.dart';
 
 class router extends StatefulWidget {
@@ -45,7 +46,7 @@ class _router extends State<router> {
                           return TextOe();
                         case 2:
                           _key.currentState?.closeDrawer();
-                          return TextOne();
+                          return const TimetablePage();
                         case 3:
                           _key.currentState?.closeDrawer();
                           return Texte();
@@ -69,12 +70,12 @@ class _router extends State<router> {
     );
   }
 
-  Center TextOne() {
-    return Center(child: Text("ข้อมูลส่วนตัว"));
-  }
+  // Center TextOne() {
+  //   return Center(child: Text("ตารางสอน"));
+  // }
 
   Center TextOe() {
-    return Center(child: Text("e"));
+    return Center(child: Text("กำหนดเวลาสอน"));
   }
 
   Center Texte() {

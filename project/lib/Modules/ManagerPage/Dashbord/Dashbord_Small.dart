@@ -1,6 +1,6 @@
 //import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:ku_t/Modules/Componemt/CustomDataTable.dart';
+import 'package:ku_t/Modules/Component/CustomDataTable.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/PopUp.dart';
 
 class DashbordSmall extends StatefulWidget {
@@ -16,7 +16,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
   late TextEditingController controller;
   String? selectedValue; //N
   bool isImport =
-      false; // ถ้า false จะเป็นไม่พบหลักสูตร ถ้า true คือมีข้อมูลหลักสูตรแล้ว (ข้อมูลจะขึ้นในตาราง)
+      true; // ถ้า false จะเป็นไม่พบหลักสูตร ถ้า true คือมีข้อมูลหลักสูตรแล้ว (ข้อมูลจะขึ้นในตาราง)
 
   //TextEditingController coursecodeC = TextEditingController(); //y
   //TextEditingController coursenameC = TextEditingController();
@@ -311,7 +311,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
   Container _textCourseStructure() {
     return Container(
       alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(top: 10),
+      margin: EdgeInsets.only(top: 8),
       child: const Text(
         "โครงสร้างรายวิชา",
         style: TextStyle(
@@ -332,7 +332,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
             color: const Color.fromRGBO(157, 157, 157, 1), width: 0.5),
         borderRadius: BorderRadius.circular(15),
       ),
-      child: Center(
+      child: const Center(
         child: Text(
           'ไม่พบโครงสร้างหลักสูตร!',
           style: TextStyle(
@@ -351,7 +351,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Container(
-              padding: const EdgeInsets.only(top: 4),
+              padding: const EdgeInsets.only(top: 2),
               child: CustomDataTable(
                   borderRadius: 10.0,
                   columns: [
@@ -413,7 +413,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
                                 Row(
                                   children: [
                                     IconButton(
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.edit,
                                         size: 18,
                                         color: Color.fromRGBO(114, 114, 114, 1),
@@ -425,14 +425,84 @@ class _DashbordSmallState extends State<DashbordSmall> {
                                       },
                                     ),
                                     IconButton(
-                                      icon: Icon(
+                                      icon: const Icon(
                                         Icons.delete,
                                         size: 18,
                                         color: Color.fromRGBO(114, 114, 114, 1),
                                       ),
                                       // iconSize: 10,
                                       onPressed: () {
-                                        // ลบข้อมูล
+                                        // แสดง PopUp ลบข้อมูล
+                                        showDialog(
+                                          context: context,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              // title: Text('ตัวอย่าง Popup'),
+                                              content: Text(
+                                                  'ต้องการลบรายวิชาหรือไม่?'),
+                                              actions: <Widget>[
+                                                Container(
+                                                  width: 100,
+                                                  height: 40,
+                                                  // alignment: Alignment.topLeft,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 10),
+                                                  decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              15),
+                                                      color:
+                                                          const Color.fromRGBO(
+                                                              0, 102, 94, 1)),
+                                                  child: TextButton(
+                                                    child: Text(
+                                                      'ยืนยัน',
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontSize: 14),
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                ),
+                                                Container(
+                                                  width: 100,
+                                                  height: 40,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                      vertical: 8,
+                                                      horizontal: 10),
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                        color: const Color
+                                                            .fromRGBO(
+                                                            255, 93, 93, 1),
+                                                        width: 2.5),
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            15),
+                                                    // color: Color.fromRGBO(0, 102, 94, 1)
+                                                  ),
+                                                  child: TextButton(
+                                                    child: Text(
+                                                      'ยกเลิก',
+                                                      style: TextStyle(
+                                                          color: Color.fromRGBO(
+                                                              255, 93, 93, 1),
+                                                          fontSize: 14),
+                                                    ),
+                                                    onPressed: () {
+                                                      Navigator.of(context)
+                                                          .pop();
+                                                    },
+                                                  ),
+                                                )
+                                              ],
+                                            );
+                                          },
+                                        );
                                         print('ลบแถวที่ $index');
                                       },
                                     ),
