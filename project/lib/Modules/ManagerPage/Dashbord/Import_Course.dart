@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:unicons/unicons.dart';
+import 'package:ku_t/Modules/Component/DropZoneWidget.dart';
+// import 'package:unicons/unicons.dart';
 
 class ImportCourse extends StatefulWidget {
   const ImportCourse({super.key});
@@ -53,7 +54,8 @@ class _ImportCourseState extends State<ImportCourse> {
                         ),
                       ],
                     )),
-          _AddCourseFile(),
+          // _AddCourseFile(),
+          const DropZoneWidget()
         ],
       ),
     );
@@ -94,54 +96,54 @@ class _ImportCourseState extends State<ImportCourse> {
   }
 
   // ignore: non_constant_identifier_names
-  Container _AddCourseFile() {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(top: 10),
-      height: 485,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: const Color.fromRGBO(157, 157, 157, 1),
-          width: 2,
-          style: BorderStyle.solid,
-        ),
-        borderRadius: BorderRadius.circular(15),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextButton(
-            onPressed: () {
-              // print('เจ๋งแจ๋ว');
-              print("นำเข้าหลักสูตร");
-              Navigator.pushNamed(context, '/importcourse');
-            },
-            child: const Text(
-              'คลิกที่นี่เพื่อเพิ่มไฟล์',
-              style: TextStyle(
-                color: Color.fromRGBO(110, 110, 110, 1),
-                fontSize: 14,
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
-          IconButton(
-            alignment: Alignment.center,
-            icon: const Center(
-              child: Icon(
-                UniconsLine.cloud_upload,
-                size: 60.0,
-                color: Color.fromRGBO(171, 171, 171, 1),
-              ),
-            ),
-            onPressed: () {
-              // print('เจ๋งแจ๋ว');
-              print("นำเข้าหลักสูตร");
-              Navigator.pushNamed(context, '/importcourse');
-            },
-          ),
-        ],
-      ),
-    );
-  }
+  // Container _AddCourseFile() {
+  //   return Container(
+  //     width: double.infinity,
+  //     margin: const EdgeInsets.only(top: 10),
+  //     height: 485,
+  //     decoration: BoxDecoration(
+  //       border: Border.all(
+  //         color: const Color.fromRGBO(157, 157, 157, 1),
+  //         width: 2,
+  //         style: BorderStyle.solid,
+  //       ),
+  //       borderRadius: BorderRadius.circular(15),
+  //     ),
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.center,
+  //       children: [
+  //         TextButton(
+  //           onPressed: () {
+  //             // print('เจ๋งแจ๋ว');
+  //             print("นำเข้าหลักสูตร");
+  //             Navigator.pushNamed(context, '/importcourse');
+  //           },
+  //           child: const Text(
+  //             'คลิกที่นี่เพื่อเพิ่มไฟล์',
+  //             style: TextStyle(
+  //               color: Color.fromRGBO(110, 110, 110, 1),
+  //               fontSize: 14,
+  //             ),
+  //           ),
+  //         ),
+  //         const SizedBox(height: 20),
+  //         IconButton(
+  //           alignment: Alignment.center,
+  //           icon: const Center(
+  //             child: Icon(
+  //               UniconsLine.cloud_upload,
+  //               size: 60.0,
+  //               color: Color.fromRGBO(171, 171, 171, 1),
+  //             ),
+  //           ),
+  //           onPressed: () {
+  //             // print('เจ๋งแจ๋ว');
+  //             print("นำเข้าหลักสูตร");
+  //             Navigator.pushNamed(context, '/importcourse');
+  //           },
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

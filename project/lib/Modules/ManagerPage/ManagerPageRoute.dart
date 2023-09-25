@@ -1,7 +1,7 @@
 // ignore_for_file: curly_braces_in_flow_control_structures
 
 import 'package:flutter/material.dart';
-import 'package:ku_t/Modules/Componemt/TabAppBar.dart';
+import 'package:ku_t/Modules/Component/TabAppBar.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/Import_Course.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/ManagerDashboard_View.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/Process_Import_Course.dart';
