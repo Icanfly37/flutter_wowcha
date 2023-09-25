@@ -62,8 +62,10 @@ class _TabletimeState extends State<Tabletime> {
                       _selectYearS(),
                       SizedBox(width: 10,),
                       Expanded(child: _checkBox()),
+                      
                       SizedBox(width: 10,),
                       Expanded(
+                        // flex: 2,
                         child: SearchBarWidget(
                           isReadOnly: true,
                           hasBackButton: false, 
@@ -189,16 +191,20 @@ class _TabletimeState extends State<Tabletime> {
                     decoration: decorationgc(),
                     child: Row(
                       children: [
-                        Checkbox(
-                            value: firstValue,
-                            onChanged: (value) {
-                              setState(() {
-                                firstValue = value!;
-                              });
-                            }),
-                        Text(
-                          "T12-1",
-                          style: textStylehint(),
+                        Expanded(
+                          child: Checkbox(
+                              value: firstValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  firstValue = value!;
+                                });
+                              }),
+                        ),
+                        Expanded(
+                          child: Text(
+                            "T12-1",
+                            style: textStylehint(),
+                          ),
                         )
                       ],
                     ),
@@ -212,16 +218,20 @@ class _TabletimeState extends State<Tabletime> {
                     decoration: decorationgc(),
                     child: Row(
                       children: [
-                        Checkbox(
-                            value: secondValue,
-                            onChanged: (value) {
-                              setState(() {
-                                secondValue = value!;
-                              });
-                            }),
-                        Text(
-                          "T12-2",
-                          style: textStylehint(),
+                        Expanded(
+                          child: Checkbox(
+                              value: secondValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  secondValue = value!;
+                                });
+                              }),
+                        ),
+                        Expanded(
+                          child: Text(
+                            "T12-2",
+                            style: textStylehint(),
+                          ),
                         )
                       ],
                     ),
@@ -235,16 +245,20 @@ class _TabletimeState extends State<Tabletime> {
                     decoration: decorationgc(),
                     child: Row(
                       children: [
-                        Checkbox(
-                            value: thirdValue,
-                            onChanged: (value) {
-                              setState(() {
-                                thirdValue = value!;
-                              });
-                            }),
-                        Text(
-                          "T12-3",
-                          style: textStylehint(),
+                        Expanded(
+                          child: Checkbox(
+                              value: thirdValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  thirdValue = value!;
+                                });
+                              }),
+                        ),
+                        Expanded(
+                          child: Text(
+                            "T12-3",
+                            style: textStylehint(),
+                          ),
                         )
                       ],
                     ),
@@ -253,22 +267,27 @@ class _TabletimeState extends State<Tabletime> {
                 SizedBox(width: 10,),
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15),
+                    padding: EdgeInsets.symmetric(horizontal: 10),
                     width: MediaQuery.of(context).size.width,
                     height: 48,
                     decoration: decorationgc(),
                     child: Row(
                       children: [
-                        Checkbox(
-                            value: fourthValue,
-                            onChanged: (value) {
-                              setState(() {
-                                fourthValue = value!;
-                              });
-                            }),
-                        Text(
-                          "T12-4",
-                          style: textStylehint(),
+                        Expanded(
+                          child: Checkbox(
+                            
+                              value: fourthValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  fourthValue = value!;
+                                });
+                              }),
+                        ),
+                        Expanded(
+                          child: Text(
+                            "T12-4",
+                            style: textStylehint(),
+                          ),
                         )
                       ],
                     ),
@@ -279,5 +298,5 @@ class _TabletimeState extends State<Tabletime> {
       ],
     );
   }
-  
+
 }
