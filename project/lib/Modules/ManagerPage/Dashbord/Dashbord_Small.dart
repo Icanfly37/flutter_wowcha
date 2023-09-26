@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ku_t/Modules/Component/CustomDataTable.dart';
-import 'package:ku_t/Modules/Component/Header_web.dart';
+import 'package:ku_t/Modules/Componemt/CustomDataTable.dart';
+import 'package:ku_t/Modules/Componemt/Header_web.dart';
 import 'package:ku_t/Modules/Dropdown/YearModel.dart';
+import 'package:ku_t/Modules/Component/CustomDataTable.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/PopUp.dart';
 
 class DashbordSmall extends StatefulWidget {
@@ -260,7 +261,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
     return Container(
       alignment: Alignment.topLeft,
       margin: EdgeInsets.only(top: 8),
-      child: Text(
+      child: const Text(
         "โครงสร้างรายวิชา",
         style: textStyleHeadDrop(),
       ),
