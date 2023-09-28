@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:ku_t/Modules/Componemt/SideAppBar.dart';
+import 'package:ku_t/Modules/Component/SideAppBar.dart';
 import 'package:ku_t/Modules/ManagerPage/ManagerPageRoute.dart';
 import 'package:ku_t/Modules/ManagerPage/Teachingtime/tabletime.dart';
-import 'package:ku_t/Modules/Component/SideAppBar.dart';
 // import 'package:ku_t/Modules/ManagerPage/ManagerImportPage.dart';
 import 'package:ku_t/Modules/ManagerPage/Timetable/TimetablePage.dart';
 import 'package:sidebarx/sidebarx.dart';
