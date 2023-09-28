@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
+// import 'package:ku_t/Modules/Componemt/Header_web.dart';
 import 'package:ku_t/Modules/Dropdown/SemesterModel.dart';
 import 'package:ku_t/Modules/Dropdown/YearSModel.dart';
 
@@ -15,7 +16,7 @@ class Tabletime extends StatefulWidget {
 class _TabletimeState extends State<Tabletime> {
   String? semesterValue;
   String? yearsValue;
-  
+
   bool firstValue = false;
   bool secondValue = false;
   bool thirdValue = false;
@@ -28,84 +29,82 @@ class _TabletimeState extends State<Tabletime> {
       appBar: NavBar(),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15, vertical: 15),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-              alignment: Alignment.topLeft,
-              child: Text(
-                "กำหนดเวลาสอน",
-                style: textStyleHeader()
-              ),
-            ),
-            Divider(height: 30),
-            Container(
+        child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+          Container(
+            alignment: Alignment.topLeft,
+            child: Text("กำหนดเวลาสอน", style: textStyleHeader()),
+          ),
+          Divider(height: 30),
+          Container(
               child: orientation == Orientation.portrait
-              ? Column(
-                children: [
-                  _selectSemester(),
-                  SizedBox(height: 10,),
-                  _selectYearS(),
-                  SizedBox(height: 10,),
-                  SearchBarWidget(
-                      isReadOnly: true,
-                      hasBackButton: false, 
-                    ),
-                ],
-              )
-              : Column(
-                children: [
-                  Row(
-                    children: [
-                      _selectSemester(),
-                      SizedBox(width: 10,),
-                      _selectYearS(),
-                      SizedBox(width: 10,),
-                      Expanded(child: _checkBox()),
-                      
-                      SizedBox(width: 10,),
-                      Expanded(
-                        // flex: 2,
-                        child: SearchBarWidget(
-                          isReadOnly: true,
-                          hasBackButton: false, 
+                  ? Column(
+                      children: [
+                        _selectSemester(),
+                        SizedBox(
+                          height: 10,
                         ),
-                        )       ,
-                            
-                    ],
-                  ),
-                  SizedBox(height: 10,),
-                  Container(
-                    height: 450,
-                    child: Addtime())
-                ],
-              )
-            ),
-          ]),),
+                        _selectYearS(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        SearchBarWidget(
+                          isReadOnly: true,
+                          hasBackButton: false,
+                        ),
+                      ],
+                    )
+                  : Column(
+                      children: [
+                        Row(
+                          children: [
+                            _selectSemester(),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            _selectYearS(),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(child: _checkBox()),
+                            SizedBox(
+                              width: 10,
+                            ),
+                            Expanded(
+                              child: SearchBarWidget(
+                                isReadOnly: true,
+                                hasBackButton: false,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(height: 450, child: Addtime())
+                      ],
+                    )),
+        ]),
+      ),
     );
   }
-  
+
   Container _selectSemester() {
     final orientation = MediaQuery.of(context).orientation;
     return Container(
-      child : 
-      Column(
-        children: [
-        Container(
-            alignment: Alignment.bottomLeft,
-            child: Text(
-              "ภาคการศึกษา",
-              style: textStyleHeadDrop(),
-            ),
-          ),
-        Container(
-            width: orientation == Orientation.portrait ? double.infinity : 100,
-            padding: EdgeInsets.symmetric(horizontal: 10),
-                      decoration: decoration(),
-                      child: DropdownButton(
-                    
-            hint: Text("เลือก",
-            style: textStylehint()),
+        child: Column(children: [
+      Container(
+        alignment: Alignment.bottomLeft,
+        child: Text(
+          "ภาคการศึกษา",
+          style: textStyleHeadDrop(),
+        ),
+      ),
+      Container(
+        width: orientation == Orientation.portrait ? double.infinity : 100,
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        decoration: decoration(),
+        child: DropdownButton(
+            hint: Text("เลือก", style: textStylehint()),
             underline: SizedBox(),
             borderRadius: BorderRadius.all(Radius.circular(10)),
             focusColor: Colors.white,
@@ -114,9 +113,10 @@ class _TabletimeState extends State<Tabletime> {
             value: semesterValue,
             items: semester
                 .map((e) => DropdownMenuItem<String?>(
-                  
-                    value: e.title, child: Text(e.title!,
-                    style: textStylehint(),
+                    value: e.title,
+                    child: Text(
+                      e.title!,
+                      style: textStylehint(),
                     )))
                 .toList(),
             onChanged: (value) {
@@ -124,50 +124,47 @@ class _TabletimeState extends State<Tabletime> {
                 semesterValue = value.toString();
               });
             }),
-                    ),
-      ])
-    );
+      ),
+    ]));
   }
 
   Container _selectYearS() {
     final orientation = MediaQuery.of(context).orientation;
     return Container(
-      child : Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            child: Text(
-              "ปีการศึกษา",
-              style: textStyleHeadDrop(),
-            ),
+        child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          child: Text(
+            "ปีการศึกษา",
+            style: textStyleHeadDrop(),
           ),
-            Container(
-              width: orientation == Orientation.portrait ? double.infinity : 100,
-          padding: EdgeInsets.only(left: 10,right: 10),
-                    decoration: decoration(),
-                    child: DropdownButton(
-          hint: Text("เลือก",
-          style: textStylehint()),
-          underline: SizedBox(),
-          borderRadius: BorderRadius.all(Radius.circular(10)),
-          focusColor: Colors.white,
-          dropdownColor: Colors.white,
-          isExpanded: true,
-          value: yearsValue,
-          items: years
-              .map((e) => DropdownMenuItem<String?>(
-                  value: e.title, child: Text(e.title!,
-                  style: textStylehint())))
-              .toList(),
-          onChanged: (value) {
-            setState(() {
-              yearsValue = value.toString();
-            });
-          }),
-                  ),
-        ],)
-
-    );
+        ),
+        Container(
+          width: orientation == Orientation.portrait ? double.infinity : 100,
+          padding: EdgeInsets.only(left: 10, right: 10),
+          decoration: decoration(),
+          child: DropdownButton(
+              hint: Text("เลือก", style: textStylehint()),
+              underline: SizedBox(),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
+              focusColor: Colors.white,
+              dropdownColor: Colors.white,
+              isExpanded: true,
+              value: yearsValue,
+              items: years
+                  .map((e) => DropdownMenuItem<String?>(
+                      value: e.title,
+                      child: Text(e.title!, style: textStylehint())))
+                  .toList(),
+              onChanged: (value) {
+                setState(() {
+                  yearsValue = value.toString();
+                });
+              }),
+        ),
+      ],
+    ));
   }
 
   Column _checkBox() {
@@ -182,121 +179,201 @@ class _TabletimeState extends State<Tabletime> {
           ),
         ),
         Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 48,
+                decoration: decorationgc(),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Checkbox(
+                          value: firstValue,
+                          onChanged: (value) {
+                            setState(() {
+                              firstValue = value!;
+                            });
+                          }),
+                    ),
+                    Expanded(
+                      child: Text(
+                        "T12-1",
+                        style: textStylehint(),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 48,
+                decoration: decorationgc(),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Checkbox(
+                          value: secondValue,
+                          onChanged: (value) {
+                            setState(() {
+                              secondValue = value!;
+                            });
+                          }),
+                    ),
+                    Expanded(
+                      child: Text(
+                        "T12-2",
+                        style: textStylehint(),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 48,
+                decoration: decorationgc(),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Checkbox(
+                          value: thirdValue,
+                          onChanged: (value) {
+                            setState(() {
+                              thirdValue = value!;
+                            });
+                          }),
+                    ),
+                    Expanded(
+                      child: Text(
+                        "T12-3",
+                        style: textStylehint(),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Expanded(
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                width: MediaQuery.of(context).size.width,
+                height: 48,
+                decoration: decorationgc(),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Checkbox(
+                          value: fourthValue,
+                          onChanged: (value) {
+                            setState(() {
+                              fourthValue = value!;
+                            });
+                          }),
+                    ),
+                    Expanded(
+                      child: Text(
+                        "T12-4",
+                        style: textStylehint(),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            )
+          ],
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 48,
+            decoration: decorationgc(),
+            child: Row(
               children: [
-                Expanded(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 48,
-                    decoration: decorationgc(),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Checkbox(
-                              value: firstValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  firstValue = value!;
-                                });
-                              }),
-                        ),
-                        Expanded(
-                          child: Text(
-                            "T12-1",
-                            style: textStylehint(),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10,),
-                Expanded(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 48,
-                    decoration: decorationgc(),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Checkbox(
-                              value: secondValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  secondValue = value!;
-                                });
-                              }),
-                        ),
-                        Expanded(
-                          child: Text(
-                            "T12-2",
-                            style: textStylehint(),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10,),
-                Expanded(
-                  child: Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 48,
-                    decoration: decorationgc(),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Checkbox(
-                              value: thirdValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  thirdValue = value!;
-                                });
-                              }),
-                        ),
-                        Expanded(
-                          child: Text(
-                            "T12-3",
-                            style: textStylehint(),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10,),
-                Expanded(
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 10),
-                    width: MediaQuery.of(context).size.width,
-                    height: 48,
-                    decoration: decorationgc(),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: Checkbox(
-                            
-                              value: fourthValue,
-                              onChanged: (value) {
-                                setState(() {
-                                  fourthValue = value!;
-                                });
-                              }),
-                        ),
-                        Expanded(
-                          child: Text(
-                            "T12-4",
-                            style: textStylehint(),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
+                Checkbox(
+                    value: secondValue,
+                    onChanged: (value) {
+                      setState(() {
+                        secondValue = value!;
+                      });
+                    }),
+                Text(
+                  "T12-2",
+                  style: textStylehint(),
                 )
               ],
             ),
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: Container(
+            width: MediaQuery.of(context).size.width,
+            height: 48,
+            decoration: decorationgc(),
+            child: Row(
+              children: [
+                Checkbox(
+                    value: thirdValue,
+                    onChanged: (value) {
+                      setState(() {
+                        thirdValue = value!;
+                      });
+                    }),
+                Text(
+                  "T12-3",
+                  style: textStylehint(),
+                )
+              ],
+            ),
+          ),
+        ),
+        SizedBox(
+          width: 10,
+        ),
+        Expanded(
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 15),
+            width: MediaQuery.of(context).size.width,
+            height: 48,
+            decoration: decorationgc(),
+            child: Row(
+              children: [
+                Checkbox(
+                    value: fourthValue,
+                    onChanged: (value) {
+                      setState(() {
+                        fourthValue = value!;
+                      });
+                    }),
+                Text(
+                  "T12-4",
+                  style: textStylehint(),
+                )
+              ],
+            ),
+          ),
+        )
       ],
     );
   }
-
 }

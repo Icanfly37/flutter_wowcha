@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+// import 'package:ku_t/Modules/Componemt/Header_web.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Modules/Dropdown/BasicsubjectModel.dart';
 import 'package:ku_t/Modules/Dropdown/CraditModel.dart';
@@ -28,7 +29,7 @@ class _PopupManagerViewState extends State<PopupManagerView> {
   void dispose() {
     coursecodeC.dispose();
     coursenameC.dispose();
-    
+
     super.dispose();
   }
 
@@ -76,10 +77,7 @@ class _PopupManagerViewState extends State<PopupManagerView> {
         children: [
           Container(
             alignment: Alignment.topLeft,
-            child: Text(
-              "รหัสวิชา",
-              style: textStyleHeadDrop()
-            ),
+            child: Text("รหัสวิชา", style: textStyleHeadDrop()),
           ),
           Container(
             width: MediaQuery.of(context).size.height,
@@ -109,10 +107,7 @@ class _PopupManagerViewState extends State<PopupManagerView> {
         children: [
           Container(
             alignment: Alignment.bottomLeft,
-            child: Text(
-              "หน่วยกิต",
-              style: textStyleHeadDrop()
-            ),
+            child: Text("หน่วยกิต", style: textStyleHeadDrop()),
           ),
           Container(
             decoration: decoration(),
@@ -137,8 +132,11 @@ class _PopupManagerViewState extends State<PopupManagerView> {
                 value: model.creditValue,
                 items: credit
                     .map((e) => DropdownMenuItem<String>(
-                        value: e.title, child: Text(e.title!,
-                        style: textStylehint(),)))
+                        value: e.title,
+                        child: Text(
+                          e.title!,
+                          style: textStylehint(),
+                        )))
                     .toList(),
                 onChanged: (value) {
                   setState(() {
@@ -214,8 +212,11 @@ class _PopupManagerViewState extends State<PopupManagerView> {
               value: model.teachernameValue,
               items: teachername
                   .map((e) => DropdownMenuItem<String>(
-                      value: e.title, child: Text(e.title!,
-                      style: textStylehint(),)))
+                      value: e.title,
+                      child: Text(
+                        e.title!,
+                        style: textStylehint(),
+                      )))
                   .toList(),
               onChanged: (value) {
                 setState(() {
@@ -261,8 +262,11 @@ class _PopupManagerViewState extends State<PopupManagerView> {
               value: model.basicsubjectValue,
               items: basicsubject //แก้
                   .map((e) => DropdownMenuItem<String>(
-                      value: e.title, child: Text(e.title!,
-                      style: textStylehint(),)))
+                      value: e.title,
+                      child: Text(
+                        e.title!,
+                        style: textStylehint(),
+                      )))
                   .toList(),
               onChanged: (value) {
                 setState(() {

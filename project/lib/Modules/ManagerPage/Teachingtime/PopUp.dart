@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+// import 'package:ku_t/Modules/Componemt/Header_web.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Modules/Dropdown/DaysModel.dart';
 import 'package:unicons/unicons.dart';
@@ -20,11 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int number = 1;
 
-  TextEditingController timestart = TextEditingController(); 
-  TextEditingController timestop = TextEditingController(); 
+  TextEditingController timestart = TextEditingController();
+  TextEditingController timestop = TextEditingController();
   //text editing controller for text field
-  
-  
   @override
   void initState() {
     timestart.text = "";
@@ -36,121 +35,146 @@ class _HomeScreenState extends State<HomeScreen> {
   bool secondValue = false;
   bool thirdValue = false;
   bool fourthValue = false;
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
       height: 700,
       width: 500,
-      
       decoration: decorationradius(),
       child: Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Text('เลือกรายวิชา',
-              style: textStyleHeadDrop(),),
-              SizedBox(height: 20,),
-              Container(
-                alignment: Alignment.topLeft,
-                child: Text('จำนวนหมู่เรียน',
-                style: textStylehintbold(),),
+        padding: EdgeInsets.all(20),
+        child: Column(
+          children: [
+            Text(
+              'เลือกรายวิชา',
+              style: textStyleHeadDrop(),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              alignment: Alignment.topLeft,
+              child: Text(
+                'จำนวนหมู่เรียน',
+                style: textStylehintbold(),
               ),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 5),
-                decoration: decoration(),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      // width: double.infinity,
-                      alignment: Alignment.topLeft,
-                      decoration: decoration(),
-                      child: TextButton(
+            ),
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(vertical: 5),
+              decoration: decoration(),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    // width: double.infinity,
+                    alignment: Alignment.topLeft,
+                    decoration: decoration(),
+                    child: TextButton(
                         onPressed: () {
                           number++;
-                        _addInputField(context);
-                      }, 
-                      child: Text(number.toString(),
-                      style: textStylehint(),)),
-                    ),
-                    Column(
-                      children: [
-                        IconButton(
-                          icon:  Icon(UniconsLine.angle_up), 
-                        onPressed: () {
-                          number++;
-                        _addInputField(context);
-                        },),
-                        // IconButton(icon:  Icon(UniconsLine.angle_down), 
-                        // onPressed: () {
-                        //   number--;
-                        // setState(() {
-                        // });
-                        // },)
-                      ],
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(height: 10,),
-              Expanded(
-                child: ListView.builder(    
-                shrinkWrap: true,     
-                itemCount: _controllerinput.length,
-                itemBuilder: (context, index) {
-                  return Column(
+                          _addInputField(context);
+                        },
+                        child: Text(
+                          number.toString(),
+                          style: textStylehint(),
+                        )),
+                  ),
+                  Column(
                     children: [
+                      IconButton(
+                        icon: Icon(UniconsLine.angle_up),
+                        onPressed: () {
+                          number++;
+                          _addInputField(context);
+                        },
+                      ),
+                      // IconButton(icon:  Icon(UniconsLine.angle_down),
+                      // onPressed: () {
+                      //   number--;
+                      // setState(() {
+                      // });
+                      // },)
+                    ],
+                  )
+                ],
+              ),
+            ),
+            SizedBox(
+              height: 10,
+            ),
+            Expanded(
+                child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: _controllerinput.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
                           Row(
                             children: [
                               _studygroup(),
-                              SizedBox(width: 10,),      
+                              SizedBox(
+                                width: 10,
+                              ),
                               _numberopen(),
-                              SizedBox(width: 10,),    
-                              _room()                            
+                              SizedBox(
+                                width: 10,
+                              ),
+                              _room()
                             ],
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Row(
                             children: [
-                              Expanded(flex: 2,
-                                child: _days()),
-                              SizedBox(width: 10,),
-                              Expanded(
-                                child: _timeStart()),
-                                SizedBox(width: 10,),
+                              Expanded(flex: 2, child: _days()),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(child: _timeStart()),
+                              SizedBox(
+                                width: 10,
+                              ),
                               Expanded(child: _timeStop())
                             ],
                           ),
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 10,
+                          ),
                           _checkBox(),
-                          SizedBox(height: 10,),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Container(
                             width: double.infinity,
                             // height: 55,
                             padding: EdgeInsets.symmetric(vertical: 5),
                             decoration: decorationredborder(),
-                            child: TextButton(onPressed: () {
-                              print(index);
-                              setState(() {
-                                number--;
-                                 _controllerinput.removeAt(index);
-                                // _numberopen.removeAt(index);
-                                // _studygroup.removeAt(index);
-                              });
-                             
-                            }, child: Text('ลบ Sec',
-                            style: textStylered()),),
+                            child: TextButton(
+                              onPressed: () {
+                                print(index);
+                                setState(() {
+                                  number--;
+                                  _controllerinput.removeAt(index);
+                                  // _numberopen.removeAt(index);
+                                  // _studygroup.removeAt(index);
+                                });
+                              },
+                              child: Text('ลบ Sec', style: textStylered()),
+                            ),
                           ),
-                          SizedBox(height: 10,),
-                    ],
-                  );
-                })),
-                _button()
-            ],
-          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      );
+                    })),
+            _button()
+          ],
         ),
+      ),
     );
   }
 
@@ -246,7 +270,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-  
+
   Column _days() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -281,8 +305,11 @@ class _HomeScreenState extends State<HomeScreen> {
               // value: teachernameValue,
               items: days
                   .map((e) => DropdownMenuItem<String>(
-                      value: e.title, child: Text(e.title!,
-                      style: textStylehint(),)))
+                      value: e.title,
+                      child: Text(
+                        e.title!,
+                        style: textStylehint(),
+                      )))
                   .toList(),
               onChanged: (value) {
                 setState(() {
@@ -304,42 +331,45 @@ class _HomeScreenState extends State<HomeScreen> {
             style: textStylehintbold(),
           ),
         ),
-      Container(
-       decoration: decoration(),
-        child: TextFormField(
-           controller: timestart, //editing controller of this TextField
-           decoration: InputDecoration(
-            border: InputBorder.none,
-            hintStyle: textStylehint(),
-            hintText: "00:00",
-            contentPadding: EdgeInsets.all(15),
+        Container(
+          decoration: decoration(),
+          child: TextFormField(
+            controller: timestart, //editing controller of this TextField
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintStyle: textStylehint(),
+              hintText: "00:00",
+              contentPadding: EdgeInsets.all(15),
+            ),
+            readOnly:
+                true, //set it true, so that user will not able to edit text
+            onTap: () async {
+              TimeOfDay? pickedTime = await showTimePicker(
+                initialTime: TimeOfDay.now(),
+                context: context,
+              );
+
+              if (pickedTime != null) {
+                print(pickedTime.format(context)); //output 10:51 PM
+                DateTime parsedTime = DateFormat.jm()
+                    .parse(pickedTime.format(context).toString());
+                //converting to DateTime so that we can further format on different pattern.
+                print(parsedTime); //output 1970-01-01 22:53:00.000
+                String formattedTime = DateFormat('HH:mm').format(parsedTime);
+                print(formattedTime); //output 14:59:00
+                //DateFormat() is from intl package, you can format the time on any pattern you need.
+
+                setState(() {
+                  timestart.text = formattedTime; //set the value of text field.
+                });
+              } else {
+                print("Time is not selected");
+              }
+            },
           ),
-           readOnly: true,  //set it true, so that user will not able to edit text
-           onTap: () async {
-             TimeOfDay? pickedTime =  await showTimePicker(
-                     initialTime: TimeOfDay.now(),
-                     context: context,
-                 );
-             
-             if(pickedTime != null ){
-                 print(pickedTime.format(context));   //output 10:51 PM
-                 DateTime parsedTime = DateFormat.jm().parse(pickedTime.format(context).toString());
-                 //converting to DateTime so that we can further format on different pattern.
-                 print(parsedTime); //output 1970-01-01 22:53:00.000
-                 String formattedTime = DateFormat('HH:mm').format(parsedTime);
-                 print(formattedTime); //output 14:59:00
-                 //DateFormat() is from intl package, you can format the time on any pattern you need.
-      
-                 setState(() {
-                   timestart.text = formattedTime; //set the value of text field. 
-                 });
-             }else{
-                 print("Time is not selected");
-             }
-           },
-        ),
-      )
-    ],);
+        )
+      ],
+    );
   }
 
   Column _timeStop() {
@@ -352,42 +382,45 @@ class _HomeScreenState extends State<HomeScreen> {
             style: textStylehintbold(),
           ),
         ),
-      Container(
-       decoration: decoration(),
-        child: TextFormField(
-           controller: timestop, //editing controller of this TextField
-           decoration: InputDecoration(
-            border: InputBorder.none,
-            hintStyle: textStylehint(),
-            hintText: "00:00",
-            contentPadding: EdgeInsets.all(15),
+        Container(
+          decoration: decoration(),
+          child: TextFormField(
+            controller: timestop, //editing controller of this TextField
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              hintStyle: textStylehint(),
+              hintText: "00:00",
+              contentPadding: EdgeInsets.all(15),
+            ),
+            readOnly:
+                true, //set it true, so that user will not able to edit text
+            onTap: () async {
+              TimeOfDay? pickedTime = await showTimePicker(
+                initialTime: TimeOfDay.now(),
+                context: context,
+              );
+
+              if (pickedTime != null) {
+                print(pickedTime.format(context)); //output 10:51 PM
+                DateTime parsedTime = DateFormat.jm()
+                    .parse(pickedTime.format(context).toString());
+                //converting to DateTime so that we can further format on different pattern.
+                print(parsedTime); //output 1970-01-01 22:53:00.000
+                String formattedTime = DateFormat('HH:mm').format(parsedTime);
+                print(formattedTime); //output 14:59:00
+                //DateFormat() is from intl package, you can format the time on any pattern you need.
+
+                setState(() {
+                  timestop.text = formattedTime; //set the value of text field.
+                });
+              } else {
+                print("Time is not selected");
+              }
+            },
           ),
-           readOnly: true,  //set it true, so that user will not able to edit text
-           onTap: () async {
-             TimeOfDay? pickedTime =  await showTimePicker(
-                     initialTime: TimeOfDay.now(),
-                     context: context,
-                 );
-             
-             if(pickedTime != null ){
-                 print(pickedTime.format(context));   //output 10:51 PM
-                 DateTime parsedTime = DateFormat.jm().parse(pickedTime.format(context).toString());
-                 //converting to DateTime so that we can further format on different pattern.
-                 print(parsedTime); //output 1970-01-01 22:53:00.000
-                 String formattedTime = DateFormat('HH:mm').format(parsedTime);
-                 print(formattedTime); //output 14:59:00
-                 //DateFormat() is from intl package, you can format the time on any pattern you need.
-      
-                 setState(() {
-                   timestop.text = formattedTime; //set the value of text field. 
-                 });
-             }else{
-                 print("Time is not selected");
-             }
-           },
-        ),
-      )
-    ],);
+        )
+      ],
+    );
   }
 
   Row _button() {
@@ -398,8 +431,7 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.symmetric(vertical: 10),
             decoration: decorationgreen(),
             child: TextButton(
-              onPressed: () {
-              },
+              onPressed: () {},
               child: Text(
                 "ตกลง",
                 style: textStylewhite(),
@@ -428,7 +460,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
   }
-  
+
   Column _checkBox() {
     return Column(
       children: [
@@ -441,93 +473,91 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  decoration: decorationgc(),
-                  padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-                  child: Row(
-                    children: [
-                      Checkbox(
-                          value: firstValue,
-                          onChanged: (value) {
-                            setState(() {
-                              firstValue = value!;
-                            });
-                          }),
-                      Text(
-                        "T12-1",
-                        style: textStylehint(),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  decoration: decorationgc(),
-                  padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-                  child: Row(
-                    children: [
-                      Checkbox(
-                          value: secondValue,
-                          onChanged: (value) {
-                            setState(() {
-                              secondValue = value!;
-                            });
-                          }),
-                      Text(
-                        "T12-2",
-                        style: textStylehint(),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  decoration: decorationgc(),
-                  padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-                  child: Row(
-                    children: [
-                      Checkbox(
-                          value: thirdValue,
-                          onChanged: (value) {
-                            setState(() {
-                              thirdValue = value!;
-                            });
-                          }),
-                      Text(
-                        "T12-3",
-                        style: textStylehint(),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  decoration: decorationgc(),
-                  padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-                  child: Row(
-                    children: [
-                      Checkbox(
-                          value: fourthValue,
-                          onChanged: (value) {
-                            setState(() {
-                              fourthValue = value!;
-                            });
-                          }),
-                      Text(
-                        "T12-4",
-                        style: textStylehint(),
-                      )
-                    ],
-                  ),
-                )
-              ],
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              decoration: decorationgc(),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              child: Row(
+                children: [
+                  Checkbox(
+                      value: firstValue,
+                      onChanged: (value) {
+                        setState(() {
+                          firstValue = value!;
+                        });
+                      }),
+                  Text(
+                    "T12-1",
+                    style: textStylehint(),
+                  )
+                ],
+              ),
             ),
+            Container(
+              decoration: decorationgc(),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              child: Row(
+                children: [
+                  Checkbox(
+                      value: secondValue,
+                      onChanged: (value) {
+                        setState(() {
+                          secondValue = value!;
+                        });
+                      }),
+                  Text(
+                    "T12-2",
+                    style: textStylehint(),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              decoration: decorationgc(),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              child: Row(
+                children: [
+                  Checkbox(
+                      value: thirdValue,
+                      onChanged: (value) {
+                        setState(() {
+                          thirdValue = value!;
+                        });
+                      }),
+                  Text(
+                    "T12-3",
+                    style: textStylehint(),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              decoration: decorationgc(),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              child: Row(
+                children: [
+                  Checkbox(
+                      value: fourthValue,
+                      onChanged: (value) {
+                        setState(() {
+                          fourthValue = value!;
+                        });
+                      }),
+                  Text(
+                    "T12-4",
+                    style: textStylehint(),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ],
     );
   }
 
-  
   _addInputField(context) {
-
     final inputContrller = TextEditingController();
     // final inputContrllerr = TextEditingController();
 
@@ -535,14 +565,13 @@ class _HomeScreenState extends State<HomeScreen> {
     // final inputNumberopen = _generateInputNumberopen(inputContrllerr);
     // // final inputRoom = _generateInputRoom(inputContrllerr);
     // final inputDays = _generateInputDays(inputContrllerr);
-    
+
     setState(() {
       _controllerinput.add(inputContrller);
       // _studygroup.add(inputStudygroup);
       // _numberopen.add(inputNumberopen);
       // // _room.add(inputRoom);
       // _days.add(inputDays);
-
     });
   }
 
@@ -569,5 +598,4 @@ class _HomeScreenState extends State<HomeScreen> {
   //     controller: inputController,
   //   );
   // }
-  
 }
