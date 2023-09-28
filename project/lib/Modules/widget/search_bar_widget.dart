@@ -80,6 +80,8 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
       //     ),
       //   ),
       // ],
+
+      ///
       children: [
         Container(
           alignment: Alignment.topLeft,
@@ -147,16 +149,6 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
             ],
           )
         ])
-
-        // padding: const EdgeInsets.all(16.0),
-
-        // ElevatedButton(
-        // onPressed: () {
-        //   String searchTerm = _searchController.text;
-        //   print('ค้นหา: $searchTerm');
-        // },
-        //   child: Text('ค้นหา'),
-        // ),
       ],
     );
   }

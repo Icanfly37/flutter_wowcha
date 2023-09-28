@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
-// import 'package:ku_t/Modules/Componemt/Header_web.dart';
 import 'package:ku_t/Modules/Dropdown/SemesterModel.dart';
 import 'package:ku_t/Modules/Dropdown/YearSModel.dart';
 
@@ -294,85 +293,35 @@ class _TabletimeState extends State<Tabletime> {
                   ],
                 ),
               ),
-            )
+            ),
+            // SizedBox(
+            //   width: 10,
+            // ),
+            // Expanded(
+            //   child: Container(
+            //     padding: EdgeInsets.symmetric(horizontal: 15),
+            //     width: MediaQuery.of(context).size.width,
+            //     height: 48,
+            //     decoration: decorationgc(),
+            //     child: Row(
+            //       children: [
+            //         Checkbox(
+            //             value: fourthValue,
+            //             onChanged: (value) {
+            //               setState(() {
+            //                 fourthValue = value!;
+            //               });
+            //             }),
+            //         Text(
+            //           "T12-4x",
+            //           style: textStylehint(),
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            // )
           ],
         ),
-        SizedBox(
-          width: 10,
-        ),
-        Expanded(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: 48,
-            decoration: decorationgc(),
-            child: Row(
-              children: [
-                Checkbox(
-                    value: secondValue,
-                    onChanged: (value) {
-                      setState(() {
-                        secondValue = value!;
-                      });
-                    }),
-                Text(
-                  "T12-2",
-                  style: textStylehint(),
-                )
-              ],
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Expanded(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: 48,
-            decoration: decorationgc(),
-            child: Row(
-              children: [
-                Checkbox(
-                    value: thirdValue,
-                    onChanged: (value) {
-                      setState(() {
-                        thirdValue = value!;
-                      });
-                    }),
-                Text(
-                  "T12-3",
-                  style: textStylehint(),
-                )
-              ],
-            ),
-          ),
-        ),
-        SizedBox(
-          width: 10,
-        ),
-        Expanded(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 15),
-            width: MediaQuery.of(context).size.width,
-            height: 48,
-            decoration: decorationgc(),
-            child: Row(
-              children: [
-                Checkbox(
-                    value: fourthValue,
-                    onChanged: (value) {
-                      setState(() {
-                        fourthValue = value!;
-                      });
-                    }),
-                Text(
-                  "T12-4",
-                  style: textStylehint(),
-                )
-              ],
-            ),
-          ),
-        )
       ],
     );
   }
