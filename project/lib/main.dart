@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'Modules/Home/Home_View.dart';
 import 'Services/firebase.dart';
+import 'Services/apiconnector/callapt.dart';
 
 void main() {
   runApp(const MyApp());
@@ -25,7 +26,7 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       home: FutureBuilder<void>(
-        future: call_db(), // a previously-obtained Future<String> or null
+        future: testconnecting(), // a previously-obtained Future<String> or null
         builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return const HomePage();

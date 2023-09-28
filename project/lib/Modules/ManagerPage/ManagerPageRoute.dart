@@ -5,8 +5,6 @@ import 'package:ku_t/Modules/Component/TabAppBar.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/Import_Course.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/ManagerDashboard_View.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/Process_Import_Course.dart';
-import 'package:ku_t/Modules/ManagerPage/ManagerImportPage.dart';
-import 'package:ku_t/Modules/ManagerPage/Test.dart';
 
 class ManagerPageRoute extends StatefulWidget {
   const ManagerPageRoute({super.key});
