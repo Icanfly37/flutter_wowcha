@@ -43,6 +43,23 @@ import 'package:http/http.dart'as http;
 
 class api_operator{
   //send Excel file from frontend to backend
+  Future<String> testconnecting() async{
+    try{
+      final response = await http.get(Uri.parse('http://127.0.0.1:8000/e'));
+      if (response.statusCode == 200){
+        //print("Connected");
+        return ("Connected");
+      }
+      else{
+        //print("Refuse");
+        return ("Refuse");
+      }
+    } catch (e){
+      //print('Error: $e');
+      //print("Not Found");
+      return ("Not Found");
+    }
+  }
   Future<void> sendExcelFile(String path) async {
     try {
       // Replace with the URL of your API endpoint
@@ -88,16 +105,22 @@ class api_operator{
   }
 
   //get data from backend to frontend
-  Future<Map<dynamic, dynamic>> getdata() async{
-    final url = Uri.parse('http://127.0.0.1:8000/test'); // Replace with your FastAPI endpoint
-    final response = await http.post(url);
-
+  Future<dynamic> getdata() async{
+    //final url = Uri.parse('http://127.0.0.1:8000/test_send',Headers()); // Replace with your FastAPI endpoint
+    //final response = await http.post(url);
+    final response = await http.post(
+      Uri.parse('http://127.0.0.1:8000/test_send'),
+      headers: {"Accept-Charset": "utf-8"}, // Set the charset header
+    );
     if (response.statusCode == 200) {
       // If the server returns a 200 OK response, parse the JSON data
-      final jsonData = json.decode(response.body);
+      //String data = response.body;
+      //final jsonData = json.decode(utf8.decode(response.body));
+      final jsonResponse = json.decode(utf8.decode(response.bodyBytes));
+      return jsonResponse['getjson'];
       // Process the data as needed
       // print(jsonData);
-      return jsonData;
+      //return jsonData;
     } else {
       // If the server did not return a 200 OK response, throw an exception
       throw Exception('Failed to load data');
@@ -126,5 +149,4 @@ class api_operator{
       print("Failed to send data. Status code: ${response.statusCode}");
     }
   }
-
 }
