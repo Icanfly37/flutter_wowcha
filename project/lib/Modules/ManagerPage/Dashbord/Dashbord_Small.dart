@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:ku_t/Modules/Componemt/CustomDataTable.dart';
-import 'package:ku_t/Modules/Componemt/Header_web.dart';
+import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Modules/Dropdown/YearModel.dart';
 import 'package:ku_t/Modules/Component/CustomDataTable.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/PopUp.dart';
+import 'package:ku_t/Modules/widget/SearchWidget.dart';
 
 class DashbordSmall extends StatefulWidget {
   const DashbordSmall({super.key});
@@ -51,7 +51,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
                             const SizedBox(height: 4),
                             _DropdownSelectYear(),
                             const SizedBox(height: 10),
-                            _SearchSubject(),
+                            SearchWidget(),
                             const SizedBox(height: 18),
                             _ButtonAdd(),
                             const SizedBox(height: 10),
@@ -66,7 +66,11 @@ class _DashbordSmallState extends State<DashbordSmall> {
                       children: [
                         _DropdownSelectYear(),
                         const SizedBox(width: 10),
-                        Expanded(flex: 3, child: _SearchSubject()),
+                        // Expanded(flex: 3, child: _SearchSubject()),
+                        Expanded(
+                          flex: 3,
+                          child: SearchWidget(),
+                        ),
                         const SizedBox(width: 50),
                         Expanded(child: _ButtonAdd()),
                         const SizedBox(width: 10),
@@ -130,6 +134,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
                 }
                 return null;
               },
+              borderRadius: BorderRadius.all(Radius.circular(10)),
               focusColor: Colors.white,
               dropdownColor: Colors.white,
               isExpanded: false,
@@ -153,63 +158,63 @@ class _DashbordSmallState extends State<DashbordSmall> {
   }
 
   // ignore: non_constant_identifier_names
-  Column _SearchSubject() {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          alignment: Alignment.topLeft,
-          child: Text("ค้นหารายวิชา", style: textStylehintbold()),
-        ),
-        Row(
-          children: [
-            //ช่องใส่รหัส/วิชา
-            Expanded(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
-                // width: 300,
-                height: 50,
-                decoration: decoration(),
-                child: const TextField(
-                  cursorColor: Color.fromRGBO(172, 173, 191, 1),
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                    hintStyle: TextStyle(fontSize: 14),
-                    hintText: "รหัสวิชา / ชื่อรายวิชา",
-                    // hintStyle: textStyle16(),
-                    contentPadding: EdgeInsets.all(15),
-                  ),
-                ),
-              ),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Row(
-              children: [
-                Container(
-                  height: 50,
-                  width: 80,
-                  padding: const EdgeInsets.symmetric(vertical: 10),
-                  decoration: decorationgreen(),
-                  child: TextButton(
-                    onPressed: () {
-                      print("hit!");
-                    },
-                    child: Text(
-                      'ค้นหา',
-                      style: textStylewhite(),
-                    ),
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-      ],
-    );
-  }
+  // Column _SearchSubject() {
+  //   return Column(
+  //     mainAxisSize: MainAxisSize.min,
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Container(
+  //         alignment: Alignment.topLeft,
+  //         child: Text("ค้นหารายวิชา", style: textStylehintbold()),
+  //       ),
+  //       Row(
+  //         children: [
+  //           //ช่องใส่รหัส/วิชา
+  //           Expanded(
+  //             child: Container(
+  //               width: MediaQuery.of(context).size.width,
+  //               // width: 300,
+  //               height: 50,
+  //               decoration: decoration(),
+  //               child: const TextField(
+  //                 cursorColor: Color.fromRGBO(172, 173, 191, 1),
+  //                 decoration: InputDecoration(
+  //                   border: InputBorder.none,
+  //                   hintStyle: TextStyle(fontSize: 14),
+  //                   hintText: "รหัสวิชา / ชื่อรายวิชา",
+  //                   // hintStyle: textStyle(16),
+  //                   contentPadding: EdgeInsets.all(15),
+  //                 ),
+  //               ),
+  //             ),
+  //           ),
+  //           const SizedBox(
+  //             width: 10,
+  //           ),
+  //           Row(
+  //             children: [
+  //               Container(
+  //                 height: 50,
+  //                 width: 80,
+  //                 padding: const EdgeInsets.symmetric(vertical: 10),
+  //                 decoration: decorationgreen(),
+  //                 child: TextButton(
+  //                   onPressed: () {
+  //                     print("hit!");
+  //                   },
+  //                   child: Text(
+  //                     'ค้นหา',
+  //                     style: textStylewhite(),
+  //                   ),
+  //                 ),
+  //               ),
+  //             ],
+  //           )
+  //         ],
+  //       ),
+  //     ],
+  //   );
+  // }
 
   // ignore: non_constant_identifier_names
   Container _ButtonImportCourse() {
@@ -263,7 +268,11 @@ class _DashbordSmallState extends State<DashbordSmall> {
       margin: EdgeInsets.only(top: 8),
       child: const Text(
         "โครงสร้างรายวิชา",
-        style: textStyleHeadDrop(),
+        // style: textStyleHeadDrop(),
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
       ),
     );
   }
@@ -272,8 +281,8 @@ class _DashbordSmallState extends State<DashbordSmall> {
     final orientation = MediaQuery.of(context).orientation;
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.only(top: 10),
-      height: orientation == Orientation.portrait ? 250 : 440,
+      margin: const EdgeInsets.only(top: 2),
+      height: orientation == Orientation.portrait ? 250 : 460,
       decoration: decorationbordergray(),
       child: Center(
         child: Text(

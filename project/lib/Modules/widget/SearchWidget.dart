@@ -2,84 +2,32 @@ import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Modules/Data/SubjectsList.dart';
-// import 'package:ku_t/Modules/Componemt/Header_web.dart';
 
 //แก้ Search Bar ให้สามารถขึ้นคำแนะนำเวลาค้นหาได้
 
-class SearchBarWidget extends StatefulWidget {
-  final bool isReadOnly;
-  final bool hasBackButton;
-  const SearchBarWidget({
-    Key? key,
-    required this.isReadOnly,
-    required this.hasBackButton,
-  }) : super(key: key);
-
+class SearchWidget extends StatefulWidget {
   @override
-  State<SearchBarWidget> createState() => _SearchBarWidgetState();
+  _SearchWidgetState createState() => _SearchWidgetState();
 }
 
-class _SearchBarWidgetState extends State<SearchBarWidget> {
+class _SearchWidgetState extends State<SearchWidget> {
   final GlobalKey<AutoCompleteTextFieldState<String>> key = GlobalKey();
   TextEditingController _searchController = TextEditingController();
+
+  // List<String> subjects = [
+  //   '01417167 Engineering Mathematics I',
+  //   '01420111 General Physics I',
+  //   '01420113 Laboratory in Physics I',
+  //   '01999111 Knowledge of the Land',
+  //   '03603111 Programming Fundamentals I',
+  //   '03604111 Engineering Drawing'
+  // ];
 
   @override
   Widget build(BuildContext context) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
-      // children: [
-      //   Container(
-      //     child: Text(
-      //       "ค้นหารายวิชา",
-      //       style: textStyleHeadDrop(),
-      //     ),
-      //   ),
-      //   Container(
-      //     child: Row(
-      //       children: [
-      //         Expanded(
-      //           child: Container(
-      //             width: MediaQuery.of(context).size.height,
-      //             decoration: BoxDecoration(
-      //                 color: Color.fromRGBO(230, 230, 230, 1),
-      //                 borderRadius: BorderRadius.circular(15)),
-      //             child: TextField(
-      //               onTap: () {},
-      //               cursorColor: Color.fromRGBO(172, 173, 191, 1),
-      //               decoration: InputDecoration(
-      //                 border: InputBorder.none,
-      //                 hintStyle: textStylehint(),
-      //                 hintText: "รหัสวิชา / ชื่อรายวิชา",
-      //                 contentPadding: const EdgeInsets.all(15),
-      //               ),
-      //             ),
-      //           ),
-      //         ),
-      //         SizedBox(
-      //           width: 10,
-      //         ),
-      //         Container(
-      //           width: 70,
-      //           padding: EdgeInsets.symmetric(vertical: 8),
-      //           decoration: BoxDecoration(
-      //               borderRadius: BorderRadius.circular(15),
-      //               color: Color.fromRGBO(0, 102, 94, 1)),
-      //           child: TextButton(
-      //             onPressed: () {},
-      //             child: Text(
-      //               'ค้นหา',
-      //               style: TextStyle(
-      //                   fontWeight: FontWeight.bold,
-      //                   color: Colors.white,
-      //                   fontSize: 14),
-      //             ),
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   ),
-      // ],
       children: [
         Container(
           alignment: Alignment.topLeft,
@@ -109,7 +57,7 @@ class _SearchBarWidgetState extends State<SearchBarWidget> {
                   });
                 },
                 style: const TextStyle(fontSize: 15),
-                // cursorColor: const Color.fromRGBO(172, 173, 191, 1),
+                cursorColor: const Color.fromRGBO(172, 173, 191, 1),
                 decoration: InputDecoration(
                   hintText: 'รหัสวิชา / ชื่อรายวิชา',
                   hintStyle: textStylehint(),
