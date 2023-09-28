@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ku_t/Modules/ManagerPage/Teachingtime/PopUp.dart';
 
-import '../../Component/Header_web.dart';
+import '../../Componemt/Header_web.dart';
 
 class Addtime extends StatefulWidget {
   const Addtime({Key? key}) : super(key: key);
