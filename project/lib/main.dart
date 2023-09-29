@@ -26,7 +26,7 @@ class _MyAppState extends State<MyApp> {
         useMaterial3: true,
       ),
       home: FutureBuilder<void>(
-        future: testconnecting(), // a previously-obtained Future<String> or null
+        future: call_db(), // a previously-obtained Future<String> or null
         builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             return const HomePage();

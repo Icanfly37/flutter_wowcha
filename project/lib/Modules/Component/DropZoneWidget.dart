@@ -1,8 +1,15 @@
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+
 // import 'dart:ui_web';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
+import 'package:ku_t/Services/apiconnector/callapt.dart';
 import 'package:unicons/unicons.dart';
+import 'package:http_parser/http_parser.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:mime/mime.dart';
+
+
 
 class DropZoneWidget extends StatefulWidget {
   const DropZoneWidget({super.key});
@@ -12,6 +19,7 @@ class DropZoneWidget extends StatefulWidget {
 }
 
 class _DropZoneWidgetState extends State<DropZoneWidget> {
+  //late DropzoneViewController controller;
   late DropzoneViewController controller;
   bool isHightlighted = false;
 
@@ -79,6 +87,7 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
                 ),
                 onPressed: () async {
                   final events = await controller.pickFiles();
+                  //print(events);
                   if (events.isEmpty) return;
                   acceptFile(events.first);
                 },
@@ -123,15 +132,21 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
   }
 
   Future acceptFile(dynamic event) async {
-    final name = event.name;
-    final mime = await controller.getFileMIME(event);
+    // final name = event.name;
+    // final mime = await controller.getFileMIME(event);
     final bytes = await controller.getFileSize(event);
-    final url = await controller.createFileUrl(event);
+    // final url = await controller.createFileUrl(event);
+    // final file = await controller.getFileData(event);
+    final ffile = await controller.getFileStream(event);
+    //final file = event.bytes;
 
-    print('Name: $name');
-    print('Mime: $mime');
-    print('Bytes: $bytes');
-    print('Url: $url');
+    // print('Name: $name');
+    // print('Mime: $mime');
+    // print('Bytes: $bytes');
+    // print('Url: $url');
+    // print('FileBytes: $file');
+    //print(event.bytes);
+    await sendExcelFile(ffile,bytes);
 
     setState(() => isHightlighted = false);
   }

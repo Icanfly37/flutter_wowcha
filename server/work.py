@@ -62,7 +62,7 @@ def OnExcel(file,db_collection=None):
 
 #path = "D:/หลักสูตร.xlsx"
 #OnExcel(path,("รายวิชา","เปิดการสอน"))
-
+#rows = OnExcel(path)
 #a=get_intel()
 #print(a[0])
 #OnJson("รายวิชา.json","w",a[0])

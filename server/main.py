@@ -1,6 +1,7 @@
 from typing import Annotated, Union
 from fastapi import FastAPI, UploadFile,File
 from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from Excel.ExcelEngine import *
 from openpyxl import *
@@ -10,6 +11,14 @@ import os
 from work import *
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @app.get("/")
 def read_root():
@@ -37,6 +46,8 @@ async def create_item(data: dict):
 @app.post("/downloadfiles/")
 async def create_file(file: Annotated[bytes, File()]):
     rows = OnExcel(file,("รายวิชา","เปิดการสอน"))
+    #rows = OnExcel(file)
+    #print(rows)
     return {"rows":rows}
 
 #sendExcelFile
