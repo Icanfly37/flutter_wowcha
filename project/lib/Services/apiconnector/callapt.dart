@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart'as http;
+import 'package:http_parser/http_parser.dart';
 
 //How to use it
 // void main() async{
@@ -45,7 +46,7 @@ import 'package:http/http.dart'as http;
 //send Excel file from frontend to backend
 Future<String> testconnecting() async{
   try{
-    final response = await http.get(Uri.parse('http://127.0.0.1:8000/e'));
+    final response = await http.get(Uri.parse('http://127.0.0.1:8000/'));
     if (response.statusCode == 200){
       //print("Connected");
       return ("Connected");
@@ -60,15 +61,30 @@ Future<String> testconnecting() async{
     return ("Not Found");
   }
 }
-Future<void> sendExcelFile(String path) async {
+Future<void> sendExcelFile(Stream<List<int>> stream,int size) async {
   try {
     // Replace with the URL of your API endpoint
+
     final apiUrl = Uri.parse('http://127.0.0.1:8000/downloadfiles/');
     
+    // final response = await http.post(
+    //   Uri.parse('http://127.0.0.1:8000/downloadfiles/'),
+    //   body: bytes,
+    //   headers: {
+    //     'Content-Type': 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', // Set the appropriate content type for Excel files
+    //   },
+    // );
+
     // Replace with the path to your Excel file
-    String excelFilePath = path;
+
+    //String excelFilebytes = bytes;
+
     final request = http.MultipartRequest('POST', apiUrl);
-    request.files.add(await http.MultipartFile.fromPath('file', excelFilePath));
+    request.files.add(await http.MultipartFile('file', stream,size,contentType: MediaType.parse(
+      "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"),filename: "import_course.xlsx"
+      ));
+    //request.files.add(await http.MultipartFile.fromPath('file', excelFilePath));
+    //request.files.add(await http.MultipartFile.fromBytes('file', bytes));
     final response = await request.send();
     if (response.statusCode == 200) {
       // File uploaded successfully
