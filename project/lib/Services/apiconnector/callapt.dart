@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart'as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:flutter/services.dart';
 
 //How to use it
 // void main() async{
@@ -94,7 +95,8 @@ Future<void> sendExcelFile(Stream<List<int>> stream,int size) async {
       print('File upload failed with status code: ${response.statusCode}');
     }
     Timer(Duration(milliseconds: 200), () { // delay time to end function
-      exit(0);
+      //exit(0);
+      SystemNavigator.pop();
     });
   } catch (e) {
     // Handle errors
