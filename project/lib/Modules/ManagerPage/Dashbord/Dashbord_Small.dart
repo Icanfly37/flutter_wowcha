@@ -28,6 +28,12 @@ class _DashbordSmallState extends State<DashbordSmall> {
   bool isExist = false;
   final ViewModel _viewModel = ViewModel();
 
+  @override
+  void initState() {
+    super.initState();
+    get_status_db();
+  }
+
   //TextEditingController coursecodeC = TextEditingController(); //y
   //TextEditingController coursenameC = TextEditingController();
 
@@ -41,7 +47,6 @@ class _DashbordSmallState extends State<DashbordSmall> {
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
-    get_status_db();
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
