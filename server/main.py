@@ -24,10 +24,13 @@ app.add_middleware(
 def read_root():
     return {"message": "Hello, World!"}
 
-#senddata
-@app.post("/test")
-def read_root():
-    return {0: {"Test": {"message": "Hello, World!"}}}
+#get status data
+@app.post("/detect_collection")
+def read_item(target:dict):
+    name = target["collection"]
+    status = get_status(get_file_path("\database\serviceAccountKey.json"),name)
+    print(status)
+    return {"status" : status}
 
 #stub/driver
 @app.post("/test_send")

@@ -44,7 +44,13 @@ def OnDB_C(cred,collection_name,target,onnow):
         db.create_doc(i,str(id))
         #id += 1
     db.close_db()
-    
+
+def get_status(cred,collection):   
+    db = Database(cred)
+    db.get_db()
+    status = db.check_exist_collection(collection)#check_exist_collection(self,collection_target) 
+    db.close_db()
+    return status
 
 def OnExcel(file,db_collection=None):
     ExcelOP = Excel(BytesIO(file))
@@ -60,6 +66,11 @@ def OnExcel(file,db_collection=None):
     clear_list()
     return rows
 
+# path_db = get_file_path("\database\serviceAccountKey.json")
+# a = 50
+# while a != 0:
+#     print(get_status(path_db,"เปิดการสอน"))
+#     a-=1
 #path = "D:/หลักสูตร.xlsx"
 #OnExcel(path,("รายวิชา","เปิดการสอน"))
 #rows = OnExcel(path)
