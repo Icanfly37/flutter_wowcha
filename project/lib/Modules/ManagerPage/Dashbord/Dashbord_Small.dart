@@ -24,14 +24,18 @@ class _DashbordSmallState extends State<DashbordSmall> {
   String? selectedValue; //N
   bool isImport = true;
   // ถ้า false จะเป็นไม่พบหลักสูตร ถ้า true คือมีข้อมูลหลักสูตรแล้ว (ข้อมูลจะขึ้นในตาราง)
-
-  bool isExist = false;
+  var isExist;
   final ViewModel _viewModel = ViewModel();
 
   @override
   void initState() {
     super.initState();
-    get_status_db();
+    isExist = get_status_db();
+  }
+
+  Future<bool> get_status_db() async {
+    isExist = await _viewModel.get_status();
+    return isExist;
   }
 
   //TextEditingController coursecodeC = TextEditingController(); //y
@@ -47,65 +51,19 @@ class _DashbordSmallState extends State<DashbordSmall> {
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
-    return Padding(
-      padding: const EdgeInsets.all(15.0),
-      child: Column(
-        children: [
-          _header(),
-          const Divider(height: 26),
-          Container(
-              child: orientation == Orientation.portrait //short if/else
-                  ? Column(
-                      //is if
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const SizedBox(height: 4),
-                            _DropdownSelectYear(),
-                            const SizedBox(height: 10),
-                            SearchWidget(),
-                            const SizedBox(height: 18),
-                            _ButtonAdd(),
-                            const SizedBox(height: 10),
-                            _ButtonImportCourse()
-                          ],
-                        ),
-                      ],
-                    )
-                  : Row(
-                      // crossAxisAlignment: CrossAxisAlignment.start,
-                      // mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        _DropdownSelectYear(),
-                        const SizedBox(width: 10),
-                        // Expanded(flex: 3, child: _SearchSubject()),
-                        Expanded(
-                          flex: 3,
-                          child: SearchWidget(),
-                        ),
-                        const SizedBox(width: 50),
-                        Expanded(child: _ButtonAdd()),
-                        const SizedBox(width: 10),
-                        Expanded(child: _ButtonImportCourse())
-                      ],
-                    )),
-          Container(
-            child: _textCourseStructure(),
-          ),
-
-          Container(
-              child: isExist
-                  ? _foundCourse()
-                  : _notFoundCourse()), // เงื่อนไขในการขึ้นตารางข้อมูลหลักสูตร (?จะขึ้นตาราง และ :จะขึ้นไม่พบหลักสูตร)
-        ],
-      ),
-    );
-  }
-
-  Future<void> get_status_db() async {
-    isExist = await _viewModel.get_status();
+    return FutureBuilder(
+        future: _viewModel.get_status(),
+        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (_viewModel.get_status() == Future.value(true)) {
+              return const Center(child: Text("ji"));
+            } else {
+              return const Center(child: Text("Nook"));
+            }
+          } else {
+            return const LinearProgressIndicator();
+          }
+        });
   }
 
   Container _header() {
