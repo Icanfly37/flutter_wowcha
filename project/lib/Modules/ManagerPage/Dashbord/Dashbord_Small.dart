@@ -26,6 +26,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
   // ถ้า false จะเป็นไม่พบหลักสูตร ถ้า true คือมีข้อมูลหลักสูตรแล้ว (ข้อมูลจะขึ้นในตาราง)
 
   bool isExist = false;
+  final ViewModel _viewModel = ViewModel();
 
   //TextEditingController coursecodeC = TextEditingController(); //y
   //TextEditingController coursenameC = TextEditingController();
@@ -40,6 +41,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
+    get_status_db();
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
@@ -89,13 +91,16 @@ class _DashbordSmallState extends State<DashbordSmall> {
           ),
 
           Container(
-              child: (send_status_db({"collection": "เปิดรายวิชา"}) ==
-                      Future.value(true))
+              child: isExist
                   ? _foundCourse()
                   : _notFoundCourse()), // เงื่อนไขในการขึ้นตารางข้อมูลหลักสูตร (?จะขึ้นตาราง และ :จะขึ้นไม่พบหลักสูตร)
         ],
       ),
     );
+  }
+
+  Future<void> get_status_db() async {
+    isExist = await _viewModel.get_status();
   }
 
   Container _header() {
