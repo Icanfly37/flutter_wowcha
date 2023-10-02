@@ -55,7 +55,8 @@ class _DashbordSmallState extends State<DashbordSmall> {
         future: _viewModel.get_status(),
         builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            if (_viewModel.get_status() == Future.value(true)) {
+            // ignore: unrelated_type_equality_checks
+            if (_viewModel.get_status() == "จิง") {
               return const Center(child: Text("ji"));
             } else {
               return const Center(child: Text("Nook"));
