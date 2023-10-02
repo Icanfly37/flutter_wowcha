@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:ku_t/Models/status_db.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Modules/Dropdown/YearModel.dart';
 import 'package:ku_t/Modules/Component/CustomDataTable.dart';
 // import 'package:ku_t/Modules/Component/Header_web.dart';
 // import 'package:ku_t/Modules/Dropdown/YearModel.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/PopUp.dart';
+import 'package:ku_t/Modules/ManagerPage/Dashbord/viewmodel.dart';
 import 'package:ku_t/Modules/widget/SearchWidget.dart';
 
 class DashbordSmall extends StatefulWidget {
@@ -19,8 +21,11 @@ class _DashbordSmallState extends State<DashbordSmall> {
   //     FirebaseFirestore.instance.collection('subject');
   // late TextEditingController controller;
   String? selectedValue; //N
-  bool isImport =
-      true; // ถ้า false จะเป็นไม่พบหลักสูตร ถ้า true คือมีข้อมูลหลักสูตรแล้ว (ข้อมูลจะขึ้นในตาราง)
+  bool isImport = true;
+  // ถ้า false จะเป็นไม่พบหลักสูตร ถ้า true คือมีข้อมูลหลักสูตรแล้ว (ข้อมูลจะขึ้นในตาราง)
+
+  bool isExist = false;
+  final ViewModel _viewModel = ViewModel();
 
   //TextEditingController coursecodeC = TextEditingController(); //y
   //TextEditingController coursenameC = TextEditingController();
@@ -35,6 +40,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
+    get_status_db();
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
@@ -84,12 +90,16 @@ class _DashbordSmallState extends State<DashbordSmall> {
           ),
 
           Container(
-              child: isImport
+              child: isExist
                   ? _foundCourse()
                   : _notFoundCourse()), // เงื่อนไขในการขึ้นตารางข้อมูลหลักสูตร (?จะขึ้นตาราง และ :จะขึ้นไม่พบหลักสูตร)
         ],
       ),
     );
+  }
+
+  Future<void> get_status_db() async {
+    isExist = await _viewModel.get_status();
   }
 
   Container _header() {
