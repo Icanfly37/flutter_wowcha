@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Modules/Dropdown/DaysModel.dart';
+import 'package:ku_t/Modules/Dropdown/TimeEndModel.dart';
+import 'package:ku_t/Modules/Dropdown/TimeStartModel.dart';
 import 'package:unicons/unicons.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,7 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   TextEditingController timestart = TextEditingController(); 
   TextEditingController timestop = TextEditingController(); 
   //text editing controller for text field
-  
+  final _formKeyy = GlobalKey<FormState>();
   
   @override
   void initState() {
@@ -42,115 +44,117 @@ class _HomeScreenState extends State<HomeScreen> {
     return Container(
       height: 700,
       width: 500,
-      
       decoration: decorationradius(),
-      child: Container(
-          padding: EdgeInsets.all(20),
-          child: Column(
-            children: [
-              Text('เลือกรายวิชา',
-              style: textStyleHeadDrop(),),
-              SizedBox(height: 20,),
-              Container(
-                alignment: Alignment.topLeft,
-                child: Text('จำนวนหมู่เรียน',
-                style: textStylehintbold(),),
-              ),
-              Container(
-                width: double.infinity,
-                padding: EdgeInsets.symmetric(vertical: 5),
-                decoration: decoration(),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      // width: double.infinity,
-                      alignment: Alignment.topLeft,
-                      decoration: decoration(),
-                      child: TextButton(
-                        onPressed: () {
-                          number++;
-                        _addInputField(context);
-                      }, 
-                      child: Text(number.toString(),
-                      style: textStylehint(),)),
-                    ),
-                    Column(
-                      children: [
-                        IconButton(
-                          icon:  Icon(UniconsLine.angle_up), 
-                        onPressed: () {
-                          number++;
-                        _addInputField(context);
-                        },),
-                        // IconButton(icon:  Icon(UniconsLine.angle_down), 
-                        // onPressed: () {
-                        //   number--;
-                        // setState(() {
-                        // });
-                        // },)
-                      ],
-                    )
-                  ],
+      child: Form(
+        key: _formKeyy,
+        child: Container(
+            padding: EdgeInsets.all(20),
+            child: Column(
+              children: [
+                Text('เลือกรายวิชา',
+                style: textStyleHeadDrop(),),
+                SizedBox(height: 20,),
+                Container(
+                  alignment: Alignment.topLeft,
+                  child: Text('จำนวนหมู่เรียน',
+                  style: textStylehintbold(),),
                 ),
-              ),
-              SizedBox(height: 10,),
-              Expanded(
-                child: ListView.builder(    
-                shrinkWrap: true,     
-                itemCount: _controllerinput.length,
-                itemBuilder: (context, index) {
-                  return Column(
+                Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                  decoration: decoration(),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                          Row(
-                            children: [
-                              _studygroup(),
-                              SizedBox(width: 10,),      
-                              _numberopen(),
-                              SizedBox(width: 10,),    
-                              _room()                            
-                            ],
-                          ),
-                          SizedBox(height: 10,),
-                          Row(
-                            children: [
-                              Expanded(flex: 2,
-                                child: _days()),
-                              SizedBox(width: 10,),
-                              Expanded(
-                                child: _timeStart()),
-                                SizedBox(width: 10,),
-                              Expanded(child: _timeStop())
-                            ],
-                          ),
-                          SizedBox(height: 10,),
-                          _checkBox(),
-                          SizedBox(height: 10,),
-                          Container(
-                            width: double.infinity,
-                            // height: 55,
-                            padding: EdgeInsets.symmetric(vertical: 5),
-                            decoration: decorationredborder(),
-                            child: TextButton(onPressed: () {
-                              print(index);
-                              setState(() {
-                                number--;
-                                 _controllerinput.removeAt(index);
-                                // _numberopen.removeAt(index);
-                                // _studygroup.removeAt(index);
-                              });
-                             
-                            }, child: Text('ลบ Sec',
-                            style: textStylered()),),
-                          ),
-                          SizedBox(height: 10,),
+                      Container(
+                        // width: double.infinity,
+                        alignment: Alignment.topLeft,
+                        decoration: decoration(),
+                        child: TextButton(
+                          onPressed: () {
+                            number++;
+                          _addInputField(context);
+                        }, 
+                        child: Text(number.toString(),
+                        style: textStylehint(),)),
+                      ),
+                      Column(
+                        children: [
+                          IconButton(
+                            icon:  Icon(UniconsLine.angle_up), 
+                          onPressed: () {
+                            number++;
+                          _addInputField(context);
+                          },),
+                          // IconButton(icon:  Icon(UniconsLine.angle_down), 
+                          // onPressed: () {
+                          //   number--;
+                          // setState(() {
+                          // });
+                          // },)
+                        ],
+                      )
                     ],
-                  );
-                })),
-                _button()
-            ],
+                  ),
+                ),
+                SizedBox(height: 10,),
+                Expanded(
+                  child: ListView.builder(    
+                  shrinkWrap: true,     
+                  itemCount: _controllerinput.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                            Row(
+                              children: [
+                                _studygroup(),
+                                SizedBox(width: 10,),      
+                                _numberopen(),
+                                SizedBox(width: 10,),    
+                                _room()                            
+                              ],
+                            ),
+                            SizedBox(height: 10,),
+                            Row(
+                              children: [
+                                Expanded(flex: 2,
+                                  child: _days()),
+                                SizedBox(width: 10,),
+                                Expanded(
+                                  child: _timeStart()),
+                                  SizedBox(width: 10,),
+                                Expanded(child: _timeStop())
+                              ],
+                            ),
+                            SizedBox(height: 10,),
+                            _checkBox(),
+                            SizedBox(height: 10,),
+                            Container(
+                              width: double.infinity,
+                              // height: 55,
+                              padding: EdgeInsets.symmetric(vertical: 5),
+                              decoration: decorationredborder(),
+                              child: TextButton(onPressed: () {
+                                print(index);
+                                setState(() {
+                                  number--;
+                                   _controllerinput.removeAt(index);
+                                  // _numberopen.removeAt(index);
+                                  // _studygroup.removeAt(index);
+                                });
+                               
+                              }, child: Text('ลบ Sec',
+                              style: textStylered()),),
+                            ),
+                            SizedBox(height: 10,),
+                      ],
+                    );
+                  })),
+                  _button()
+              ],
+            ),
           ),
-        ),
+      ),
     );
   }
 
@@ -165,20 +169,20 @@ class _HomeScreenState extends State<HomeScreen> {
               style: textStylehintbold(),
             ),
           ),
-          Container(
-            // width: MediaQuery.of(context).size.height,
-            decoration: decoration(),
-            child: TextFormField(
-              // controller: coursenameC,
-              keyboardType: TextInputType.number,
-              cursorColor: const Color.fromRGBO(172, 173, 191, 1),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintStyle: textStylehint(),
-                hintText: "หมู่เรียน",
-                contentPadding: EdgeInsets.all(15),
-              ),
-            ),
+          TextFormField(
+            validator: (value) {
+              if(value!.isEmpty) {
+                return "กรุณากรอก";
+              }
+              if(value.characters.length != 3) {
+                return "กรุณากรอกรหัสวิชาให้ถูกด้อง";
+              }
+              return null;
+            },
+            // controller: coursenameC,
+            keyboardType: TextInputType.number,
+            cursorColor: const Color.fromRGBO(172, 173, 191, 1),
+            decoration: inputdecorationtext(),
           ),
         ],
       ),
@@ -196,20 +200,17 @@ class _HomeScreenState extends State<HomeScreen> {
               style: textStylehintbold(),
             ),
           ),
-          Container(
-            // width: MediaQuery.of(context).size.height,
-            decoration: decoration(),
-            child: TextFormField(
-              // controller: coursenameC,
-              keyboardType: TextInputType.number,
-              cursorColor: const Color.fromRGBO(172, 173, 191, 1),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintStyle: textStylehint(),
-                hintText: "จำนวนที่เปิดรับ",
-                contentPadding: EdgeInsets.all(15),
-              ),
-            ),
+          TextFormField(
+            // controller: coursenameC,
+            validator: (value) {
+              if(value!.isEmpty) {
+                return "กรุณากรอก";
+              }
+              return null;
+            },
+            keyboardType: TextInputType.number,
+            cursorColor: const Color.fromRGBO(172, 173, 191, 1),
+            decoration: inputdecorationtext(),
           ),
         ],
       ),
@@ -227,20 +228,17 @@ class _HomeScreenState extends State<HomeScreen> {
               style: textStylehintbold(),
             ),
           ),
-          Container(
-            // width: MediaQuery.of(context).size.height,
-            decoration: decoration(),
-            child: TextFormField(
-              // controller: coursenameC,
-              keyboardType: TextInputType.number,
-              cursorColor: const Color.fromRGBO(172, 173, 191, 1),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintStyle: textStylehint(),
-                hintText: "ห้อง",
-                contentPadding: EdgeInsets.all(15),
-              ),
-            ),
+          TextFormField(
+            // controller: coursenameC,
+            validator: (value) {
+              if(value!.isEmpty) {
+                return "กรุณากรอก";
+              }
+              return null;
+            },
+            keyboardType: TextInputType.number,
+            cursorColor: const Color.fromRGBO(172, 173, 191, 1),
+            decoration: inputdecorationtext()
           ),
         ],
       ),
@@ -258,136 +256,116 @@ class _HomeScreenState extends State<HomeScreen> {
             style: textStylehintbold(),
           ),
         ),
-        Container(
-          decoration: decoration(),
-          child: DropdownButtonFormField(
-              hint: Text(
-                "วัน",
-                style: textStylehint(),
-              ),
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.all(15),
-              ),
-              validator: (value) {
-                if (value == null) {
-                  return "";
-                }
-                return null;
-              },
-              focusColor: Colors.white,
-              dropdownColor: Colors.white,
-              isExpanded: false,
-              // value: teachernameValue,
-              items: days
-                  .map((e) => DropdownMenuItem<String>(
-                      value: e.title, child: Text(e.title!,
-                      style: textStylehint(),)))
-                  .toList(),
-              onChanged: (value) {
-                setState(() {
-                  // teachernameValue = value.toString();
-                });
-              }),
-        ),
+        DropdownButtonFormField(
+            // hint: Text(
+            //   "วัน",
+            //   style: textStylehint(),
+            // ),
+            decoration: inputdecorationtext(),
+            validator: (value) {
+              if (value == null) {
+                return "กรุณากรอก";
+              }
+              return null;
+            },
+            focusColor: Colors.white,
+            dropdownColor: Colors.white,
+            isExpanded: false,
+            // value: teachernameValue,
+            items: days
+                .map((e) => DropdownMenuItem<String>(
+                    value: e.title, child: Text(e.title!,
+                    style: textStylehint(),)))
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                // teachernameValue = value.toString();
+              });
+            }),
       ],
     );
   }
 
   Column _timeStart() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           alignment: Alignment.bottomLeft,
           child: Text(
-            "เวลาเริ่มต้น",
+            "วัน",
             style: textStylehintbold(),
           ),
         ),
-      Container(
-       decoration: decoration(),
-        child: TextFormField(
-           controller: timestart, //editing controller of this TextField
-           decoration: InputDecoration(
-            border: InputBorder.none,
-            hintStyle: textStylehint(),
-            hintText: "00:00",
-            contentPadding: EdgeInsets.all(15),
-          ),
-           readOnly: true,  //set it true, so that user will not able to edit text
-           onTap: () async {
-             TimeOfDay? pickedTime =  await showTimePicker(
-                     initialTime: TimeOfDay.now(),
-                     context: context,
-                 );
-             
-             if(pickedTime != null ){
-                 print(pickedTime.format(context));   //output 10:51 PM
-                 DateTime parsedTime = DateFormat.jm().parse(pickedTime.format(context).toString());
-                 //converting to DateTime so that we can further format on different pattern.
-                 print(parsedTime); //output 1970-01-01 22:53:00.000
-                 String formattedTime = DateFormat('HH:mm').format(parsedTime);
-                 print(formattedTime); //output 14:59:00
-                 //DateFormat() is from intl package, you can format the time on any pattern you need.
-      
-                 setState(() {
-                   timestart.text = formattedTime; //set the value of text field. 
-                 });
-             }else{
-                 print("Time is not selected");
-             }
-           },
-        ),
-      )
-    ],);
+        DropdownButtonFormField(
+            hint: Text(
+              "00:00",
+              style: textStylehint(),
+            ),
+            decoration: inputdecorationtext(),
+            validator: (value) {
+              if (value == null) {
+                return "กรุณากรอก";
+              }
+              return null;
+            },
+            focusColor: Colors.white,
+            dropdownColor: Colors.white,
+            isExpanded: false,
+            // value: teachernameValue,
+            items: timeStart
+                .map((e) => DropdownMenuItem<String>(
+                    value: e.title, child: Text(e.title!,
+                    style: textStylehint(),)))
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                // teachernameValue = value.toString();
+              });
+            }),
+      ],
+    );
   }
 
   Column _timeStop() {
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           alignment: Alignment.bottomLeft,
           child: Text(
-            "เวลาสิ้นสุด",
+            "วัน",
             style: textStylehintbold(),
           ),
         ),
-      Container(
-       decoration: decoration(),
-        child: TextFormField(
-           controller: timestop, //editing controller of this TextField
-           decoration: InputDecoration(
-            border: InputBorder.none,
-            hintStyle: textStylehint(),
-            hintText: "00:00",
-            contentPadding: EdgeInsets.all(15),
-          ),
-           readOnly: true,  //set it true, so that user will not able to edit text
-           onTap: () async {
-             TimeOfDay? pickedTime =  await showTimePicker(
-                     initialTime: TimeOfDay.now(),
-                     context: context,
-                 );
-             
-             if(pickedTime != null ){
-                 print(pickedTime.format(context));   //output 10:51 PM
-                 DateTime parsedTime = DateFormat.jm().parse(pickedTime.format(context).toString());
-                 //converting to DateTime so that we can further format on different pattern.
-                 print(parsedTime); //output 1970-01-01 22:53:00.000
-                 String formattedTime = DateFormat('HH:mm').format(parsedTime);
-                 print(formattedTime); //output 14:59:00
-                 //DateFormat() is from intl package, you can format the time on any pattern you need.
-      
-                 setState(() {
-                   timestop.text = formattedTime; //set the value of text field. 
-                 });
-             }else{
-                 print("Time is not selected");
-             }
-           },
-        ),
-      )
-    ],);
+        DropdownButtonFormField(
+            hint: Text(
+              "00:00",
+              style: textStylehint(),
+            ),
+            decoration: inputdecorationtext(),
+            validator: (value) {
+              if (value == null) {
+                return "กรุณากรอก";
+              }
+              return null;
+            },
+            focusColor: Colors.white,
+            dropdownColor: Colors.white,
+            isExpanded: false,
+            // value: teachernameValue,
+            items: timeEnd
+                .map((e) => DropdownMenuItem<String>(
+                    value: e.title, child: Text(e.title!,
+                    style: textStylehint(),)))
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                // teachernameValue = value.toString();
+              });
+            }),
+      ],
+    );
   }
 
   Row _button() {
@@ -399,6 +377,11 @@ class _HomeScreenState extends State<HomeScreen> {
             decoration: decorationgreen(),
             child: TextButton(
               onPressed: () {
+                if(_formKeyy.currentState!.validate()) {
+                  print("Validated");
+                } else {
+                  print("Not Validated");
+                }
               },
               child: Text(
                 "ตกลง",

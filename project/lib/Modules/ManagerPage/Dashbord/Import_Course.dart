@@ -10,14 +10,14 @@ class ImportCourse extends StatefulWidget {
 }
 
 class _ImportCourseState extends State<ImportCourse> {
-  late TextEditingController controller;
+  // late TextEditingController controller;
 
-  @override
-  void dispose() {
-    controller.dispose();
+  // @override
+  // void dispose() {
+  //   controller.dispose();
 
-    super.dispose();
-  }
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -147,3 +147,4 @@ class _ImportCourseState extends State<ImportCourse> {
   //   );
   // }
 }
+

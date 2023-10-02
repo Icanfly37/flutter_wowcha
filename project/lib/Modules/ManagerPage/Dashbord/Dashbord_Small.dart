@@ -14,7 +14,7 @@ class DashbordSmall extends StatefulWidget {
 class _DashbordSmallState extends State<DashbordSmall> {
   // CollectionReference addsubject =
   //     FirebaseFirestore.instance.collection('subject');
-  late TextEditingController controller;
+  // late TextEditingController controller;
   String? selectedValue; //N
   bool isImport =
       true; // ถ้า false จะเป็นไม่พบหลักสูตร ถ้า true คือมีข้อมูลหลักสูตรแล้ว (ข้อมูลจะขึ้นในตาราง)
@@ -22,12 +22,12 @@ class _DashbordSmallState extends State<DashbordSmall> {
   //TextEditingController coursecodeC = TextEditingController(); //y
   //TextEditingController coursenameC = TextEditingController();
 
-  @override
-  void dispose() {
-    controller.dispose();
+  // @override
+  // void dispose() {
+  //   controller.dispose();
 
-    super.dispose();
-  }
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {

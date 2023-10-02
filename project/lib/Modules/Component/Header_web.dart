@@ -191,3 +191,22 @@ InputDecoration inputdecoration() {
     )
   );
 }
+
+InputDecoration inputdecorationtext() {
+  return InputDecoration(
+      filled: true,
+      fillColor: Color.fromRGBO(230, 230, 230, 1),
+      errorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+      focusedErrorBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(15),
+        borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+  );
+}
