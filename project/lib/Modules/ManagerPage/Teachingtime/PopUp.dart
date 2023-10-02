@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+// import 'package:ku_t/Modules/Componemt/Header_web.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Modules/Dropdown/DaysModel.dart';
 import 'package:ku_t/Modules/Dropdown/TimeEndModel.dart';
@@ -22,8 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   int number = 1;
 
-  TextEditingController timestart = TextEditingController(); 
-  TextEditingController timestop = TextEditingController(); 
+  TextEditingController timestart = TextEditingController();
+  TextEditingController timestop = TextEditingController();
   //text editing controller for text field
   final _formKeyy = GlobalKey<FormState>();
   
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   bool secondValue = false;
   bool thirdValue = false;
   bool fourthValue = false;
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -244,7 +245,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
-  
+
   Column _days() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -411,7 +412,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
     );
   }
-  
+
   Column _checkBox() {
     return Column(
       children: [
@@ -424,93 +425,91 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  decoration: decorationgc(),
-                  padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-                  child: Row(
-                    children: [
-                      Checkbox(
-                          value: firstValue,
-                          onChanged: (value) {
-                            setState(() {
-                              firstValue = value!;
-                            });
-                          }),
-                      Text(
-                        "T12-1",
-                        style: textStylehint(),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  decoration: decorationgc(),
-                  padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-                  child: Row(
-                    children: [
-                      Checkbox(
-                          value: secondValue,
-                          onChanged: (value) {
-                            setState(() {
-                              secondValue = value!;
-                            });
-                          }),
-                      Text(
-                        "T12-2",
-                        style: textStylehint(),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  decoration: decorationgc(),
-                  padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-                  child: Row(
-                    children: [
-                      Checkbox(
-                          value: thirdValue,
-                          onChanged: (value) {
-                            setState(() {
-                              thirdValue = value!;
-                            });
-                          }),
-                      Text(
-                        "T12-3",
-                        style: textStylehint(),
-                      )
-                    ],
-                  ),
-                ),
-                Container(
-                  decoration: decorationgc(),
-                  padding: EdgeInsets.symmetric(horizontal: 15,vertical: 5),
-                  child: Row(
-                    children: [
-                      Checkbox(
-                          value: fourthValue,
-                          onChanged: (value) {
-                            setState(() {
-                              fourthValue = value!;
-                            });
-                          }),
-                      Text(
-                        "T12-4",
-                        style: textStylehint(),
-                      )
-                    ],
-                  ),
-                )
-              ],
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              decoration: decorationgc(),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              child: Row(
+                children: [
+                  Checkbox(
+                      value: firstValue,
+                      onChanged: (value) {
+                        setState(() {
+                          firstValue = value!;
+                        });
+                      }),
+                  Text(
+                    "T12-1",
+                    style: textStylehint(),
+                  )
+                ],
+              ),
             ),
+            Container(
+              decoration: decorationgc(),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              child: Row(
+                children: [
+                  Checkbox(
+                      value: secondValue,
+                      onChanged: (value) {
+                        setState(() {
+                          secondValue = value!;
+                        });
+                      }),
+                  Text(
+                    "T12-2",
+                    style: textStylehint(),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              decoration: decorationgc(),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              child: Row(
+                children: [
+                  Checkbox(
+                      value: thirdValue,
+                      onChanged: (value) {
+                        setState(() {
+                          thirdValue = value!;
+                        });
+                      }),
+                  Text(
+                    "T12-3",
+                    style: textStylehint(),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              decoration: decorationgc(),
+              padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
+              child: Row(
+                children: [
+                  Checkbox(
+                      value: fourthValue,
+                      onChanged: (value) {
+                        setState(() {
+                          fourthValue = value!;
+                        });
+                      }),
+                  Text(
+                    "T12-4",
+                    style: textStylehint(),
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ],
     );
   }
 
-  
   _addInputField(context) {
-
     final inputContrller = TextEditingController();
     // final inputContrllerr = TextEditingController();
 
@@ -518,14 +517,13 @@ class _HomeScreenState extends State<HomeScreen> {
     // final inputNumberopen = _generateInputNumberopen(inputContrllerr);
     // // final inputRoom = _generateInputRoom(inputContrllerr);
     // final inputDays = _generateInputDays(inputContrllerr);
-    
+
     setState(() {
       _controllerinput.add(inputContrller);
       // _studygroup.add(inputStudygroup);
       // _numberopen.add(inputNumberopen);
       // // _room.add(inputRoom);
       // _days.add(inputDays);
-
     });
   }
 
@@ -552,5 +550,4 @@ class _HomeScreenState extends State<HomeScreen> {
   //     controller: inputController,
   //   );
   // }
-  
 }

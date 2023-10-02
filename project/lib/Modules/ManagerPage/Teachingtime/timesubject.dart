@@ -1,8 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Modules/ManagerPage/Teachingtime/PopUp.dart';
 
-import '../../Component/Header_web.dart';
+// import '../../Component/Header_web.dart';
 
 class Addtime extends StatefulWidget {
   const Addtime({Key? key}) : super(key: key);
@@ -20,7 +21,8 @@ class _AddtimeState extends State<Addtime> {
           itemBuilder: (BuildContext context, int index) {
             return Container(
               margin: EdgeInsets.symmetric(vertical: 5),
-              padding: EdgeInsets.only(top: 10, bottom:10, left: 10, right: 20),
+              padding:
+                  EdgeInsets.only(top: 10, bottom: 10, left: 10, right: 20),
               decoration: decorationadd(),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -31,7 +33,6 @@ class _AddtimeState extends State<Addtime> {
                     child: Text("รหัสวิชา",
                     style: textStylehintbold(),),
                   ),
-                  SizedBox(width: 10,),
                   Expanded(
                     flex: 7,
                     child: Column(
@@ -51,22 +52,23 @@ class _AddtimeState extends State<Addtime> {
                             ),
                           ],
                         ),
-                        Text('ชั้นปีที่มีสิทธิ์',
-                        style: textStylehintbold(),)
+                        Text(
+                          'ชั้นปีที่มีสิทธิ์',
+                          style: textStylehintbold(),
+                        )
                       ],
                     ),
                   ),
                   Expanded(
                     child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 5),
-                      decoration: decorationgreen(),
-                      child: TextButton(
-                        onPressed: () {
-                          openDialog();
-                        },
-                        child: Text('เลือกรายวิชา',
-                        style: textStylewhite()),)
-                    ),
+                        padding: EdgeInsets.symmetric(vertical: 5),
+                        decoration: decorationgreen(),
+                        child: TextButton(
+                          onPressed: () {
+                            openDialog();
+                          },
+                          child: Text('เลือกรายวิชา', style: textStylewhite()),
+                        )),
                   )
                 ],
               ),
@@ -78,7 +80,5 @@ class _AddtimeState extends State<Addtime> {
 
   Future openDialog() => showDialog(
       context: context,
-    builder: (context) => const Dialog(
-      child: HomeScreen())
-  );
+      builder: (context) => const Dialog(child: HomeScreen()));
 }
