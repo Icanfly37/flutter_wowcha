@@ -31,11 +31,17 @@ dependencies:
   flutter:
     sdk: flutter
 
-  firebase_core:
+  firebase_core: ^2.16.0
   network_request: ^0.0.2
   numberpicker: ^2.1.2
   flutter_dropzone: ^3.0.6
   dotted_border: ^2.0.0
+
+  csv: ^5.0.1
+  path_provider: ^2.0.10
+  open_file: ^3.2.1
+
+  excel: ^2.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
