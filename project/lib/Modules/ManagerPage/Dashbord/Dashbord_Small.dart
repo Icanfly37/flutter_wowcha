@@ -53,10 +53,9 @@ class _DashbordSmallState extends State<DashbordSmall> {
     final orientation = MediaQuery.of(context).orientation;
     return FutureBuilder(
         future: _viewModel.get_status(),
-        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-            // ignore: unrelated_type_equality_checks
-            if (_viewModel.get_status() == "จิง") {
+            if (_viewModel.status == true) {
               return const Center(child: Text("ji"));
             } else {
               return const Center(child: Text("Nook"));
