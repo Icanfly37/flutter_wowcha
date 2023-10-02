@@ -8,6 +8,7 @@ import 'package:ku_t/Modules/Component/CustomDataTable.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/PopUp.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/viewmodel.dart';
 import 'package:ku_t/Modules/widget/SearchWidget.dart';
+import 'package:ku_t/Services/apiconnector/callapt.dart';
 
 class DashbordSmall extends StatefulWidget {
   const DashbordSmall({super.key});
@@ -25,7 +26,6 @@ class _DashbordSmallState extends State<DashbordSmall> {
   // ถ้า false จะเป็นไม่พบหลักสูตร ถ้า true คือมีข้อมูลหลักสูตรแล้ว (ข้อมูลจะขึ้นในตาราง)
 
   bool isExist = false;
-  final ViewModel _viewModel = ViewModel();
 
   //TextEditingController coursecodeC = TextEditingController(); //y
   //TextEditingController coursenameC = TextEditingController();
@@ -40,7 +40,6 @@ class _DashbordSmallState extends State<DashbordSmall> {
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
-    get_status_db();
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
@@ -90,16 +89,13 @@ class _DashbordSmallState extends State<DashbordSmall> {
           ),
 
           Container(
-              child: isExist
+              child: (send_status_db({"collection": "เปิดรายวิชา"}) ==
+                      Future.value(true))
                   ? _foundCourse()
                   : _notFoundCourse()), // เงื่อนไขในการขึ้นตารางข้อมูลหลักสูตร (?จะขึ้นตาราง และ :จะขึ้นไม่พบหลักสูตร)
         ],
       ),
     );
-  }
-
-  Future<void> get_status_db() async {
-    isExist = await _viewModel.get_status();
   }
 
   Container _header() {
@@ -146,7 +142,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
                 }
                 return null;
               },
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
               focusColor: Colors.white,
               dropdownColor: Colors.white,
               isExpanded: false,
@@ -277,8 +273,8 @@ class _DashbordSmallState extends State<DashbordSmall> {
   Container _textCourseStructure() {
     return Container(
       alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(top: 8),
-      child: Text(
+      margin: const EdgeInsets.only(top: 8),
+      child: const Text(
         "โครงสร้างรายวิชา",
         // style: textStyleHeadDrop(),
         style: TextStyle(
