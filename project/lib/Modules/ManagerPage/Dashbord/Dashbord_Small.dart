@@ -26,12 +26,8 @@ class _DashbordSmallState extends State<DashbordSmall> {
   // ถ้า false จะเป็นไม่พบหลักสูตร ถ้า true คือมีข้อมูลหลักสูตรแล้ว (ข้อมูลจะขึ้นในตาราง)
   var isExist;
   final ViewModel _viewModel = ViewModel();
-
+  
   @override
-  void initState() {
-    super.initState();
-    isExist = get_status_db();
-  }
 
   Future<bool> get_status_db() async {
     isExist = await _viewModel.get_status();
@@ -51,17 +47,18 @@ class _DashbordSmallState extends State<DashbordSmall> {
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
+    print(isExist.toString()+" : Now");
     return FutureBuilder(
         future: _viewModel.get_status(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (_viewModel.status == true) {
-              return const Center(child: Text("ji"));
+              return _show_table(orientation, _foundCourse());
             } else {
-              return const Center(child: Text("Nook"));
+              return _show_table(orientation, _notFoundCourse());
             }
           } else {
-            return const LinearProgressIndicator();
+            return _show_table(orientation, _notFoundCourse());
           }
         });
   }
@@ -75,6 +72,62 @@ class _DashbordSmallState extends State<DashbordSmall> {
           fontWeight: FontWeight.bold,
           fontSize: 22,
         ),
+      ),
+    );
+  }
+
+  Padding _show_table(Orientation orientation,Widget table){
+    return Padding(
+      padding: const EdgeInsets.all(15.0),
+      child: Column(
+        children: [
+          _header(),
+          const Divider(height: 26),
+          Container(
+              child: orientation == Orientation.portrait //short if/else
+                  ? Column(
+                      //is if
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const SizedBox(height: 4),
+                            _DropdownSelectYear(),
+                            const SizedBox(height: 10),
+                            SearchWidget(),
+                            const SizedBox(height: 18),
+                            _ButtonAdd(),
+                            const SizedBox(height: 10),
+                            _ButtonImportCourse()
+                          ],
+                        ),
+                      ],
+                    )
+                  : Row(
+                      // crossAxisAlignment: CrossAxisAlignment.start,
+                      // mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        _DropdownSelectYear(),
+                        const SizedBox(width: 10),
+                        // Expanded(flex: 3, child: _SearchSubject()),
+                        Expanded(
+                          flex: 3,
+                          child: SearchWidget(),
+                        ),
+                        const SizedBox(width: 50),
+                        Expanded(child: _ButtonAdd()),
+                        const SizedBox(width: 10),
+                        Expanded(child: _ButtonImportCourse())
+                      ],
+                    )),
+          Container(
+            child: _textCourseStructure(),
+          ),
+
+          Container(
+              child: table)
+        ],
       ),
     );
   }
