@@ -175,7 +175,9 @@ class _ProcessImportCourseState extends State<ProcessImportCourse> {
           borderRadius: BorderRadius.circular(15),
           color: const Color.fromRGBO(0, 102, 94, 1)),
       child: TextButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.pushNamed(context, '/');
+        },
         child: const Text(
           'นำเข้าหลักสูตร',
           style: TextStyle(
