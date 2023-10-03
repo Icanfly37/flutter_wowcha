@@ -52,7 +52,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
     //print(isExist.toString()+" : Now");
     return FutureBuilder(
         future: _viewModel.get_status(),
-        builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
+        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             if (_viewModel.status == true) {
               return _show_table(orientation, _foundCourse());
