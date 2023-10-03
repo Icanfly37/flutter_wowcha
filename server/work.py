@@ -5,6 +5,8 @@ from database.DB_Engine import *
 from io import *
 from Excel.rows_and_cols import *
 
+finish_import = False
+
 def get_Current_Path(file_target): #for write
     current_directory = os.getcwd()
     port_path = current_directory.replace("\\", "/")
@@ -64,8 +66,15 @@ def OnExcel(file,db_collection=None):
         for i in range(len(db_collection)):     
             OnDB_C(get_file_path("\database\serviceAccountKey.json"),db_collection[i],pack_for_db[i],i)
     clear_list()
+    global finish_import
+    finish_import = True
     return rows
 
+def reset_status():
+    global finish_import
+    send = finish_import
+    finish_import = False
+    return send
 # path_db = get_file_path("\database\serviceAccountKey.json")
 # a = 50
 # while a != 0:

@@ -58,3 +58,11 @@ async def create_file(file: Annotated[bytes, File()]):
 def upload_file():
     excel_send = "D:/excel_test/ontester.xlsx"
     return FileResponse(excel_send, media_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+#get_status when finish import
+@app.post("/status_import")
+async def status_import():
+    send = reset_status()
+    print(send)
+    return {"status":send}
+    

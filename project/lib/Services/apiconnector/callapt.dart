@@ -186,7 +186,7 @@ Future<bool> send_status_db(final Map<dynamic, dynamic> data) async {
     print("Data sent successfully");
     final jsonResponse = json.decode(utf8.decode(response.bodyBytes));
     bool now =jsonResponse['status'] as bool;
-    print(now);
+    //print(now);
     return now;
   } else {
     // Handle errors here
@@ -195,26 +195,26 @@ Future<bool> send_status_db(final Map<dynamic, dynamic> data) async {
   }
 }
 
-// Future<bool> get_status_db() async{
-//   //final url = Uri.parse('http://127.0.0.1:8000/test_send',Headers()); // Replace with your FastAPI endpoint
-//   //final response = await http.post(url);
-//   final response = await http.post(
-//     Uri.parse('http://127.0.0.1:8000/send_status'),
-//     headers: {"Accept-Charset": "utf-8"}, // Set the charset header
-//   );
-//   if (response.statusCode == 200) {
-//     // If the server returns a 200 OK response, parse the JSON data
-//     //String data = response.body;
-//     //final jsonData = json.decode(utf8.decode(response.body));
-//     final jsonResponse = json.decode(utf8.decode(response.bodyBytes));
-//     bool now =jsonResponse['status'] as bool;
-//     print(now);
-//     return now;
-//     // Process the data as needed
-//     // print(jsonData);
-//     //return jsonData;
-//   } else {
-//     // If the server did not return a 200 OK response, throw an exception
-//     throw Exception('Failed to load data');
-//   }
-// }
+//get import status from backend to frontend
+Future<bool> imported() async{
+  //final url = Uri.parse('http://127.0.0.1:8000/test_send',Headers()); // Replace with your FastAPI endpoint
+  //final response = await http.post(url);
+  final response = await http.post(
+    Uri.parse('http://127.0.0.1:8000/status_import'),
+    headers: {"Accept-Charset": "utf-8"}, // Set the charset header
+  );
+  if (response.statusCode == 200) {
+    // If the server returns a 200 OK response, parse the JSON data
+    //String data = response.body;
+    //final jsonData = json.decode(utf8.decode(response.body));
+    final jsonResponse = json.decode(utf8.decode(response.bodyBytes));
+    bool atnow = jsonResponse as bool;
+    return atnow;
+    // Process the data as needed
+    // print(jsonData);
+    //return jsonData;
+  } else {
+    // If the server did not return a 200 OK response, throw an exception
+    throw Exception('Failed to load data');
+  }
+}

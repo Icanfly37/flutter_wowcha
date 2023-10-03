@@ -22,17 +22,19 @@ class _DashbordSmallState extends State<DashbordSmall> {
   //     FirebaseFirestore.instance.collection('subject');
   // late TextEditingController controller;
   String? selectedValue; //N
-  bool isImport = true;
+
+  // bool isImport = true;
+
   // ถ้า false จะเป็นไม่พบหลักสูตร ถ้า true คือมีข้อมูลหลักสูตรแล้ว (ข้อมูลจะขึ้นในตาราง)
-  var isExist;
+  //var isExist;
   final ViewModel _viewModel = ViewModel();
   
   @override
 
-  Future<bool> get_status_db() async {
-    isExist = await _viewModel.get_status();
-    return isExist;
-  }
+  //Future<bool> get_status_db() async {
+  //  isExist = await _viewModel.get_status();
+  //  return isExist;
+  //}
 
   //TextEditingController coursecodeC = TextEditingController(); //y
   //TextEditingController coursenameC = TextEditingController();
@@ -47,7 +49,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
-    print(isExist.toString()+" : Now");
+    //print(isExist.toString()+" : Now");
     return FutureBuilder(
         future: _viewModel.get_status(),
         builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
