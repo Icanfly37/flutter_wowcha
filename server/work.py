@@ -75,18 +75,15 @@ def reset_status():
     send = finish_import
     finish_import = False
     return send
-# path_db = get_file_path("\database\serviceAccountKey.json")
-# a = 50
-# while a != 0:
-#     print(get_status(path_db,"เปิดการสอน"))
-#     a-=1
-#path = "D:/หลักสูตร.xlsx"
-#OnExcel(path,("รายวิชา","เปิดการสอน"))
-#rows = OnExcel(path)
-#a=get_intel()
-#print(a[0])
-#OnJson("รายวิชา.json","w",a[0])
-#OnJson("เปิดการสอน.json","w",a[1])
-#print(a[1])
-#print("------------------------------------------")
-#print(clear_list())
+
+# path = "D:/หลักสูตร.xlsx"
+# #OnExcel(path,("รายวิชา","เปิดการสอน"))
+# OnExcel(path)
+# rows = OnExcel(path)
+# a=get_intel()
+# print(a[0])
+# OnJson("รายวิชา.json","w",a[0])
+# OnJson("เปิดการสอน.json","w",a[1])
+# print(a[1])
+# print("------------------------------------------")
+# print(clear_list())
