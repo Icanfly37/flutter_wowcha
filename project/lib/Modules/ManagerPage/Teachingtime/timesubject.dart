@@ -13,32 +13,11 @@ class Addtime extends StatefulWidget {
 }
 
 class _AddtimeState extends State<Addtime> {
-  final addsubject =
-      FirebaseFirestore.instance.collection('subjectt').snapshots();
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder(
-      stream: addsubject,
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        }
-
-        if (!snapshot.hasData || snapshot.data == null) {
-          return const Text(
-              'No data available'); // Handle the case where data is null
-        }
-
-        var docs = (snapshot.data! as QuerySnapshot).docs;
-
-        if (docs.isEmpty) {
-          return const Text(
-              'No documents found'); // Handle the case where there are no documents
-        }
-
-        return ListView.builder(
-          itemCount: docs.length,
+    return ListView.builder(
+          // itemCount: docs.length,
           itemBuilder: (BuildContext context, int index) {
             return Container(
               margin: EdgeInsets.symmetric(vertical: 5),
@@ -51,36 +30,25 @@ class _AddtimeState extends State<Addtime> {
                   Container(
                     alignment: Alignment.center,
                     width: 100,
-                    child: Text(
-                      docs[index]['coursecode'],
-                      style: textStylehintbold(),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 10,
+                    child: Text("รหัสวิชา",
+                    style: textStylehintbold(),),
                   ),
                   Expanded(
                     flex: 7,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          docs[index]['coursename'],
-                          style: textStylehintbold(),
-                        ),
-                        Text(
-                          docs[index]['credit'] + ' หน่วยกิต',
-                          style: textStylehint(),
+                        Text("ชื่อวิชา",
+                        style: textStylehintbold(),),
+                        Text('3' + ' หน่วยกิต',
+                        style: textStylehint(),
                         ),
                         Row(
                           children: [
-                            Text(
-                              'อาจารย์ผู้สอน ',
-                              style: textStylehintbold(),
-                            ),
-                            Text(
-                              docs[index]['teachername'],
-                              style: textStylehint(),
+                            Text('อาจารย์ผู้สอน ',
+                            style: textStylehintbold(),),
+                            Text("ชื่ออาจารย์",
+                            style: textStylehint(),
                             ),
                           ],
                         ),
@@ -107,8 +75,7 @@ class _AddtimeState extends State<Addtime> {
             );
           },
         );
-      },
-    );
+    
   }
 
   Future openDialog() => showDialog(

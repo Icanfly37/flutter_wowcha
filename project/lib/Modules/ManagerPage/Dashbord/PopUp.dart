@@ -18,12 +18,12 @@ class _PopupManagerViewState extends State<PopupManagerView> {
   TextEditingController coursecodeC = TextEditingController(); //y
   TextEditingController coursenameC = TextEditingController();
 
-  DashbordModel model = DashbordModel(
-      basicsubjectValue: null,
-      coursecodeCText: null,
-      coursenameCText: null,
-      creditValue: null,
-      teachernameValue: null);
+  // DashbordModel model = DashbordModel(
+  //     basicsubjectValue: null,
+  //     coursecodeCText: null,
+  //     coursenameCText: null,
+  //     creditValue: null,
+  //     teachernameValue: null);
 
   @override
   void dispose() {
@@ -33,32 +33,36 @@ class _PopupManagerViewState extends State<PopupManagerView> {
     super.dispose();
   }
 
+  final _formKey = GlobalKey<FormState>();
+
   DashboardViewModel _viewModel = new DashboardViewModel();
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 500,
       width: 500,
-      padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 30),
+      padding: const EdgeInsets.only(top: 30,left: 30,right: 30,bottom: 30),
       decoration: decorationpop(),
-      child: Column(
-        children: [
-          _title(),
-          const SizedBox(height: 20),
-          Row(children: [
-            _subjectcode(),
-            const SizedBox(width: 10),
-            _caditvalue()
-          ]),
-          const SizedBox(height: 10),
-          _subject(),
-          const SizedBox(height: 10),
-          _teacher(),
-          const SizedBox(height: 10),
-          _basicSubject(),
-          const SizedBox(height: 30),
-          _button()
-        ],
+      child: Form(
+        key: _formKey,
+        child: Column(
+          children: [
+            _title(),
+            const SizedBox(height: 20),
+            Row(children: [
+              _subjectcode(),
+              const SizedBox(width: 10),
+              _caditvalue()
+            ]),
+            const SizedBox(height: 10),
+            _subject(),
+            const SizedBox(height: 10),
+            _teacher(),
+            const SizedBox(height: 10),
+            _basicSubject(),
+            const SizedBox(height: 30),
+            _button()
+          ],
+        ),
       ),
     );
   }
@@ -77,23 +81,27 @@ class _PopupManagerViewState extends State<PopupManagerView> {
         children: [
           Container(
             alignment: Alignment.topLeft,
-            child: Text("รหัสวิชา", style: textStyleHeadDrop()),
-          ),
-          Container(
-            width: MediaQuery.of(context).size.height,
-            decoration: decoration(),
-            child: TextFormField(
-              controller: coursecodeC,
-              keyboardType: TextInputType.number,
-              cursorColor: const Color.fromRGBO(172, 173, 191, 1),
-              decoration: InputDecoration(
-                border: InputBorder.none,
-                hintStyle: textStylehint(),
-                hintText: "รหัสวิชา",
-                // hintStyle: textStyle16(),
-                contentPadding: EdgeInsets.all(15),
-              ),
+            child: Text(
+              "รหัสวิชา",
+              style: textStylehintbold()
             ),
+          ),
+          TextFormField(
+            // maxLength: 11,
+            validator: (value) {
+              if(value!.isEmpty) {
+                return "กรุณากรอกรหัสวิชาให้ถูกด้อง";
+              }
+              else if(!value.contains("-") || value.characters.length != 11)
+                // ignore: curly_braces_in_flow_control_structures
+                return "กรุณากรอกรหัสวิชาให้ถูกด้อง";
+              
+              return null;
+            },
+            controller: coursecodeC,
+            keyboardType: TextInputType.number,
+            cursorColor: const Color.fromRGBO(172, 173, 191, 1),
+            decoration: inputdecorationtext(),
           ),
         ],
       ),
@@ -107,43 +115,41 @@ class _PopupManagerViewState extends State<PopupManagerView> {
         children: [
           Container(
             alignment: Alignment.bottomLeft,
-            child: Text("หน่วยกิต", style: textStyleHeadDrop()),
+            child: Text(
+              "หน่วยกิต",
+              style: textStylehintbold()
+            ),
           ),
-          Container(
-            decoration: decoration(),
-            child: DropdownButtonFormField(
-                hint: Text(
-                  "เลือก",
-                  style: textStylehint(),
-                ),
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.all(15),
-                ),
-                validator: (value) {
-                  if (value == null) {
-                    return "";
-                  }
-                  return null;
-                },
-                focusColor: Colors.white,
-                dropdownColor: Colors.white,
-                isExpanded: false,
-                value: model.creditValue,
-                items: credit
-                    .map((e) => DropdownMenuItem<String>(
-                        value: e.title,
-                        child: Text(
-                          e.title!,
-                          style: textStylehint(),
-                        )))
-                    .toList(),
-                onChanged: (value) {
-                  setState(() {
-                    model.creditValue = value.toString();
-                  });
-                }),
-          ),
+          DropdownButtonFormField(
+              hint: Text(
+                "เลือก",
+                style: textStylehint(),
+              ),
+              validator: (value) {
+                if (value == null) {
+                  return "กรุณาเลือกหน่วยกิต";
+                }
+                return null;
+              },
+              // decoration: const InputDecoration(
+              //   border: InputBorder.none,
+              //   contentPadding: EdgeInsets.all(15),
+              // ),
+              decoration: inputdecorationtext(),
+              focusColor: Colors.white,
+              dropdownColor: Colors.white,
+              // isExpanded: false,
+              // value: model.creditValue,
+              items: credit
+                  .map((e) => DropdownMenuItem<String>(
+                      value: e.title, child: Text(e.title!,
+                      style: textStylehint(),)))
+                  .toList(),
+              onChanged: (value) {
+                setState(() {
+                  // model.creditValue = value.toString();
+                });
+              }),
         ],
       ),
     );
@@ -159,20 +165,17 @@ class _PopupManagerViewState extends State<PopupManagerView> {
             style: textStyleHeadDrop(),
           ),
         ),
-        Container(
-          // width: MediaQuery.of(context).size.height,
-          decoration: decoration(),
-          child: TextFormField(
-            controller: coursenameC,
-            keyboardType: TextInputType.number,
-            cursorColor: const Color.fromRGBO(172, 173, 191, 1),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              hintStyle: textStylehint(),
-              hintText: "ชื่อรายวิชา",
-              contentPadding: EdgeInsets.all(15),
-            ),
-          ),
+        TextFormField(
+          validator: (value) {
+              if(value!.isEmpty) {
+                return "กรุณากรอกชื่อรายวิชาให้ถูกด้อง";
+              }
+              return null;
+            },
+          controller: coursenameC,
+          keyboardType: TextInputType.number,
+          cursorColor: const Color.fromRGBO(172, 173, 191, 1),
+          decoration: inputdecorationtext(),
         ),
       ],
     );
@@ -186,44 +189,35 @@ class _PopupManagerViewState extends State<PopupManagerView> {
           alignment: Alignment.bottomLeft,
           child: Text(
             "อาจารย์ผู้สอน",
-            style: textStyleHeadDrop(),
+            style: textStylehintbold(),
           ),
         ),
-        Container(
-          decoration: decoration(),
-          child: DropdownButtonFormField(
-              hint: Text(
-                "อาจารย์ผู้สอน",
-                style: textStylehint(),
-              ),
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.all(15),
-              ),
-              validator: (value) {
-                if (value == null) {
-                  return "";
-                }
-                return null;
-              },
-              focusColor: Colors.white,
-              dropdownColor: Colors.white,
-              isExpanded: false,
-              value: model.teachernameValue,
-              items: teachername
-                  .map((e) => DropdownMenuItem<String>(
-                      value: e.title,
-                      child: Text(
-                        e.title!,
-                        style: textStylehint(),
-                      )))
-                  .toList(),
-              onChanged: (value) {
-                setState(() {
-                  model.teachernameValue = value.toString();
-                });
-              }),
-        ),
+        DropdownButtonFormField(
+            hint: Text(
+              "อาจารย์ผู้สอน",
+              style: textStylehint(),
+            ),
+            decoration: inputdecorationtext(),
+            validator: (value) {
+              if (value == null) {
+                return "กรุณาเลือกอาจารย์ผู้สอน";
+              }
+              return null;
+            },
+            focusColor: Colors.white,
+            dropdownColor: Colors.white,
+            isExpanded: false,
+            // value: model.teachernameValue,
+            items: teachername
+                .map((e) => DropdownMenuItem<String>(
+                    value: e.title, child: Text(e.title!,
+                    style: textStylehint(),)))
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                // model.teachernameValue = value.toString();
+              });
+            }),
       ],
     );
   }
@@ -236,44 +230,35 @@ class _PopupManagerViewState extends State<PopupManagerView> {
           alignment: Alignment.bottomLeft,
           child: Text(
             "วิชาพื้นฐาน",
-            style: textStyleHeadDrop(),
+            style: textStylehintbold(),
           ),
         ),
-        Container(
-          decoration: decoration(),
-          child: DropdownButtonFormField(
-              hint: Text(
-                "วิชาพื้นฐาน",
-                style: textStylehint(),
-              ),
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.all(15),
-              ),
-              validator: (value) {
-                if (value == null) {
-                  return "";
-                }
-                return null;
-              },
-              focusColor: Colors.white,
-              dropdownColor: Colors.white,
-              isExpanded: false,
-              value: model.basicsubjectValue,
-              items: basicsubject //แก้
-                  .map((e) => DropdownMenuItem<String>(
-                      value: e.title,
-                      child: Text(
-                        e.title!,
-                        style: textStylehint(),
-                      )))
-                  .toList(),
-              onChanged: (value) {
-                setState(() {
-                  model.basicsubjectValue = value.toString();
-                });
-              }),
-        ),
+        DropdownButtonFormField(
+            hint: Text(
+              "วิชาพื้นฐาน",
+              style: textStylehint(),
+            ),
+            decoration: inputdecorationtext(),
+            validator: (value) {
+              if (value == null) {
+                return "กรุณาเลือกวิชาพื้นฐาน";
+              }
+              return null;
+            },
+            focusColor: Colors.white,
+            dropdownColor: Colors.white,
+            isExpanded: false,
+            // value: model.basicsubjectValue,
+            items: basicsubject //แก้
+                .map((e) => DropdownMenuItem<String>(
+                    value: e.title, child: Text(e.title!,
+                    style: textStylehint(),)))
+                .toList(),
+            onChanged: (value) {
+              setState(() {
+                // model.basicsubjectValue = value.toString();
+              });
+            }),
       ],
     );
   }
@@ -287,9 +272,14 @@ class _PopupManagerViewState extends State<PopupManagerView> {
             decoration: decorationgreen(),
             child: TextButton(
               onPressed: () {
-                model.coursecodeCText = coursecodeC.text;
-                model.coursenameCText = coursenameC.text;
-                _viewModel.adddata(model: model, context: context);
+                if(_formKey.currentState!.validate()) {
+                  print("Validated");
+                } else {
+                  print("Not Validated");
+                }
+                // model.coursecodeCText = coursecodeC.text;
+                // model.coursenameCText = coursenameC.text;
+                // _viewModel.adddata(model: model, context: context);
               },
               child: Text(
                 "ตกลง",

@@ -24,10 +24,13 @@ app.add_middleware(
 def read_root():
     return {"message": "Hello, World!"}
 
-#senddata
-@app.post("/test")
-def read_root():
-    return {0: {"Test": {"message": "Hello, World!"}}}
+#get status data
+@app.post("/detect_collection")
+def read_item(target:dict):
+    name = target["collection"]
+    status = get_status(get_file_path("\database\serviceAccountKey.json"),name)
+    print(status)
+    return {"status" : status}
 
 #stub/driver
 @app.post("/test_send")
@@ -55,3 +58,11 @@ async def create_file(file: Annotated[bytes, File()]):
 def upload_file():
     excel_send = "D:/excel_test/ontester.xlsx"
     return FileResponse(excel_send, media_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+
+#get_status when finish import
+@app.post("/status_import")
+async def status_import():
+    send = reset_status()
+    print(send)
+    return {"status":send}
+    

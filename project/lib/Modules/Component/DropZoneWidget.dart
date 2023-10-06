@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 // import 'dart:ui_web';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
+import 'package:ku_t/Modules/ManagerPage/Dashbord/viewmodel.dart';
 import 'package:ku_t/Services/apiconnector/callapt.dart';
 import 'package:unicons/unicons.dart';
 import 'package:http_parser/http_parser.dart';
@@ -22,7 +23,7 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
   //late DropzoneViewController controller;
   late DropzoneViewController controller;
   bool isHightlighted = false;
-
+  final ViewModel _viewModel = ViewModel();
   @override
   Widget build(BuildContext context) {
     final colorBackground =
@@ -92,7 +93,7 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
                   acceptFile(events.first);
                 },
               ),
-
+              
               // ปุ่มเทส จะลบออกตอนเขียนเงื่อนไขโชว์ข้อมูลในตารางแล้ว
               const SizedBox(height: 10),
               ElevatedButton(
@@ -149,5 +150,7 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
     await sendExcelFile(ffile,bytes);
 
     setState(() => isHightlighted = false);
+    Navigator.pushNamed(context, '/importcourse');
   }
+
 }

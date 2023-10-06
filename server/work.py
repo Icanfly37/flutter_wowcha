@@ -5,6 +5,8 @@ from database.DB_Engine import *
 from io import *
 from Excel.rows_and_cols import *
 
+finish_import = False
+
 def get_Current_Path(file_target): #for write
     current_directory = os.getcwd()
     port_path = current_directory.replace("\\", "/")
@@ -44,7 +46,13 @@ def OnDB_C(cred,collection_name,target,onnow):
         db.create_doc(i,str(id))
         #id += 1
     db.close_db()
-    
+
+def get_status(cred,collection):   
+    db = Database(cred)
+    db.get_db()
+    status = db.check_exist_collection(collection)#check_exist_collection(self,collection_target) 
+    db.close_db()
+    return status
 
 def OnExcel(file,db_collection=None):
     ExcelOP = Excel(BytesIO(file))
@@ -58,15 +66,24 @@ def OnExcel(file,db_collection=None):
         for i in range(len(db_collection)):     
             OnDB_C(get_file_path("\database\serviceAccountKey.json"),db_collection[i],pack_for_db[i],i)
     clear_list()
+    global finish_import
+    finish_import = True
     return rows
 
-#path = "D:/หลักสูตร.xlsx"
-#OnExcel(path,("รายวิชา","เปิดการสอน"))
-#rows = OnExcel(path)
-#a=get_intel()
-#print(a[0])
-#OnJson("รายวิชา.json","w",a[0])
-#OnJson("เปิดการสอน.json","w",a[1])
-#print(a[1])
-#print("------------------------------------------")
-#print(clear_list())
+def reset_status():
+    global finish_import
+    send = finish_import
+    finish_import = False
+    return send
+
+# path = "D:/หลักสูตร.xlsx"
+# #OnExcel(path,("รายวิชา","เปิดการสอน"))
+# OnExcel(path)
+# rows = OnExcel(path)
+# a=get_intel()
+# print(a[0])
+# OnJson("รายวิชา.json","w",a[0])
+# OnJson("เปิดการสอน.json","w",a[1])
+# print(a[1])
+# print("------------------------------------------")
+# print(clear_list())

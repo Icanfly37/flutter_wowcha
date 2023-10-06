@@ -94,6 +94,12 @@ def sub_object_send(id,header,slave):
                     pre = slave[i].split(",")
                 elif "/" in slave[i]:
                     pre = slave[i].split("/")
+                elif "และ" in slave[i]:
+                    intro = slave[i].split("และ")
+                    pre = []
+                    for j in intro:
+                        pre.append(j.replace(" ",""))
+                    #pre = slave[i].split("และ")
                 else:
                     pre = [slave[i]]
             else:

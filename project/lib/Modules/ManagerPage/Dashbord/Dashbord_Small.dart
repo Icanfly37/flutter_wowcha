@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:ku_t/Models/status_db.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Modules/Dropdown/YearModel.dart';
 import 'package:ku_t/Modules/Component/CustomDataTable.dart';
 // import 'package:ku_t/Modules/Component/Header_web.dart';
 // import 'package:ku_t/Modules/Dropdown/YearModel.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/PopUp.dart';
+import 'package:ku_t/Modules/ManagerPage/Dashbord/viewmodel.dart';
 import 'package:ku_t/Modules/widget/SearchWidget.dart';
+import 'package:ku_t/Services/apiconnector/callapt.dart';
 
 class DashbordSmall extends StatefulWidget {
   const DashbordSmall({super.key});
@@ -17,24 +20,65 @@ class DashbordSmall extends StatefulWidget {
 class _DashbordSmallState extends State<DashbordSmall> {
   // CollectionReference addsubject =
   //     FirebaseFirestore.instance.collection('subject');
-  late TextEditingController controller;
+  // late TextEditingController controller;
   String? selectedValue; //N
-  bool isImport =
-      true; // ถ้า false จะเป็นไม่พบหลักสูตร ถ้า true คือมีข้อมูลหลักสูตรแล้ว (ข้อมูลจะขึ้นในตาราง)
+
+  // bool isImport = true;
+
+  // ถ้า false จะเป็นไม่พบหลักสูตร ถ้า true คือมีข้อมูลหลักสูตรแล้ว (ข้อมูลจะขึ้นในตาราง)
+  //var isExist;
+  final ViewModel _viewModel = ViewModel();
+  
+  @override
+
+  //Future<bool> get_status_db() async {
+  //  isExist = await _viewModel.get_status();
+  //  return isExist;
+  //}
 
   //TextEditingController coursecodeC = TextEditingController(); //y
   //TextEditingController coursenameC = TextEditingController();
 
-  @override
-  void dispose() {
-    controller.dispose();
+  // @override
+  // void dispose() {
+  //   controller.dispose();
 
-    super.dispose();
-  }
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
+    //print(isExist.toString()+" : Now");
+    return FutureBuilder(
+        future: _viewModel.get_status(),
+        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            if (_viewModel.status == true) {
+              return _show_table(orientation, _foundCourse());
+            } else {
+              return _show_table(orientation, _notFoundCourse());
+            }
+          } else {
+            return _show_table(orientation, _notFoundCourse());
+          }
+        });
+  }
+
+  Container _header() {
+    return Container(
+      alignment: Alignment.topLeft,
+      child: const Text(
+        "การจัดการข้อมูลหลักสูตร",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 22,
+        ),
+      ),
+    );
+  }
+
+  Padding _show_table(Orientation orientation,Widget table){
     return Padding(
       padding: const EdgeInsets.all(15.0),
       child: Column(
@@ -84,23 +128,8 @@ class _DashbordSmallState extends State<DashbordSmall> {
           ),
 
           Container(
-              child: isImport
-                  ? _foundCourse()
-                  : _notFoundCourse()), // เงื่อนไขในการขึ้นตารางข้อมูลหลักสูตร (?จะขึ้นตาราง และ :จะขึ้นไม่พบหลักสูตร)
+              child: table)
         ],
-      ),
-    );
-  }
-
-  Container _header() {
-    return Container(
-      alignment: Alignment.topLeft,
-      child: const Text(
-        "การจัดการข้อมูลหลักสูตร",
-        style: TextStyle(
-          fontWeight: FontWeight.bold,
-          fontSize: 22,
-        ),
       ),
     );
   }
@@ -136,7 +165,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
                 }
                 return null;
               },
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
               focusColor: Colors.white,
               dropdownColor: Colors.white,
               isExpanded: false,
@@ -267,8 +296,8 @@ class _DashbordSmallState extends State<DashbordSmall> {
   Container _textCourseStructure() {
     return Container(
       alignment: Alignment.topLeft,
-      margin: EdgeInsets.only(top: 8),
-      child: Text(
+      margin: const EdgeInsets.only(top: 8),
+      child: const Text(
         "โครงสร้างรายวิชา",
         // style: textStyleHeadDrop(),
         style: TextStyle(
