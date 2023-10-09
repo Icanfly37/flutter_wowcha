@@ -52,8 +52,6 @@ class Database():
             if coll_ref.id == collection_target:
                 return True
         return False
-    def get_all_doc(self):
-        return self.collection.stream()
 
 
 # #Initialize database
