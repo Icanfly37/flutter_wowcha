@@ -3,6 +3,7 @@ import 'package:ku_t/Models/status_db.dart';
 import 'package:ku_t/Modules/Component/CustomDataTable.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Services/apiconnector/callapt.dart';
+
 // import 'Modules/Home/Home_View.dart';
 // import 'Services/firebase.dart';
 // import 'Services/apiconnector/callapt.dart';
@@ -26,15 +27,16 @@ class _Table_status_State extends State<Table_status> {
         useMaterial3: true,
       ),
       home: FutureBuilder<void>(
-        future: send_status_db({"collection":"เปิดการสอน"}), // a previously-obtained Future<String> or null
+        future: send_status_db({
+          "collection": "เปิดการสอน"
+        }), // a previously-obtained Future<String> or null
         builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
-             if (send_status_db({"collection":"เปิดการสอน"}) == true){
-                return _foundCourse();
-             }
-             else{
-               return _notFoundCourse();
-             }
+            if (send_status_db({"collection": "เปิดการสอน"}) == true) {
+              return _foundCourse();
+            } else {
+              return _notFoundCourse();
+            }
           } else {
             return _notFoundCourse();
           }
@@ -42,6 +44,7 @@ class _Table_status_State extends State<Table_status> {
       ),
     );
   }
+
   Container _foundCourse() {
     return Container(
       // width: MediaQuery.of(context).size.width,
@@ -255,6 +258,7 @@ class _Table_status_State extends State<Table_status> {
       ),
     );
   }
+
   Container _notFoundCourse() {
     final orientation = MediaQuery.of(context).orientation;
     return Container(

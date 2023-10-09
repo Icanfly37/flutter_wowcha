@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ku_t/Modules/Component/PaginatedDataTable_process.dart';
 // import 'package:unicons/unicons.dart';
 
 class ProcessImportCourse extends StatefulWidget {
@@ -84,7 +85,7 @@ class _ProcessImportCourseState extends State<ProcessImportCourse> {
           //   child: _textCourseStructure(),
           // ),
           const SizedBox(height: 15),
-          Container(child: _TableCourseData()),
+          Container(child: PaginatedTableProcess()),
           // if (isImport==true) {
           //   Container(child: _foundCourse()),
           // }
@@ -230,159 +231,159 @@ class _ProcessImportCourseState extends State<ProcessImportCourse> {
     );
   }
 
-  Container _TableCourseData() {
-    return Container(
-      // width: MediaQuery.of(context).size.width,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Container(
-              padding: const EdgeInsets.only(top: 10),
-              child: DataTable(
-                  dataRowHeight: 40,
-                  headingRowHeight: 40,
-                  headingRowColor: MaterialStateProperty.resolveWith(
-                    (states) => const Color.fromRGBO(
-                        227, 227, 227, 1), // สีของ headingRow
-                  ),
-                  columns: [
-                    DataColumn(
-                        label: Text(
-                      'ลำดับ',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                    )),
-                    DataColumn(
-                        label: Text(
-                      'รหัสวิชา',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                    )),
-                    DataColumn(
-                        label: Text(
-                      'ชื่อรายวิชา',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                    )),
-                    DataColumn(
-                        label: Text(
-                      'หน่วยกิต',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                    )),
-                    DataColumn(
-                        label: Text(
-                      'วิชาพื้นฐาน',
-                      style:
-                          TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                    )),
-                    // DataColumn(
-                    //     label: Text(
-                    //   'จัดการข้อมูล',
-                    //   style:
-                    //       TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
-                    // )),
-                  ],
-                  rows: List.generate(
-                      10, // กำหนดให้ตารางขึ้น 10 rows
-                      (index) => DataRow(
-                            color: MaterialStateColor.resolveWith((states) {
-                              // กำหนดสีแต่ละแถวตาม index
-                              if (index % 2 == 0) {
-                                return Colors.white; // สีขาวสลับกับสีเทา
-                              } else {
-                                return Color.fromRGBO(246, 246, 246, 1);
-                              }
-                            }),
-                            cells: [
-                              DataCell(Text('ข้อมูล ${index + 1}')),
-                              DataCell(Text('ข้อมูล ${index + 1}')),
-                              DataCell(Text('ข้อมูล ${index + 1}')),
-                              DataCell(Text('ข้อมูล ${index + 1}')),
-                              DataCell(Text('ข้อมูล ${index + 1}')),
-                              // DataCell(
-                              //   Row(
-                              //     children: [
-                              //       IconButton(
-                              //         icon: Icon(
-                              //           Icons.edit,
-                              //           size: 18,
-                              //           color: Color.fromRGBO(114, 114, 114, 1),
-                              //         ),
-                              //         // iconSize: 10,
-                              //         onPressed: () {
-                              //           // แก้ไขข้อมูล
-                              //           print('แก้ไขแถวที่ $index');
-                              //         },
-                              //       ),
-                              //       IconButton(
-                              //         icon: Icon(
-                              //           Icons.delete,
-                              //           size: 18,
-                              //           color: Color.fromRGBO(114, 114, 114, 1),
-                              //         ),
-                              //         // iconSize: 10,
-                              //         onPressed: () {
-                              //           // ลบข้อมูล
-                              //           print('ลบแถวที่ $index');
-                              //         },
-                              //       ),
-                              //     ],
-                              //   ),
-                              // ),
-                            ],
-                          )))),
-          // ส่วนปุ่มกดเปลี่ยนหน้าของตาราง
-          Container(
-            padding: const EdgeInsets.only(top: 10),
-            // alignment: Alignment.topRight,
-            // mainAxisAlignment: MainAxisAlignment.end,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  child: Text(
-                    "หน้า",
-                    style: TextStyle(
-                      fontSize: 14,
-                      // fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "1",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "2",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "3",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    "See All",
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  // Container _TableCourseData() {
+  //   return Container(
+  //     // width: MediaQuery.of(context).size.width,
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.stretch,
+  //       children: [
+  //         Container(
+  //             padding: const EdgeInsets.only(top: 10),
+  //             child: DataTable(
+  //                 dataRowHeight: 40,
+  //                 headingRowHeight: 40,
+  //                 headingRowColor: MaterialStateProperty.resolveWith(
+  //                   (states) => const Color.fromRGBO(
+  //                       227, 227, 227, 1), // สีของ headingRow
+  //                 ),
+  //                 columns: [
+  //                   DataColumn(
+  //                       label: Text(
+  //                     'ลำดับ',
+  //                     style:
+  //                         TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+  //                   )),
+  //                   DataColumn(
+  //                       label: Text(
+  //                     'รหัสวิชา',
+  //                     style:
+  //                         TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+  //                   )),
+  //                   DataColumn(
+  //                       label: Text(
+  //                     'ชื่อรายวิชา',
+  //                     style:
+  //                         TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+  //                   )),
+  //                   DataColumn(
+  //                       label: Text(
+  //                     'หน่วยกิต',
+  //                     style:
+  //                         TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+  //                   )),
+  //                   DataColumn(
+  //                       label: Text(
+  //                     'วิชาพื้นฐาน',
+  //                     style:
+  //                         TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+  //                   )),
+  //                   // DataColumn(
+  //                   //     label: Text(
+  //                   //   'จัดการข้อมูล',
+  //                   //   style:
+  //                   //       TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+  //                   // )),
+  //                 ],
+  //                 rows: List.generate(
+  //                     10, // กำหนดให้ตารางขึ้น 10 rows
+  //                     (index) => DataRow(
+  //                           color: MaterialStateColor.resolveWith((states) {
+  //                             // กำหนดสีแต่ละแถวตาม index
+  //                             if (index % 2 == 0) {
+  //                               return Colors.white; // สีขาวสลับกับสีเทา
+  //                             } else {
+  //                               return Color.fromRGBO(246, 246, 246, 1);
+  //                             }
+  //                           }),
+  //                           cells: [
+  //                             DataCell(Text('ข้อมูล ${index + 1}')),
+  //                             DataCell(Text('ข้อมูล ${index + 1}')),
+  //                             DataCell(Text('ข้อมูล ${index + 1}')),
+  //                             DataCell(Text('ข้อมูล ${index + 1}')),
+  //                             DataCell(Text('ข้อมูล ${index + 1}')),
+  //                             // DataCell(
+  //                             //   Row(
+  //                             //     children: [
+  //                             //       IconButton(
+  //                             //         icon: Icon(
+  //                             //           Icons.edit,
+  //                             //           size: 18,
+  //                             //           color: Color.fromRGBO(114, 114, 114, 1),
+  //                             //         ),
+  //                             //         // iconSize: 10,
+  //                             //         onPressed: () {
+  //                             //           // แก้ไขข้อมูล
+  //                             //           print('แก้ไขแถวที่ $index');
+  //                             //         },
+  //                             //       ),
+  //                             //       IconButton(
+  //                             //         icon: Icon(
+  //                             //           Icons.delete,
+  //                             //           size: 18,
+  //                             //           color: Color.fromRGBO(114, 114, 114, 1),
+  //                             //         ),
+  //                             //         // iconSize: 10,
+  //                             //         onPressed: () {
+  //                             //           // ลบข้อมูล
+  //                             //           print('ลบแถวที่ $index');
+  //                             //         },
+  //                             //       ),
+  //                             //     ],
+  //                             //   ),
+  //                             // ),
+  //                           ],
+  //                         )))),
+  //         // ส่วนปุ่มกดเปลี่ยนหน้าของตาราง
+  //         Container(
+  //           padding: const EdgeInsets.only(top: 10),
+  //           // alignment: Alignment.topRight,
+  //           // mainAxisAlignment: MainAxisAlignment.end,
+  //           child: Row(
+  //             mainAxisAlignment: MainAxisAlignment.end,
+  //             children: [
+  //               Container(
+  //                 child: Text(
+  //                   "หน้า",
+  //                   style: TextStyle(
+  //                     fontSize: 14,
+  //                     // fontWeight: FontWeight.bold,
+  //                   ),
+  //                 ),
+  //               ),
+  //               TextButton(
+  //                 onPressed: () {},
+  //                 child: Text(
+  //                   "1",
+  //                   style: TextStyle(color: Colors.black),
+  //                 ),
+  //               ),
+  //               TextButton(
+  //                 onPressed: () {},
+  //                 child: Text(
+  //                   "2",
+  //                   style: TextStyle(color: Colors.black),
+  //                 ),
+  //               ),
+  //               TextButton(
+  //                 onPressed: () {},
+  //                 child: Text(
+  //                   "3",
+  //                   style: TextStyle(color: Colors.black),
+  //                 ),
+  //               ),
+  //               TextButton(
+  //                 onPressed: () {},
+  //                 child: Text(
+  //                   "See All",
+  //                   style: TextStyle(color: Colors.black),
+  //                 ),
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }
 // }

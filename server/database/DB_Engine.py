@@ -57,8 +57,6 @@ class Database():
                 else:
                     return True
         return False
-    def get_all_doc(self):
-        return self.collection.stream()
 
 
 # #Initialize database
