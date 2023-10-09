@@ -6,6 +6,7 @@ import 'package:ku_t/Modules/Dropdown/CraditModel.dart';
 import 'package:ku_t/Modules/Dropdown/TeachernameModel.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/Dashbord_Model.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/Dashbord_ViewModel.dart';
+import 'package:ku_t/Modules/ManagerPage/Dashbord/viewmodel.dart';
 
 class PopupManagerView extends StatefulWidget {
   const PopupManagerView({super.key});
@@ -26,7 +27,6 @@ class _PopupManagerViewState extends State<PopupManagerView> {
   //     coursenameCText: null,
   //     creditValue: null,
   //     teachernameValue: null);
-
   @override
   void dispose() {
     coursecodeC.dispose();
@@ -37,7 +37,8 @@ class _PopupManagerViewState extends State<PopupManagerView> {
 
   final _formKey = GlobalKey<FormState>();
 
-  DashboardViewModel _viewModel = new DashboardViewModel();
+  //DashboardViewModel _viewModel = new DashboardViewModel();
+  ViewModel _viewModel = new ViewModel();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -275,15 +276,20 @@ class _PopupManagerViewState extends State<PopupManagerView> {
             child: TextButton(
               onPressed: () {
                 if(_formKey.currentState!.validate()) {
-                  print("Validated");
+                  //print("Validated");
+                  print(coursecodeC.text);
+                  print(coursenameC.text);
+                  print(creditValue.toString());
+                  print(basicsubjectValue.toString());
+                  print(teachernameValue.toString());
                 } else {
                   print("Not Validated");
                 }
-                print(coursecodeC.text);
-                print(coursenameC.text);
-                print(creditValue.toString());
-                print(basicsubjectValue.toString());
-                print(teachernameValue.toString());
+                // print(coursecodeC.text);
+                // print(coursenameC.text);
+                // print(creditValue.toString());
+                // print(basicsubjectValue.toString());
+                // print(teachernameValue.toString());
               },
               child: Text(
                 "ตกลง",
