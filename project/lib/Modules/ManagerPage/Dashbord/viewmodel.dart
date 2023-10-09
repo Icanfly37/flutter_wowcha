@@ -5,7 +5,7 @@ class ViewModel {
   bool status = false;
   bool now_import = false;
   Future<void> get_status() async {
-    status = await send_status_db({"collection": "เปิดการสอน"});
+    status = await send_status_db({"collection": "รายวิชา"});
   }
   Future<bool> Is_Import() async {
     now_import = await imported();

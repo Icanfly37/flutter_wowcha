@@ -50,7 +50,12 @@ class Database():
         # Check if the target collection exists
         for coll_ref in collections:
             if coll_ref.id == collection_target:
-                return True
+                is_collection = self.db.collection(collection_target)
+                docs = is_collection.stream()
+                if not docs:
+                    return False
+                else:
+                    return True
         return False
     def get_all_doc(self):
         return self.collection.stream()
