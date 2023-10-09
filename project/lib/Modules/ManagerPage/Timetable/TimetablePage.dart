@@ -8,7 +8,6 @@ import 'package:ku_t/Modules/Dropdown/SemesterModel.dart';
 import 'package:ku_t/Modules/Dropdown/YearSModel.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
-
 class TimetablePage extends StatefulWidget {
   const TimetablePage({super.key});
 
@@ -31,29 +30,24 @@ class _TimetablePageState extends State<TimetablePage> {
     padding: EdgeInsets.only(bottom: 20,top: 20),
     child: SizedBox());
 
-  Widget coloredBox(Widget child, {bool top = false, bool bottom = false}) => 
-    Container(
-      decoration: BoxDecoration(
-        border: Border(
-          top: BorderSide(
-            color: top ? Colors.blue.shade900 : Colors.transparent,
-            width: 2
-          ),
-          bottom: BorderSide(
-            color: top ? Colors.blue.shade900 : Colors.transparent,
-            width: 2
-          ),
-          left: BorderSide(
-            color: top ? Colors.blue.shade900 : Colors.transparent,
-            width: 2
-          ),
-          right: BorderSide(
-            color: top ? Colors.blue.shade900 : Colors.transparent,
-            width: 2
-          ))
-      ),
-      child: child,
-    );
+  Widget coloredBox(Widget child, {bool top = false, bool bottom = false}) =>
+      Container(
+        decoration: BoxDecoration(
+            border: Border(
+                top: BorderSide(
+                    color: top ? Colors.blue.shade900 : Colors.transparent,
+                    width: 2),
+                bottom: BorderSide(
+                    color: top ? Colors.blue.shade900 : Colors.transparent,
+                    width: 2),
+                left: BorderSide(
+                    color: top ? Colors.blue.shade900 : Colors.transparent,
+                    width: 2),
+                right: BorderSide(
+                    color: top ? Colors.blue.shade900 : Colors.transparent,
+                    width: 2))),
+        child: child,
+      );
 
   @override
   Widget build(BuildContext context) {
@@ -685,9 +679,28 @@ class _TimetablePageState extends State<TimetablePage> {
                 ]
               ),
             ],
-            ),
-            
+          ),
         ),
       );
+  }
+
+  Container _DownloadFileExcel() {
+    final orientation = MediaQuery.of(context).orientation;
+    return Container(
+        margin: orientation == Orientation.portrait
+            ? null
+            : EdgeInsets.only(top: 20),
+        width: MediaQuery.of(context).size.width,
+        height: 50,
+        // width: 100,
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        decoration: decorationgreen(),
+        child: TextButton(
+          onPressed: () {},
+          child: Text(
+            'ดาวน์โหลดไฟล์ excel',
+            style: textStylewhite(),
+          ),
+        ));
   }
 }

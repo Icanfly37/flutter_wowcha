@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 
 // import 'dart:ui_web';
 import 'package:flutter_dropzone/flutter_dropzone.dart';
+import 'package:ku_t/Modules/ManagerPage/Dashbord/viewmodel.dart';
 import 'package:ku_t/Services/apiconnector/callapt.dart';
 import 'package:unicons/unicons.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:mime/mime.dart';
-
-
+// import 'package:file_picker/file_picker.dart';
+// import 'package:mime/mime.dart';
 
 class DropZoneWidget extends StatefulWidget {
   const DropZoneWidget({super.key});
@@ -22,11 +21,11 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
   //late DropzoneViewController controller;
   late DropzoneViewController controller;
   bool isHightlighted = false;
-
+  final ViewModel _viewModel = ViewModel();
   @override
   Widget build(BuildContext context) {
-    final colorBackground =
-        isHightlighted ? Color.fromRGBO(240, 249, 241, 1) : Colors.white;
+    // final colorBackground =
+    //     isHightlighted ? Color.fromRGBO(240, 249, 241, 1) : Colors.white;
     final colorButton = isHightlighted
         ? Color.fromRGBO(195, 231, 196, 1)
         : Color.fromRGBO(200, 200, 200, 1);
@@ -146,8 +145,9 @@ class _DropZoneWidgetState extends State<DropZoneWidget> {
     // print('Url: $url');
     // print('FileBytes: $file');
     //print(event.bytes);
-    await sendExcelFile(ffile,bytes);
+    await sendExcelFile(ffile, bytes);
 
     setState(() => isHightlighted = false);
+    Navigator.pushNamed(context, '/importcourse');
   }
 }

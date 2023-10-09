@@ -45,6 +45,15 @@ class Database():
             i.reference.delete()
     def close_db(self):
         firebase_admin.delete_app(firebase_admin.get_app())
+    def check_exist_collection(self,collection_target):
+        collections = self.db.collections()
+        # Check if the target collection exists
+        for coll_ref in collections:
+            if coll_ref.id == collection_target:
+                return True
+        return False
+    def get_all_doc(self):
+        return self.collection.stream()
 
 
 # #Initialize database
