@@ -50,6 +50,7 @@ class _TimetablePageState extends State<TimetablePage> {
                         SizedBox(
                           height: 10,
                         ),
+                        _DownloadFileExcel(),
                         // SearchBarWidget(
                         //     isReadOnly: true,
                         //     hasBackButton: false,
@@ -70,19 +71,20 @@ class _TimetablePageState extends State<TimetablePage> {
                             ),
                             Expanded(child: _checkBox()),
                             SizedBox(
-                              width: 10,
+                              width: 175,
                             ),
-                            // Expanded(
-                            //   child: SearchBarWidget(
-                            //     isReadOnly: true,
-                            //     hasBackButton: false,
-                            //   ),
-                            //   )       ,
+                            Expanded(
+                              // child: SearchBarWidget(
+                              //   isReadOnly: true,
+                              //   hasBackButton: false,
+                              // ),
+                              child: _DownloadFileExcel(),
+                            ),
                           ],
                         ),
-                        SizedBox(
-                          height: 10,
-                        ),
+                        // SizedBox(
+                        //   height: 10,
+                        // ),
                         // Container(
                         //   height: 450,
                         //   child: Addtime())
@@ -301,5 +303,25 @@ class _TimetablePageState extends State<TimetablePage> {
         ),
       ),
     );
+  }
+
+  Container _DownloadFileExcel() {
+    final orientation = MediaQuery.of(context).orientation;
+    return Container(
+        margin: orientation == Orientation.portrait
+            ? null
+            : EdgeInsets.only(top: 20),
+        width: MediaQuery.of(context).size.width,
+        height: 50,
+        // width: 100,
+        padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        decoration: decorationgreen(),
+        child: TextButton(
+          onPressed: () {},
+          child: Text(
+            'ดาวน์โหลดไฟล์ excel',
+            style: textStylewhite(),
+          ),
+        ));
   }
 }
