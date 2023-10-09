@@ -17,7 +17,9 @@ class PopupManagerView extends StatefulWidget {
 class _PopupManagerViewState extends State<PopupManagerView> {
   TextEditingController coursecodeC = TextEditingController(); //y
   TextEditingController coursenameC = TextEditingController();
-
+  String? teachernameValue;
+  String? creditValue;
+  String? basicsubjectValue;
   // DashbordModel model = DashbordModel(
   //     basicsubjectValue: null,
   //     coursecodeCText: null,
@@ -139,7 +141,7 @@ class _PopupManagerViewState extends State<PopupManagerView> {
               focusColor: Colors.white,
               dropdownColor: Colors.white,
               // isExpanded: false,
-              // value: model.creditValue,
+              value: creditValue,
               items: credit
                   .map((e) => DropdownMenuItem<String>(
                       value: e.title, child: Text(e.title!,
@@ -147,7 +149,7 @@ class _PopupManagerViewState extends State<PopupManagerView> {
                   .toList(),
               onChanged: (value) {
                 setState(() {
-                  // model.creditValue = value.toString();
+                  creditValue = value.toString();
                 });
               }),
         ],
@@ -207,7 +209,7 @@ class _PopupManagerViewState extends State<PopupManagerView> {
             focusColor: Colors.white,
             dropdownColor: Colors.white,
             isExpanded: false,
-            // value: model.teachernameValue,
+            value: teachernameValue,
             items: teachername
                 .map((e) => DropdownMenuItem<String>(
                     value: e.title, child: Text(e.title!,
@@ -215,7 +217,7 @@ class _PopupManagerViewState extends State<PopupManagerView> {
                 .toList(),
             onChanged: (value) {
               setState(() {
-                // model.teachernameValue = value.toString();
+                teachernameValue = value.toString();
               });
             }),
       ],
@@ -248,7 +250,7 @@ class _PopupManagerViewState extends State<PopupManagerView> {
             focusColor: Colors.white,
             dropdownColor: Colors.white,
             isExpanded: false,
-            // value: model.basicsubjectValue,
+            value: basicsubjectValue,
             items: basicsubject //แก้
                 .map((e) => DropdownMenuItem<String>(
                     value: e.title, child: Text(e.title!,
@@ -256,7 +258,7 @@ class _PopupManagerViewState extends State<PopupManagerView> {
                 .toList(),
             onChanged: (value) {
               setState(() {
-                // model.basicsubjectValue = value.toString();
+                basicsubjectValue = value.toString();
               });
             }),
       ],
@@ -277,9 +279,11 @@ class _PopupManagerViewState extends State<PopupManagerView> {
                 } else {
                   print("Not Validated");
                 }
-                // model.coursecodeCText = coursecodeC.text;
-                // model.coursenameCText = coursenameC.text;
-                // _viewModel.adddata(model: model, context: context);
+                print(coursecodeC.text);
+                print(coursenameC.text);
+                print(creditValue.toString());
+                print(basicsubjectValue.toString());
+                print(teachernameValue.toString());
               },
               child: Text(
                 "ตกลง",

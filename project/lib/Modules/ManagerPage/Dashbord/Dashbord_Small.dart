@@ -4,8 +4,10 @@ import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Modules/Component/PaginatedDataTable.dart';
 // import 'package:ku_t/Modules/Component/datatable_c.dart';
 import 'package:ku_t/Modules/Dropdown/YearModel.dart';
-import 'package:ku_t/Modules/ManagerPage/Dashbord/PopUp.dart';
-import 'package:ku_t/Modules/ManagerPage/Dashbord/viewmodel.dart';
+import 'package:ku_t/Modules/Component/CustomDataTable.dart';
+// import 'package:ku_t/Modules/Component/Header_web.dart';
+// import 'package:ku_t/Modules/Dropdown/YearModel.dart';
+import 'package:ku_t/Modules/ManagerPage/Dashbord/PopUp_AddCourse.dart';
 import 'package:ku_t/Modules/widget/SearchWidget.dart';
 import 'package:ku_t/Services/apiconnector/callapt.dart';
 // import 'package:ku_t/Modules/provider/provider.dart';
@@ -188,66 +190,6 @@ class _DashbordSmallState extends State<DashbordSmall> {
     );
   }
 
-  // ignore: non_constant_identifier_names
-  // Column _SearchSubject() {
-  //   return Column(
-  //     mainAxisSize: MainAxisSize.min,
-  //     crossAxisAlignment: CrossAxisAlignment.start,
-  //     children: [
-  //       Container(
-  //         alignment: Alignment.topLeft,
-  //         child: Text("ค้นหารายวิชา", style: textStylehintbold()),
-  //       ),
-  //       Row(
-  //         children: [
-  //           //ช่องใส่รหัส/วิชา
-  //           Expanded(
-  //             child: Container(
-  //               width: MediaQuery.of(context).size.width,
-  //               // width: 300,
-  //               height: 50,
-  //               decoration: decoration(),
-  //               child: const TextField(
-  //                 cursorColor: Color.fromRGBO(172, 173, 191, 1),
-  //                 decoration: InputDecoration(
-  //                   border: InputBorder.none,
-  //                   hintStyle: TextStyle(fontSize: 14),
-  //                   hintText: "รหัสวิชา / ชื่อรายวิชา",
-  //                   // hintStyle: textStyle(16),
-  //                   contentPadding: EdgeInsets.all(15),
-  //                 ),
-  //               ),
-  //             ),
-  //           ),
-  //           const SizedBox(
-  //             width: 10,
-  //           ),
-  //           Row(
-  //             children: [
-  //               Container(
-  //                 height: 50,
-  //                 width: 80,
-  //                 padding: const EdgeInsets.symmetric(vertical: 10),
-  //                 decoration: decorationgreen(),
-  //                 child: TextButton(
-  //                   onPressed: () {
-  //                     print("hit!");
-  //                   },
-  //                   child: Text(
-  //                     'ค้นหา',
-  //                     style: textStylewhite(),
-  //                   ),
-  //                 ),
-  //               ),
-  //             ],
-  //           )
-  //         ],
-  //       ),
-  //     ],
-  //   );
-  // }
-
-  // ignore: non_constant_identifier_names
   Container _ButtonImportCourse() {
     final orientation = MediaQuery.of(context).orientation;
     return Container(
