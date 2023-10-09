@@ -47,7 +47,7 @@ class _router extends State<router> {
                           return Tabletime();
                         case 2:
                           _key.currentState?.closeDrawer();
-                          return TimetablePage();
+                          return const TimetablePage();
                         case 3:
                           _key.currentState?.closeDrawer();
                           return Texte();

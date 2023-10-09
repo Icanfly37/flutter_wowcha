@@ -23,7 +23,6 @@ class _TabletimeState extends State<Tabletime> {
 
   @override
   Widget build(BuildContext context) {
-    
     final orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       appBar: NavBar(),
@@ -40,17 +39,17 @@ class _TabletimeState extends State<Tabletime> {
                   ? Column(
                       children: [
                         _selectSemester(),
-                        const SizedBox(height: 10),
+                        SizedBox(
+                          height: 10,
+                        ),
                         _selectYearS(),
-                        const SizedBox(height: 10),
-                        _checkBox(),
-                        const SizedBox(height: 10),
-                        const SearchBarWidget(
+                        SizedBox(
+                          height: 10,
+                        ),
+                        SearchBarWidget(
                           isReadOnly: true,
                           hasBackButton: false,
                         ),
-                        const SizedBox(height: 10),
-                        Container(height: 200, child: Addtime())
                       ],
                     )
                   : Column(
@@ -87,7 +86,6 @@ class _TabletimeState extends State<Tabletime> {
       ),
     );
   }
-  
 
   Container _selectSemester() {
     final orientation = MediaQuery.of(context).orientation;
@@ -296,7 +294,32 @@ class _TabletimeState extends State<Tabletime> {
                 ),
               ),
             ),
-
+            // SizedBox(
+            //   width: 10,
+            // ),
+            // Expanded(
+            //   child: Container(
+            //     padding: EdgeInsets.symmetric(horizontal: 15),
+            //     width: MediaQuery.of(context).size.width,
+            //     height: 48,
+            //     decoration: decorationgc(),
+            //     child: Row(
+            //       children: [
+            //         Checkbox(
+            //             value: fourthValue,
+            //             onChanged: (value) {
+            //               setState(() {
+            //                 fourthValue = value!;
+            //               });
+            //             }),
+            //         Text(
+            //           "T12-4x",
+            //           style: textStylehint(),
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            // )
           ],
         ),
       ],

@@ -26,7 +26,7 @@ TextStyle textStyleHeader() {
 TextStyle textStyleHeadDrop() {
   return TextStyle(
     fontWeight: FontWeight.bold,
-    fontSize: 18,
+    fontSize: 14,
   );
 }
 
@@ -40,7 +40,6 @@ TextStyle textStylehintbold() {
 TextStyle textStylehint() {
   return TextStyle(
     overflow: TextOverflow.ellipsis,
-    color: Colors.black,
     fontSize: 14,
   );
 }
