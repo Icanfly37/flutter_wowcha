@@ -7,6 +7,7 @@ import 'package:ku_t/Modules/Dropdown/TeachernameModel.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/Dashbord_Model.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/Dashbord_ViewModel.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/viewmodel.dart';
+import 'package:ku_t/Services/apiconnector/callapt.dart';
 
 class PopupManagerView extends StatefulWidget {
   const PopupManagerView({super.key});
@@ -39,6 +40,7 @@ class _PopupManagerViewState extends State<PopupManagerView> {
 
   //DashboardViewModel _viewModel = new DashboardViewModel();
   ViewModel _viewModel = new ViewModel();
+  //late Map<String,dynamic> update_data;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -275,13 +277,16 @@ class _PopupManagerViewState extends State<PopupManagerView> {
             decoration: decorationgreen(),
             child: TextButton(
               onPressed: () {
+                _viewModel.adddata("รหัสวิชา",coursecodeC.text);
+                _viewModel.adddata("ชื่อราชวิชาภาษาอังกฤษ",coursenameC.text);
+                _viewModel.adddata("หน่วยกิต",creditValue.toString());
+                _viewModel.adddata("วิชาพื้นฐาน",[basicsubjectValue.toString()]);
+                _viewModel.adddata("อาจารย์ผู้สอน",[teachernameValue.toString()]);
                 if(_formKey.currentState!.validate()) {
                   //print("Validated");
-                  print(coursecodeC.text);
-                  print(coursenameC.text);
-                  print(creditValue.toString());
-                  print(basicsubjectValue.toString());
-                  print(teachernameValue.toString());
+                  //print(_viewModel.update_data);
+                  updates_data("Update_Subject",_viewModel.update_data);
+                  Navigator.pop(context);
                 } else {
                   print("Not Validated");
                 }

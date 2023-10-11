@@ -39,9 +39,13 @@ def read_root():
     return {"getjson": send}
 
 #getdata
-@app.post("/items/")
-async def create_item(data: dict):
-    print(data)
+@app.post("/update/")
+async def update_item(data: dict):
+    #print(data)
+    keys = list(data.keys())
+    if keys[0] == "Update_Subject":
+        print("update")
+        update_subject(data[keys[0]])
     #print(item.description)
     return {"message": "Data received and processed successfully"}
 

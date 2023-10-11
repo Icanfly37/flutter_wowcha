@@ -47,6 +47,13 @@ def OnDB_C(cred,collection_name,target,onnow):
         #id += 1
     db.close_db()
 
+def add_field_db(cred,collection_name,doc,data):
+    db = Database(cred)
+    db.get_db()
+    db.get_collection(collection_name)
+    db.create_doc(data,doc)
+    db.close_db()
+
 def get_status(cred,collection):   
     db = Database(cred)
     db.get_db()
@@ -68,7 +75,8 @@ def OnExcel(file,db_collection=None):
     clear_list()
     global finish_import
     finish_import = True
-    return rows
+    OnJson(get_file_path("\last_status.json"),'w',{"last_id":rows[1]})
+    return rows[1]
 
 def reset_status():
     global finish_import
@@ -76,6 +84,29 @@ def reset_status():
     finish_import = False
     return send
 
+def update_subject(data):
+    subject = {}
+    course = {}
+    data["ปีการศึกษา"] = data['รหัสวิชา'][-2:]
+    data['รหัสวิชา'] = data['รหัสวิชา'][:8]
+    for key,value in data.items():
+        if key == "อาจารย์ผู้สอน":
+            course["P_ID"] = value
+        else:
+            subject[key] = value
+    last_status = list(OnJson(get_file_path("\last_status.json"),'r').values())
+    last_status[0]+=1
+    add_field_db(get_file_path("\database\serviceAccountKey.json"),
+        "รายวิชา",
+        "Subject_"+str(last_status[0]),
+        subject
+    )
+    add_field_db(get_file_path("\database\serviceAccountKey.json"),
+        "เปิดการสอน",
+        "Course_"+str(last_status[0]),
+        course
+    )
+    OnJson(get_file_path("\last_status.json"),'w',{"last_id":last_status[0]})
 # path = "D:/หลักสูตร.xlsx"
 # #OnExcel(path,("รายวิชา","เปิดการสอน"))
 # OnExcel(path)

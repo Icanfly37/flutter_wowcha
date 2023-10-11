@@ -27,7 +27,7 @@ class Excel():
             else:
                 slave = each_row(sheet,i,num_rows,num_cols)
                 self.all_object.append(sub_object_send(str(i-1),header,slave))
-        return self.all_object
+        return self.all_object,num_rows-1
     # def getcolumns(self):
     #     sheet = self.excel[self.excel.sheetnames[0]]
     #     num_rows = sheet.max_row # จำนวนสมาชิก row สูงสุดใน sheet
