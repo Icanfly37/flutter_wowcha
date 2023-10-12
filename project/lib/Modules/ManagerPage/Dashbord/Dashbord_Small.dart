@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:ku_t/Models/status_db.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Modules/Component/PaginatedDataTable.dart';
-// import 'package:ku_t/Modules/Component/datatable_c.dart';
 import 'package:ku_t/Modules/Dropdown/YearModel.dart';
-import 'package:ku_t/Modules/Component/CustomDataTable.dart';
-// import 'package:ku_t/Modules/Component/Header_web.dart';
-// import 'package:ku_t/Modules/Dropdown/YearModel.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/PopUp_AddCourse.dart';
-import 'package:ku_t/Modules/widget/SearchWidget.dart';
-import 'package:ku_t/Services/apiconnector/callapt.dart';
-// import 'package:ku_t/Modules/provider/provider.dart';
-import 'package:ku_t/Modules/widget/SearchWidget.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/viewmodel.dart';
-// import 'package:provider/provider.dart';
+import 'package:ku_t/Modules/widget/SearchWidget.dart';
 
 class DashbordSmall extends StatefulWidget {
   const DashbordSmall({super.key});
