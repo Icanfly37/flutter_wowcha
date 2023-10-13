@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 // import 'package:ku_t/Modules/Componemt/Header_web.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
-import 'package:ku_t/Modules/Dropdown/BasicsubjectModel.dart';
 import 'package:ku_t/Modules/Dropdown/CraditModel.dart';
-import 'package:ku_t/Modules/Dropdown/TeachernameModel.dart';
-import 'package:ku_t/Modules/ManagerPage/Dashbord/Dashbord_Model.dart';
-import 'package:ku_t/Modules/ManagerPage/Dashbord/Dashbord_ViewModel.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/viewmodel.dart';
 import 'package:ku_t/Services/apiconnector/callapt.dart';
 
@@ -22,6 +18,8 @@ class _PopupManagerViewState extends State<PopupManagerView> {
   String? teachernameValue;
   String? creditValue;
   String? basicsubjectValue;
+  List<String> _selectedItemsTeacher = [];
+  List<String> _selectedItemsBasicsubject = [];
   // DashbordModel model = DashbordModel(
   //     basicsubjectValue: null,
   //     coursecodeCText: null,
@@ -36,7 +34,129 @@ class _PopupManagerViewState extends State<PopupManagerView> {
     super.dispose();
   }
 
+  void _showMultiSelectTeacher() async {
+    final List<String> items = [
+      "ผศ.วัชรพัฐ เมตตานันท",
+      "ดร.ณัฐพล พันนุรัตน์",
+      "จิรวัฒน์ จิตประสูตวิทย์",
+      "รศ.ดร.อนันต์ บรรหารสกุล",
+      "ผศ.ดร.ประวิทย์ ชุมชู",
+      "ผศ.เพ็ญพรรณ ใช้ฮวดเจริญ",
+      "กาญจนา เอี่ยมสอาด",
+      "ณัฏฐ์ อรุณ",
+      "ธรรมนุวัฒน์ วาลีประโคน",
+      "ดร.อดิศักดิ์ สุภีสุน",
+      "ผศ.ดร.กุลวดี สมบูรณ์วิวัฒน์",
+      "ดร.กรวิทย์ ออกผล",
+      "ผศ.ดร.นันทา จันทร์พิทักษ์",
+      "ดร.ฐนียา สัตยพานิช",
+      "ไพรัช สร้อยทอง",
+      "ผศ.ดร.มนตรี โพธิโสโนทัย",
+      "ปุณณะ ยศปัญญา",
+      "ประสิทธิชัย ณรงค์เลิศฤทธิ์",
+      "คทาวัชร เสถียรปกิรณกรณ์",
+    ];
+
+    final List<String>? results = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return MultiSelect(items: items);
+      },
+    );
+
+    if (results != null) {
+      setState(() {
+        _selectedItemsTeacher = results;
+      });
+    }
+  }
+
+  void _showMultiSelectBasicsubject() async {
+    final List<String> itemss = [
+      "Engineering Mathematics I",
+      "Engineering Mathematics II",
+      "Engineering Mathematics III",
+      "General Physics I",
+      "General Physics II",
+      "Laboratory in Physics I",
+      "Laboratory in Physics II",
+      "Electric Circuit Analysis for Computer Engineers",
+      "Electric Circuit Laboratory for Computer Engineers",
+      "Programming Fundamentals I",
+      "Programming Fundamentals II",
+      "Introduction to Computer Engineering and Informatics",
+      "Laws and Ethics in Information Technology",
+      "Database Systems",
+      "Database Systems Laboratory",
+      "Abstract Data Types and Problem Solving",
+      "Algorithm Design and Analysis",
+      "Programming Skills Development Laboratory",
+      "Software Engineering",
+      "Discrete Mathematics",
+      "Probability and Statistics for Informatics",
+      "Data Communications and Computer Networks",
+      "Operating Systems",
+      "Electronics for Computer Engineers",
+      "Electronics Laboratory for Computer Engineers",
+      "Digital Systems  LDesign",
+      "Logic Circuitaboratory",
+      "Computer Architecture and Organization",
+      "Introduction to Embedded Systems",
+      "Embedded Systems Laboratory",
+      "Exploratory Project in Computing"
+      "Seminar",
+      "Internetworking with TCP/IP",
+      "Wireless and Mobile Networks",
+      "Network Programming",
+      "Computer Networks Laboratory I",
+      "Computer Networks Laboratory II",
+      "Computer Security",
+      "Mobile Computing",
+      "Internet of Things",
+      "Functional Programming",
+      "Cloud Computing",
+      "Web Application Development",
+      "Mobile Application Development",
+      "Object-Oriented Analysis and Design",
+      "User Experience Design",
+      "Computer Game Development",
+      "Introduction to Data Science",
+      "Data Mining",
+      "Artificial Intelligence",
+      "Statistical Learning",
+      "Biologically-Inspired Computational Intelligence",
+      "Digital Signal Processing for Computer Engineers",
+      "Digital Image Processing",
+      "Statistical Learning",
+      "Computer Vision",
+      "Computer Graphics",
+      "Computer Game Development",
+      "Digital Audio and Computer Music",
+      "Computer Engineering and Informatics Project Preparation",
+      "Computer Engineering and Informatics Project",
+      "Programming Language Concepts",
+      "Embedded Systems Interfacing",
+      "Selected Topics in Computer Engineering and Informatics",
+      "Co-operative Education Preparation",
+      "Co-operative Education",
+    ];
+
+    final List<String>? results = await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return MultiSelect(items: itemss);
+      },
+    );
+
+    if (results != null) {
+      setState(() {
+        _selectedItemsBasicsubject = results;
+      });
+    }
+  }
+
   final _formKey = GlobalKey<FormState>();
+  List<String> selected = [];
 
   //DashboardViewModel _viewModel = new DashboardViewModel();
   ViewModel _viewModel = new ViewModel();
@@ -45,7 +165,7 @@ class _PopupManagerViewState extends State<PopupManagerView> {
   Widget build(BuildContext context) {
     return Container(
       width: 500,
-      padding: const EdgeInsets.only(top: 30,left: 30,right: 30,bottom: 30),
+      padding: const EdgeInsets.only(top: 30,left: 30,right: 30,bottom: 20),
       decoration: decorationpop(),
       child: Form(
         key: _formKey,
@@ -65,7 +185,7 @@ class _PopupManagerViewState extends State<PopupManagerView> {
             const SizedBox(height: 10),
             _basicSubject(),
             const SizedBox(height: 30),
-            _button()
+            _button(),
           ],
         ),
       ),
@@ -188,84 +308,88 @@ class _PopupManagerViewState extends State<PopupManagerView> {
 
   Column _teacher() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          alignment: Alignment.bottomLeft,
-          child: Text(
-            "อาจารย์ผู้สอน",
-            style: textStylehintbold(),
-          ),
-        ),
-        DropdownButtonFormField(
-            hint: Text(
-              "อาจารย์ผู้สอน",
-              style: textStylehint(),
-            ),
-            decoration: inputdecorationtext(),
-            validator: (value) {
-              if (value == null) {
-                return "กรุณาเลือกอาจารย์ผู้สอน";
-              }
-              return null;
-            },
-            focusColor: Colors.white,
-            dropdownColor: Colors.white,
-            isExpanded: false,
-            value: teachernameValue,
-            items: teachername
-                .map((e) => DropdownMenuItem<String>(
-                    value: e.title, child: Text(e.title!,
-                    style: textStylehint(),)))
-                .toList(),
-            onChanged: (value) {
-              setState(() {
-                teachernameValue = value.toString();
-              });
-            }),
-      ],
-    );
+                    children: [
+                      Container(
+                              alignment: Alignment.bottomLeft,
+                              child: Text(
+                                "ชั้นปี",
+                                style: textStylehintbold(),
+                              ),
+                            ),
+                      Container(
+                        height: 55,
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        decoration: decoration(),
+                        child: Row(
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                              _showMultiSelectTeacher();
+                            }, child: Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'อาจารย์ผู้สอน',style: textStylehint()),
+                            )),
+                            
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Wrap(
+                            clipBehavior: Clip.none,
+                            spacing: 2,
+                            children: _selectedItemsTeacher
+                        .map((e) => Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: decorationgc(),
+                          child: Text(e)))
+                        .toList(),
+                                          )
+                    ],
+                  );
   }
 
   Column _basicSubject() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          alignment: Alignment.bottomLeft,
-          child: Text(
-            "วิชาพื้นฐาน",
-            style: textStylehintbold(),
-          ),
-        ),
-        DropdownButtonFormField(
-            hint: Text(
-              "วิชาพื้นฐาน",
-              style: textStylehint(),
-            ),
-            decoration: inputdecorationtext(),
-            validator: (value) {
-              if (value == null) {
-                return "กรุณาเลือกวิชาพื้นฐาน";
-              }
-              return null;
-            },
-            focusColor: Colors.white,
-            dropdownColor: Colors.white,
-            isExpanded: false,
-            value: basicsubjectValue,
-            items: basicsubject //แก้
-                .map((e) => DropdownMenuItem<String>(
-                    value: e.title, child: Text(e.title!,
-                    style: textStylehint(),)))
-                .toList(),
-            onChanged: (value) {
-              setState(() {
-                basicsubjectValue = value.toString();
-              });
-            }),
-      ],
-    );
+                    children: [
+                      Container(
+                              alignment: Alignment.bottomLeft,
+                              child: Text(
+                                "วิชาพื้นฐาน",
+                                style: textStylehintbold(),
+                              ),
+                            ),
+                      Container(
+                        height: 55,
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        decoration: decoration(),
+                        child: Row(
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                              _showMultiSelectBasicsubject();
+                            }, child: Container(
+                              alignment: Alignment.centerLeft,
+                              child: Text(
+                                'เลือกวิชาพื้นฐาน',style: textStylehint()),
+                            )),
+                            
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 5),
+                      Wrap(
+                            clipBehavior: Clip.none,
+                            spacing: 2,
+                            children: _selectedItemsBasicsubject
+                        .map((e) => Container(
+                          padding: EdgeInsets.all(5),
+                          decoration: decorationgc(),
+                          child: Text(e)))
+                        .toList(),
+                                          )
+                    ],
+                  );
   }
 
   Row _button() {
@@ -295,6 +419,8 @@ class _PopupManagerViewState extends State<PopupManagerView> {
                 // print(creditValue.toString());
                 // print(basicsubjectValue.toString());
                 // print(teachernameValue.toString());
+                print(_selectedItemsBasicsubject);
+                print(_selectedItemsTeacher);
               },
               child: Text(
                 "ตกลง",
@@ -325,3 +451,75 @@ class _PopupManagerViewState extends State<PopupManagerView> {
     );
   }
 }
+
+class MultiSelect extends StatefulWidget {
+  final List<String> items;
+  const MultiSelect({Key? key, required this.items}) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() => _MultiSelectState();
+}
+
+class _MultiSelectState extends State<MultiSelect> {
+  final List<String> _selectedItems = [];
+
+  void _itemChange(String itemValue, bool isSelected) {
+    setState(() {
+      if (isSelected) {
+        _selectedItems.add(itemValue);
+      } else {
+        _selectedItems.remove(itemValue);
+      }
+    });
+  }
+
+  void _cancel() {
+    Navigator.pop(context);
+  }
+
+  void _submit() {
+    Navigator.pop(context, _selectedItems);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AlertDialog(
+      content: SingleChildScrollView(
+        child: ListBody(
+          children: widget.items
+              .map((item) => CheckboxListTile(
+                    value: _selectedItems.contains(item),
+                    title: Text(item,style: textStylehint(),),
+                    controlAffinity: ListTileControlAffinity.leading,
+                    onChanged: (isChecked) 
+                    { setState(() {
+                      _itemChange(item, isChecked!);
+                    });
+                      },
+                  ))
+              .toList(),
+        ),
+      ),
+      actions: [
+        Container(
+          decoration: decorationredborder(),
+          child: TextButton(
+            onPressed: _cancel,
+            child: Text('ยกเลิก',
+            style: textStylered(),),
+          ),
+        ),
+        Container(
+          padding: EdgeInsets.all(2),
+          decoration: decorationgreen(),
+          child: TextButton(
+            onPressed: _submit,
+            child: Text('ตกลง',
+            style: textStylewhite()),
+          ),
+        ),
+      ],
+    );
+  }
+}
+

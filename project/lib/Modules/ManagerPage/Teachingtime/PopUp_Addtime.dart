@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Modules/Dropdown/DaysModel.dart';
+import 'package:ku_t/Modules/Dropdown/TeachernameModel.dart';
 import 'package:ku_t/Modules/Dropdown/TimeEndModel.dart';
 import 'package:ku_t/Modules/Dropdown/TimeStartModel.dart';
+import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
+import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:unicons/unicons.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,15 +20,19 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final List<TextEditingController> _studygroup = [];
   final List<TextEditingController> _numberopen = [];
-  final List<TextEditingController> _room = [];
+  final List<String?> _room = [];
   final List<String?> _daysvalue = [];
   final List<String?> _timeStartvalue = [];
   final List<String?> _timeEndvalue = [];
-  List<String> _selectedItems = [];
   final _formKeyyy = GlobalKey<FormState>();
 
   int number = 1;
 
+  final List<String?> _checkbox1 = [];
+  final List<String?> _checkbox2 = [];
+  final List<String?> _checkbox3 = [];
+  final List<String?> _checkbox4 = [];
+  
   @override
   void initState() {
     super.initState();
@@ -38,11 +45,14 @@ class _HomeScreenState extends State<HomeScreen> {
     setState(() {
       _studygroup.add(TextEditingController());
       _numberopen.add(TextEditingController());
-      _room.add(TextEditingController());
+      _room.add(null);
       _daysvalue.add(null);
       _timeStartvalue.add(null);
       _timeEndvalue.add(null);
-      _selectedItems.add('');
+      _checkbox1.add(null);
+      _checkbox2.add(null);
+      _checkbox3.add(null);
+      _checkbox4.add(null);
     });
   }
 
@@ -54,7 +64,10 @@ class _HomeScreenState extends State<HomeScreen> {
       _daysvalue.removeAt(i);
       _timeStartvalue.removeAt(i);
       _timeEndvalue.removeAt(i);
-      _selectedItems.removeAt(i);
+      _checkbox1.removeAt(i);
+      _checkbox2.removeAt(i);
+      _checkbox3.removeAt(i);
+      _checkbox4.removeAt(i);
     });
   }
 
@@ -69,46 +82,27 @@ class _HomeScreenState extends State<HomeScreen> {
     print(_daysvalue.toList());
     print(_timeStartvalue.toList());
     print(_timeEndvalue.toList());
-    print(_selectedItems.toList());
+    print(_checkbox1.toList());
+    print(_checkbox2.toList());
+    print(_checkbox3.toList());
+    print(_checkbox4.toList());
 
     _formKeyyy.currentState!.save();
 
     for (int i = 0; i < _studygroup.length; i++) {
       String studygroup = _studygroup[i].text;
       String numberopen = _numberopen[i].text;
-      String room = _room[i].text;
+      String? room = _room[i];
       String? daysvalue = _daysvalue[i]; 
       String? timeStartvalue = _timeStartvalue[i];
       String? timeEndvalue = _timeEndvalue[i]; 
-      String? selectedItems = _selectedItems[i]; 
+      String? checkbox1 = _checkbox1[i];
+      String? checkbox2 = _checkbox2[i]; 
+      String? checkbox3 = _checkbox3[i]; 
+      String? checkbox4 = _checkbox4[i]; 
     }
   }
 
-  
-
-  void _showMultiSelect() async {
-    final List<String> items = [
-      'T12-1',
-      'T12-2',
-      'T12-3',
-      'T12-4',
-    ];
-
-    final List<String>? results = await showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return MultiSelect(items: items);
-      },
-    );
-
-    if (results != null) {
-      setState(() {
-        _selectedItems = results;
-      });
-    }
-  }
-
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -216,25 +210,41 @@ class _HomeScreenState extends State<HomeScreen> {
                       const SizedBox(width: 10),
                       Expanded(
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Container(
-                              alignment: Alignment.topLeft,
+                              alignment: Alignment.bottomLeft,
                               child: Text(
-                                "ห้อง",
+                                "ห้องเรียน",
                                 style: textStylehintbold(),
                               ),
                             ),
-                            TextFormField(
-                              controller: _room[index],
+                            DropdownButtonFormField(
+                              decoration: inputdecorationtext(),
                               validator: (value) {
-                                if(value!.isEmpty) {
-                                  return "กรุณากรอก";
+                                if (value == null) {
+                                  return "เลือก";
                                 }
                                 return null;
                               },
-                              keyboardType: TextInputType.number,
-                              cursorColor: const Color.fromRGBO(172, 173, 191, 1),
-                              decoration: inputdecorationtext(),
+                              focusColor: Colors.white,
+                              dropdownColor: Colors.white,
+                              isExpanded: false,
+                              value: _room[index],
+                              items: rooms
+                                  .map((e) => DropdownMenuItem<String>(
+                                        value: e.title,
+                                        child: Text(
+                                          e.title!,
+                                          style: textStylehint(),
+                                        ),
+                                      ))
+                                  .toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  _room[index] = value;
+                                });
+                              },
                             ),
                           ],
                         ),
@@ -371,7 +381,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 10,),
                   Column(
                     children: [
                       Container(
@@ -382,35 +392,106 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                       Container(
-                        height: 55,
-                        decoration: decoration(),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              flex: 3,
-                              child: TextButton(onPressed: () {
-                                _showMultiSelect();
-                              }, child: Container(
-                                alignment: Alignment.centerLeft,
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                width: double.infinity,
+                height: 48,
+                decoration: decorationgc(),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Row(
+                            children: [
+                              Expanded(
+                                child: Radio(
+                                  value: 'T12-1', 
+                                  groupValue: _checkbox1[index], 
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _checkbox1[index] = value;
+                                    });
+                                  },),
+                              ),
+                              Expanded(
                                 child: Text(
-                                  'เลือกชั้นปีที่เปิดรับ',style: textStylehint()),
-                              )),
-                            ),
-                            const SizedBox(width: 10),
-                            Expanded(
-                              child: Wrap(
-                                                    clipBehavior: Clip.none,
-                                                    spacing: 2,
-                                                    children: _selectedItems
-                                .map((e) => Text(e))
-                                .toList(),
-                                                  ),
-                            )
-                          ],
-                        ),
+                                  "T12-1",
+                                  style: textStylehint(),
+                                ),
+                              )
+                            ],
                       ),
+                    ),
+                    Expanded(
+                      child: Row(
+                            children: [
+                              Expanded(
+                                child: Radio(
+                                  value: 'T12-2', 
+                                  groupValue: _checkbox2[index], 
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _checkbox2[index] = value;
+                                    });
+                                  },),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  "T12-2",
+                                  style: textStylehint(),
+                                ),
+                              )
+                            ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                            children: [
+                              Expanded(
+                                child: Radio(
+                                  value: 'T12-3', 
+                                  groupValue: _checkbox3[index], 
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _checkbox3[index] = value;
+                                    });
+                                  },),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  "T12-3",
+                                  style: textStylehint(),
+                                ),
+                              )
+                            ],
+                      ),
+                    ),
+                    Expanded(
+                      child: Row(
+                            children: [
+                              Expanded(
+                                child: Radio(
+                                  value: 'T12-4', 
+                                  groupValue: _checkbox4[index], 
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _checkbox4[index] = value;
+                                    });
+                                  },),
+                              ),
+                              Expanded(
+                                child: Text(
+                                  "T12-4",
+                                  style: textStylehint(),
+                                ),
+                              )
+                            ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
                     ],
                   ),
+                  const SizedBox(height: 10),
               Column(
                 children: [
                   Container(
@@ -475,68 +556,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-    );
-  }
-}
-
-class MultiSelect extends StatefulWidget {
-  final List<String> items;
-  const MultiSelect({Key? key, required this.items}) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() => _MultiSelectState();
-}
-
-class _MultiSelectState extends State<MultiSelect> {
-  final List<String> _selectedItems = [];
-
-  void _itemChange(String itemValue, bool isSelected) {
-    setState(() {
-      if (isSelected) {
-        _selectedItems.add(itemValue);
-      } else {
-        _selectedItems.remove(itemValue);
-      }
-    });
-  }
-
-  void _cancel() {
-    Navigator.pop(context);
-  }
-
-  void _submit() {
-    Navigator.pop(context, _selectedItems);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return AlertDialog(
-      content: SingleChildScrollView(
-        child: ListBody(
-          children: widget.items
-              .map((item) => CheckboxListTile(
-                    value: _selectedItems.contains(item),
-                    title: Text(item,style: textStylehint(),),
-                    controlAffinity: ListTileControlAffinity.leading,
-                    onChanged: (isChecked) 
-                    { setState(() {
-                      _itemChange(item, isChecked!);
-                    });
-                      },
-                  ))
-              .toList(),
-        ),
-      ),
-      actions: [
-        TextButton(
-          onPressed: _cancel,
-          child: const Text('ยกเลิก'),
-        ),
-        ElevatedButton(
-          onPressed: _submit,
-          child: const Text('ตกลง'),
-        ),
-      ],
     );
   }
 }
