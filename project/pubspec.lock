@@ -145,6 +145,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0+3"
+  dynamic_table:
+    dependency: "direct main"
+    description:
+      name: dynamic_table
+      sha256: a41f9137053b6d0a96bf3fd1fe62b5c647fadb81f7a652e29fa8c62b2d411bf0
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1-beta.2"
   equatable:
     dependency: transitive
     description:

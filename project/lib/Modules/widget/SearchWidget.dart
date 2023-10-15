@@ -23,6 +23,28 @@ class _SearchWidgetState extends State<SearchWidget> {
   //   '03604111 Engineering Drawing'
   // ];
 
+  // Future<String> fetchData() async {
+  //   await Future.delayed(
+  //       Duration(seconds: 2)); // รอ 2 วิ
+  //   return "ข้อมูลจากเซิร์ฟเวอร์";
+  // }
+
+//   FutureBuilder<String>(
+//   future: fetchData(),
+//   builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+//     if (snapshot.connectionState == ConnectionState.waiting) {
+//       // แสดง Loading หรือ Spinner ขณะรอ Future สำเร็จ
+//       return CircularProgressIndicator();
+//     } else if (snapshot.hasError) {
+//       // แสดงข้อผิดพลาดที่เกิดขึ้น
+//       return Text('เกิดข้อผิดพลาด: ${snapshot.error}');
+//     } else {
+//       // แสดงข้อมูลที่ได้จาก Future
+//       return Text('ข้อมูล: ${snapshot.data}');
+//     }
+//   },
+// )
+
   @override
   Widget build(BuildContext context) {
     return Column(
