@@ -403,9 +403,9 @@ class _PopupManagerViewState extends State<PopupManagerView> {
               onPressed: () {
                 _viewModel.adddata("รหัสวิชา",coursecodeC.text);
                 _viewModel.adddata("ชื่อราชวิชาภาษาอังกฤษ",coursenameC.text);
-                _viewModel.adddata("หน่วยกิต",creditValue.toString());
-                _viewModel.adddata("วิชาพื้นฐาน",[basicsubjectValue.toString()]);
-                _viewModel.adddata("อาจารย์ผู้สอน",[teachernameValue.toString()]);
+                _viewModel.adddata("หน่วยกิต",creditValue);
+                _viewModel.adddata("วิชาพื้นฐาน",_selectedItemsBasicsubject);
+                _viewModel.adddata("อาจารย์ผู้สอน",_selectedItemsTeacher);
                 if(_formKey.currentState!.validate()) {
                   //print("Validated");
                   //print(_viewModel.update_data);
