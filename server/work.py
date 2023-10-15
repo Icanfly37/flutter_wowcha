@@ -76,6 +76,11 @@ def OnExcel(file,db_collection=None):
     global finish_import
     finish_import = True
     OnJson(get_file_path("\last_status.json"),'w',{"last_id":rows[1]})
+    
+    global all_subject
+    OnJson(get_file_path("\Total_Course.json"),'w',all_subject)
+    all_subject.clear()
+    
     return rows[1]
 
 def reset_status():
@@ -87,6 +92,9 @@ def reset_status():
 def update_subject(data):
     subject = {}
     course = {}
+    
+    Current_Subject = OnJson(get_file_path("\Total_Course.json"),"r") #new
+    
     data["ปีการศึกษา"] = data['รหัสวิชา'][-2:]
     data['รหัสวิชา'] = data['รหัสวิชา'][:8]
     for key,value in data.items():
@@ -96,6 +104,10 @@ def update_subject(data):
             subject[key] = value
     last_status = list(OnJson(get_file_path("\last_status.json"),'r').values())
     last_status[0]+=1
+    course["S_ID"] = "Subject_"+str(last_status[0])
+    
+    Current_Subject[data['รหัสวิชา']] = course["S_ID"] #new
+    
     add_field_db(get_file_path("\database\serviceAccountKey.json"),
         "รายวิชา",
         "Subject_"+str(last_status[0]),
@@ -106,7 +118,11 @@ def update_subject(data):
         "Course_"+str(last_status[0]),
         course
     )
+    
     OnJson(get_file_path("\last_status.json"),'w',{"last_id":last_status[0]})
+    
+    OnJson(get_file_path("\Total_Course.json"),'w',Current_Subject) #new
+    
 # path = "D:/หลักสูตร.xlsx"
 # #OnExcel(path,("รายวิชา","เปิดการสอน"))
 # OnExcel(path)

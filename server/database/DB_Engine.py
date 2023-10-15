@@ -57,10 +57,22 @@ class Database():
                 else:
                     return True
         return False
+    def get_all_docs(self):
+        all_subject = {}
+        docs = self.collection.stream()
+        #docs = self.db.collection(doc_target).stream()
+        for doc in docs:
+            #all_docs.append(doc)
+            #print(f'Document ID: {doc.id}')
+            #print(f'Document Data: {doc.to_dict()}')
+            id = doc.id
+            detail = doc.to_dict()
+            all_subject[detail["รหัสวิชา"]] = id
+        return all_subject
 
 
 # #Initialize database
-# db = Database(get_Current_Path("/backend/database/serviceAccountKey.json"))
+# db = Database(get_Current_Path("/database/serviceAccountKey.json"))
 
 # #test Create Database
 # data = {'basicsubject':'Wow',
@@ -85,4 +97,7 @@ class Database():
 # #db.delete_field(doc,"Pre")
 # #db.delete_document(doc)
 # #close database
+
+# db.get_collection("รายวิชา")
+# print(db.get_all_docs())
 # db.close_db()
