@@ -4,6 +4,8 @@ from openpyxl import *
 pack_for_subject = []
 pack_for_course = []
 
+all_subject = {} #for update
+
 def each_column(sheet,col_target,max_col,max_row):
     box = []
     for i in range(1,max_row+1):
@@ -46,9 +48,15 @@ def sub_object_send(id,header,slave):
                     catch_year = slave[i][target_year:][1:]
                     real_year = "25"+str(catch_year)
                     sub_object_1[header[i]] = slave[i][:target_year]
+                    
+                    all_subject[slave[i][:target_year]] = sub_object_1["S_ID"] #new
+                    
                     sub_object_1["ปีการศึกษา"] = real_year
                 else:
                     sub_object_1[header[i]] = slave[i]
+                    
+                    all_subject[slave[i]] = sub_object_1["S_ID"] #new
+                    
                     sub_object_1["ปีการศึกษา"] = None
             else:
                 sub_object_1[header[i]] = slave[i]
