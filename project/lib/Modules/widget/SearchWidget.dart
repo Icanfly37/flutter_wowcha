@@ -47,87 +47,100 @@ class _SearchWidgetState extends State<SearchWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Container(
-          alignment: Alignment.topLeft,
-          child: Text("ค้นหารายวิชา", style: textStylehintbold()),
-        ),
-        Row(children: [
-          Expanded(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              // width: 300,
-              height: 50,
-              decoration: decoration(),
-              child: AutoCompleteTextField<String>(
-                key: key,
-                controller: _searchController,
-                clearOnSubmit: false,
-                suggestions: subjects,
-                itemBuilder: (context, suggestion) => ListTile(
-                  title: Text(suggestion),
-                ),
-                itemFilter: (item, query) =>
-                    item.toLowerCase().contains(query.toLowerCase()),
-                itemSorter: (a, b) => a.compareTo(b),
-                itemSubmitted: (item) {
-                  setState(() {
-                    _searchController.text = item;
-                  });
-                },
-                style: const TextStyle(fontSize: 15),
-                cursorColor: const Color.fromRGBO(172, 173, 191, 1),
-                decoration: InputDecoration(
-                  hintText: 'รหัสวิชา / ชื่อรายวิชา',
-                  hintStyle: textStylehint(),
-                  prefixIcon: const Icon(
-                    Icons.search,
-                    color: Color.fromRGBO(157, 157, 157, 1),
+    return FutureBuilder(
+        // future: fetchData(),
+        future: null,
+        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return CircularProgressIndicator(); // แสดงแถบโหลดข้อมูล
+          } else if (snapshot.hasError) {
+            return Text('เกิดข้อผิดพลาด: ${snapshot.error}');
+          } else {
+            return Builder(builder: (context) {
+              return Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    alignment: Alignment.topLeft,
+                    child: Text("ค้นหารายวิชา", style: textStylehintbold()),
                   ),
-                  border: InputBorder.none,
-                  contentPadding: const EdgeInsets.all(15),
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(
-            width: 10,
-          ),
-          Row(
-            children: [
-              Container(
-                height: 50,
-                width: 80,
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                decoration: decorationgreen(),
-                child: TextButton(
-                  onPressed: () {
-                    String searchTerm = _searchController.text;
-                    print('ค้นหา: $searchTerm');
-                  },
-                  child: Text(
-                    'ค้นหา',
-                    style: textStylewhite(),
-                  ),
-                ),
-              ),
-            ],
-          )
-        ])
+                  Row(children: [
+                    Expanded(
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        // width: 300,
+                        height: 50,
+                        decoration: decoration(),
+                        child: AutoCompleteTextField<String>(
+                          key: key,
+                          controller: _searchController,
+                          clearOnSubmit: false,
+                          suggestions: subjects,
+                          itemBuilder: (context, suggestion) => ListTile(
+                            title: Text(suggestion),
+                          ),
+                          itemFilter: (item, query) =>
+                              item.toLowerCase().contains(query.toLowerCase()),
+                          itemSorter: (a, b) => a.compareTo(b),
+                          itemSubmitted: (item) {
+                            setState(() {
+                              _searchController.text = item;
+                            });
+                          },
+                          style: const TextStyle(fontSize: 15),
+                          cursorColor: const Color.fromRGBO(172, 173, 191, 1),
+                          decoration: InputDecoration(
+                            hintText: 'รหัสวิชา / ชื่อรายวิชา',
+                            hintStyle: textStylehint(),
+                            prefixIcon: const Icon(
+                              Icons.search,
+                              color: Color.fromRGBO(157, 157, 157, 1),
+                            ),
+                            border: InputBorder.none,
+                            contentPadding: const EdgeInsets.all(15),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Row(
+                      children: [
+                        Container(
+                          height: 50,
+                          width: 80,
+                          padding: const EdgeInsets.symmetric(vertical: 10),
+                          decoration: decorationgreen(),
+                          child: TextButton(
+                            onPressed: () {
+                              String searchTerm = _searchController.text;
+                              print('ค้นหา: $searchTerm');
+                            },
+                            child: Text(
+                              'ค้นหา',
+                              style: textStylewhite(),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  ])
 
-        // padding: const EdgeInsets.all(16.0),
+                  // padding: const EdgeInsets.all(16.0),
 
-        // ElevatedButton(
-        // onPressed: () {
-        //   String searchTerm = _searchController.text;
-        //   print('ค้นหา: $searchTerm');
-        // },
-        //   child: Text('ค้นหา'),
-        // ),
-      ],
-    );
+                  // ElevatedButton(
+                  // onPressed: () {
+                  //   String searchTerm = _searchController.text;
+                  //   print('ค้นหา: $searchTerm');
+                  // },
+                  //   child: Text('ค้นหา'),
+                  // ),
+                ],
+              );
+            });
+          }
+        });
   }
 }
