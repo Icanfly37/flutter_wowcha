@@ -123,6 +123,20 @@ def update_subject(data):
     
     OnJson(get_file_path("\Total_Course.json"),'w',Current_Subject) #new
     
+def test(Collection):
+    FetchAD = Database(get_file_path("\database\serviceAccountKey.json")) 
+    FetchAD.get_db()
+    if Collection == "รายวิชา":
+        key = "Subject_"
+        for i in 10:
+            if i < 10:
+                key = key + "0" + i
+                print(FetchAD.read_field(key))
+    Item = FetchAD.get_all_data(Collection) 
+    FetchAD.close_db()
+    return Item
+print(test("รายวิชา"))
+
 # path = "D:/หลักสูตร.xlsx"
 # #OnExcel(path,("รายวิชา","เปิดการสอน"))
 # OnExcel(path)

@@ -74,4 +74,38 @@ async def status_import():
     send = reset_status()
     print(send)
     return {"status":send}
+
+#Delete
+@app.delete("/Delete_Item/{Collection}/{Document}")
+def Delete_Item(Collection: str, Document: str):
+    FetchAD = Database(get_file_path("\database\serviceAccountKey.json")) 
+    FetchAD.get_db()
+    Item = FetchAD.get_collection(Collection) 
+    FetchAD.delete_document(Document)
+    FetchAD.close_db()
+    return {"Delete json":Item}
+
+#Read
+@app.get("/Fetch_Data/{Collection}/{Document}") 
+def Fetch_Data(Collection: str, Document: str):
+    FetchAD = Database(get_file_path("\database\serviceAccountKey.json")) 
+    FetchAD.get_db()
+    FetchAD.get_collection(Collection) 
+    Item = FetchAD.read_field(Document)
+    FetchAD.close_db()
+    return {"get json":Item}
     
+@app.get("/Fetch_All_Data/{Collection}") 
+def Fetch_All_Data(Collection: str):
+    Item = test(Collection)
+    # FetchAD = Database(get_file_path("\database\serviceAccountKey.json")) 
+    # FetchAD.get_db()
+    # if Collection == "รายวิชา":
+    #     key = "Subject_ๅ"
+    #     for i in 10:
+    #         if i < 10:
+    #             key = key + "0" + i
+    #             print(FetchAD.read_field(key))
+    # Item = FetchAD.get_all_data(Collection) 
+    # FetchAD.close_db()
+    return {"get json":Item}

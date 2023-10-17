@@ -19,6 +19,9 @@ class Database():
         self.db = firestore.client()
     def get_collection(self,collection): #if exist, use it, otherwise new collection
         self.collection = self.db.collection(collection)
+    def get_all_data(self,collection):
+        result = self.collection(collection).stream()
+        return result.to_dict()
     def create_doc(self,data,doc = None): #use for new document only
         if doc is not None:
             self.collection.document(doc).set(data)
@@ -36,7 +39,7 @@ class Database():
     def delete_field(self,document,field_name):
         self.collection.document(document).update({
             field_name:firestore.DELETE_FIELD
-            })
+        })
     def delete_document(self,document):
         self.collection.document(document).delete()
     def delete_all_document(self):
