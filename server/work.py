@@ -94,8 +94,8 @@ def update_subject(data):
     course = {}
     
     Current_Subject = OnJson(get_file_path("\Total_Course.json"),"r") #new
-    
-    data["ปีการศึกษา"] = data['รหัสวิชา'][-2:]
+    current_subject = data['รหัสวิชา']#new
+    data["ปีหลักสูตร"] = data['รหัสวิชา'][-2:]
     data['รหัสวิชา'] = data['รหัสวิชา'][:8]
     for key,value in data.items():
         if key == "อาจารย์ผู้สอน":
@@ -106,7 +106,7 @@ def update_subject(data):
     last_status[0]+=1
     course["S_ID"] = "Subject_"+str(last_status[0])
     
-    Current_Subject[data['รหัสวิชา']] = course["S_ID"] #new
+    Current_Subject[current_subject] = course["S_ID"] #new2
     
     add_field_db(get_file_path("\database\serviceAccountKey.json"),
         "รายวิชา",

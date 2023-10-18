@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
     updates_data("Update_Course",_operator.all_data);
     _operator.all_clear();
     //print("---------------------------------------------------------------------");
-    //Navigator.pop(context);
+    Navigator.pop(context);
   }
 
   @override
