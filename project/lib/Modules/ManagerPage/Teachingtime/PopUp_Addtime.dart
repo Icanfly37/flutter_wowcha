@@ -4,6 +4,8 @@ import 'package:ku_t/Modules/Dropdown/DaysModel.dart';
 import 'package:ku_t/Modules/Dropdown/TeachernameModel.dart';
 import 'package:ku_t/Modules/Dropdown/TimeEndModel.dart';
 import 'package:ku_t/Modules/Dropdown/TimeStartModel.dart';
+import 'package:ku_t/Modules/ManagerPage/Teachingtime/value_for_time.dart';
+import 'package:ku_t/Services/apiconnector/callapt.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:unicons/unicons.dart';
@@ -18,6 +20,10 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+
+  Operator _operator = Operator();
+  Variable _variable = Variable();
+
   final List<TextEditingController> _studygroup = [];
   final List<TextEditingController> _numberopen = [];
   final List<String?> _room = [];
@@ -76,31 +82,42 @@ class _HomeScreenState extends State<HomeScreen> {
     if (!isValid) {
       return;
     }
-    print(_studygroup.toList());
-    print(_room.toList());
-    print(_numberopen.toList());
-    print(_daysvalue.toList());
-    print(_timeStartvalue.toList());
-    print(_timeEndvalue.toList());
-    print(_checkbox1.toList());
-    print(_checkbox2.toList());
-    print(_checkbox3.toList());
-    print(_checkbox4.toList());
+    // print(_studygroup.toList());
+    // print(_room.toList());
+    // print(_numberopen.toList());
+    // print(_daysvalue.toList());
+    // print(_timeStartvalue.toList());
+    // print(_timeEndvalue.toList());
+    // print(_checkbox1.toList());
+    // print(_checkbox2.toList());
+    // print(_checkbox3.toList());
+    // print(_checkbox4.toList());
 
     _formKeyyy.currentState!.save();
 
     for (int i = 0; i < _studygroup.length; i++) {
-      String studygroup = _studygroup[i].text;
-      String numberopen = _numberopen[i].text;
-      String? room = _room[i];
-      String? daysvalue = _daysvalue[i]; 
-      String? timeStartvalue = _timeStartvalue[i];
-      String? timeEndvalue = _timeEndvalue[i]; 
-      String? checkbox1 = _checkbox1[i];
-      String? checkbox2 = _checkbox2[i]; 
-      String? checkbox3 = _checkbox3[i]; 
-      String? checkbox4 = _checkbox4[i]; 
+      _operator.collecter.add(
+        Require_Data(
+          studygroup : _studygroup[i].text,
+          numberopen : _numberopen[i].text,
+          room : _room[i],
+          daysvalue : _daysvalue[i],
+          timeStartvalue : _timeStartvalue[i],
+          timeEndvalue : _timeEndvalue[i],
+          checkbox1 : _checkbox1[i],
+          checkbox2 : _checkbox2[i],
+          checkbox3 : _checkbox3[i],
+          checkbox4 : _checkbox4[i]
+        )
+      );
     }
+    _operator.combind_to_list({"อาจารย์ผู้สอน":_variable.teacher_name});//_variable.teacher_name แก้ด้วยถ้า data เป็น List<ใดๆ> / Map<ใดๆ,ใดๆ>
+    _operator.all_data[_variable.course_code] = _operator.element; //_variable.course_code แก้ด้วยถ้า data เป็น List<ใดๆ> / Map<ใดๆ,ใดๆ>
+    //print(_operator.all_data);
+    updates_data("Update_Course",_operator.all_data);
+    _operator.all_clear();
+    //print("---------------------------------------------------------------------");
+    //Navigator.pop(context);
   }
 
   @override

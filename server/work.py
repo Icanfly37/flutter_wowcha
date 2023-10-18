@@ -122,6 +122,120 @@ def update_subject(data):
     OnJson(get_file_path("\last_status.json"),'w',{"last_id":last_status[0]})
     
     OnJson(get_file_path("\Total_Course.json"),'w',Current_Subject) #new
+
+class for_collect_time_data:
+    def __init__(self,sec,count,room,day,t_start,t_end,s_year):
+       self.sec = sec
+       self.count = count
+       self.room = room
+       self.day = day
+       self.t_start = t_start
+       self.t_end = t_end
+       self.s_year = s_year
+    def to_dict(self):
+        onsec = list(self.sec.values())[0] #value
+        #keys------------------------------------------
+        oncount = list(self.count.keys())[0]
+        onroom = list(self.room.keys())[0]
+        onday = list(self.day.keys())[0]
+        ont_start = list(self.t_start.keys())[0]
+        ont_end = list(self.t_end.keys())[0]
+        ons_year = list(self.s_year.keys())[0]
+        #keys------------------------------------------
+        return {onsec:{
+            'หมู่เรียน': onsec,
+            'จำนวนที่เปิดรับ': self.count[oncount],
+            'ห้องเรียน': self.room[onroom],
+            'วันเปิดสอน': self.day[onday],
+            'เวลาเริ่มต้น': self.t_start[ont_start],
+            'เวลาสิ้นสุด':  self.t_end[ont_end],
+            'ชั้นปีที่เปิดสอน': self.s_year[ons_year]
+        }}
+        
+
+class for_year_student:
+    def __init__(self,y1,y2,y3,y4):
+        self.y1 = y1
+        self.y2 = y2
+        self.y3 = y3
+        self.y4 = y4
+    def toList(self):
+        l = [self.y1,self.y2,self.y3,self.y4]
+        fillter = []
+        if self.y1 is None and self.y2 is None and self.y3 is None and self.y4 is None:
+            fillter.append(None)
+        else:
+            for i in l:
+                if i is not None:
+                    fillter.append(i)
+        return fillter
+
+
+def update_course(data):
+    combine_data = {"detail" : {}}
+    keep_teacher = {}
+    big_buffer = []
+    round = 1
+    Current_Subject = OnJson(get_file_path("\Total_Course.json"),"r")
+    key = list(data.keys())
+    if "-" in key[0]:
+        code = key[0][:8]
+    else:
+        code = key[0]
+    course_code = Current_Subject[code]
+    name,id = str(course_code).split("_")
+    doc_target = str("Course_"+id)
+    #print(doc_target)
+    value = data[key[0]]
+    #print(value)
+    # db = Database(get_file_path("\database\serviceAccountKey.json"))
+    # db.get_db()
+    # db.get_collection("เปิดการสอน")
+    # db.update_db(doc_target,{"S_ID":course_code})
+    #print({"S_ID":course_code})
+    for i in value:
+        if "อาจารย์" in list(i.keys())[0]:
+            keep_teacher.update({list(i.keys())[0]:i[list(i.keys())[0]]})
+        else:
+            buffer = []
+            for key,value in i.items():
+                if "ชั้นปี" in key:
+                    buffer.append(value)
+                else:
+                    big_buffer.append({key:value})
+                    # db.update_db(doc_target,{
+                    #     key:value
+                    # })
+            student = for_year_student(buffer[0],buffer[1],buffer[2],buffer[3])
+            big_buffer.append({"ชั้นปีที่เปิดสอน":student.toList()})
+            converter = for_collect_time_data(
+                big_buffer[0],
+                big_buffer[1],
+                big_buffer[2],
+                big_buffer[3],
+                big_buffer[4],
+                big_buffer[5],
+                big_buffer[6],
+            )
+            #print(converter.to_dict())
+            #print(combine_data)
+            combine_data["detail"].update(converter.to_dict())
+            buffer.clear()
+            big_buffer.clear()
+            round+=1
+            #print("----------------------------------------------")
+    #print(keep_teacher)
+    combine_data["detail"].update(keep_teacher)
+    #print(combine_data)
+    db = Database(get_file_path("\database\serviceAccountKey.json"))
+    db.get_db()
+    db.get_collection("เปิดการสอน")
+    db.update_db(doc_target,combine_data)
+    #print({"detail":combine_data})
+    #print(doc_target)
+    #print({"S_ID":course_code})
+    db.close_db()
+    
     
 # path = "D:/หลักสูตร.xlsx"
 # #OnExcel(path,("รายวิชา","เปิดการสอน"))
