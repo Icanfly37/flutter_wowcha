@@ -178,20 +178,19 @@ def update_course(data):
     round = 1
     Current_Subject = OnJson(get_file_path("\Total_Course.json"),"r")
     key = list(data.keys())
-    if "-" in key[0]:
-        code = key[0][:8]
-    else:
-        code = key[0]
+    #--------------------------------- For access key ---------------------------------------
+    # if "-" in key[0]:
+    #     code = key[0][:8]
+    # else:
+    #     code = key[0]
+    code = key[0]
+    #----------------------------------------------------------------------------------------
     course_code = Current_Subject[code]
     name,id = str(course_code).split("_")
     doc_target = str("Course_"+id)
     #print(doc_target)
     value = data[key[0]]
     #print(value)
-    # db = Database(get_file_path("\database\serviceAccountKey.json"))
-    # db.get_db()
-    # db.get_collection("เปิดการสอน")
-    # db.update_db(doc_target,{"S_ID":course_code})
     #print({"S_ID":course_code})
     for i in value:
         if "อาจารย์" in list(i.keys())[0]:
@@ -236,7 +235,36 @@ def update_course(data):
     #print({"S_ID":course_code})
     db.close_db()
     
+def print_to_excel():
+    #limiter = list(OnJson(get_file_path("\last_status.json"),'r').values())[0]
+    db = Multi_Collection(get_file_path("\database\serviceAccountKey.json"))
+    collection_1 = "เปิดการสอน"
+    collection_2 = "รายวิชา"
+    data1 = db.instance_get_all_docs(collection_1)
+    data2 = db.instance_get_all_docs(collection_2)
+    db.close_db()
+    for i in data1:
+        for key1,value1 in i.items():
+            try:
+                item = value1["detail"]
+            except KeyError:
+                continue
+            else:
+                target_list = int(key1[7:])-1
+                doc = data2[target_list] #dict
+                doc_2 = doc["Subject_"+key1[7:]]
+                if doc_2["ปีหลักสูตร"] is not None:
+                    subject = doc_2["รหัสวิชา"]+"-"+doc_2["ปีหลักสูตร"][2:]
+                else:
+                    subject = doc_2["รหัสวิชา"]
+                print({subject:item})
     
+    # search = OnJson(get_file_path("\Total_Course.json"),"r")
+    # for key,value in search.items():
+    #     if value == "Subject_42":
+    #         print(key)
+    
+print_to_excel()
 # path = "D:/หลักสูตร.xlsx"
 # #OnExcel(path,("รายวิชา","เปิดการสอน"))
 # OnExcel(path)
