@@ -243,6 +243,12 @@ def print_to_excel():
     data1 = db.instance_get_all_docs(collection_1)
     data2 = db.instance_get_all_docs(collection_2)
     db.close_db()
+    
+    start_row_for_80x = 8
+    start_row_for_83x = 8
+    start_row_at = 8
+    
+    writer = header(get_file_path("\\file_export\\file_extract.xlsx"))
     for i in data1:
         for key1,value1 in i.items():
             try:
@@ -253,17 +259,144 @@ def print_to_excel():
                 target_list = int(key1[7:])-1
                 doc = data2[target_list] #dict
                 doc_2 = doc["Subject_"+key1[7:]]
+                subject_name = doc_2["ชื่อรายวิชาภาษาอังกฤษ"]
+                basic_subject = doc_2["วิชาพื้นฐาน"]
+                big_credit = doc_2["หน่วยกิต"] #หน่วยกิตใหญ่
+                timing = big_credit[big_credit.index("("):big_credit.index(")")+1].replace("(","").replace(")","").split("-") #ชม.เรียน
+                real_credit = int(big_credit[:big_credit.index("(")]) #หน่วยกิต
+                #print(subject_name) 
+                
+                writer.insert_data(start_row_at,3,subject_name)
+                writer.insert_data(start_row_at,4,big_credit)
+                
+                if int(timing[0]) != 0: #สำหรับวิชาที่มีทฤษฎี
+                    #print("for 80x")
+                    #print(timing[0],timing[0])
+                    cap_timing_for_80x = (timing[0],timing[0])
+                    real_credit -= int(timing[0])
+                    if real_credit != 0: #สำหรับวิชาที่มีทฤษฎีและปฏิบัติ
+                        #print("for 83x")
+                        #print(real_credit,timing[1])
+                        cap_timing_for_83x = (real_credit,timing[1])
+                    else:
+                        cap_timing_for_83x = None
+                else: #สำหรับวิชาที่ไม่มีทฤษฎี
+                    cap_timing_for_80x = None
+                    #print("for 83x")
+                    #print(real_credit,timing[1])
+                    cap_timing_for_83x = (real_credit,timing[1])
+                    
                 if doc_2["ปีหลักสูตร"] is not None:
                     subject = doc_2["รหัสวิชา"]+"-"+doc_2["ปีหลักสูตร"][2:]
+                    writer.insert_data(start_row_at,1,doc_2["รหัสวิชา"])
+                    writer.insert_data(start_row_at,2,subject)
                 else:
                     subject = doc_2["รหัสวิชา"]
-                print({subject:item})
-    
-    # search = OnJson(get_file_path("\Total_Course.json"),"r")
-    # for key,value in search.items():
-    #     if value == "Subject_42":
-    #         print(key)
-    
+                    writer.insert_data(start_row_at,1,doc_2["รหัสวิชา"])
+                
+                #print({subject:item})
+                for key2,value2 in item.items():
+                    if "80" in key2:
+                        #print(key2) #sec
+                        
+                        # for key3,value3 in value2.items():
+                        #     print(key3)
+                        #     print(value3)
+                        if cap_timing_for_80x is not None:
+                            writer.insert_data(start_row_for_80x,5,cap_timing_for_80x[0])
+                            writer.insert_data(start_row_for_80x,6,cap_timing_for_80x[1])
+
+                            writer.insert_data(start_row_for_80x,7,key2) #หมู่เรียน
+                            writer.insert_data(start_row_for_80x,8,value2["วันเปิดสอน"])
+                            writer.insert_data(start_row_for_80x,9,value2["เวลาเริ่มต้น"])
+                            writer.insert_data(start_row_for_80x,10,"-")
+                            writer.insert_data(start_row_for_80x,11,value2["เวลาสิ้นสุด"])
+                            writer.insert_data(start_row_for_80x,12,value2["ห้องเรียน"])
+                            
+                            year = ""
+                            for i in value2["ชั้นปีที่เปิดสอน"]:
+                                jer = i[:3]
+                                year += i[4:]
+                            pack_year = jer+"/"+year[:1]+"-"+year[-1:]
+                            writer.insert_data(start_row_for_80x,13,pack_year)
+                            
+                            writer.insert_data(start_row_for_80x,14,value2["จำนวนที่เปิดรับ"])
+                            #print(value2["จำนวนที่เปิดรับ"])
+                            #print(value2["ชั้นปีที่เปิดสอน"])
+                            #print(value2["วันเปิดสอน"])
+                            #print(value2["หมู่เรียน"])
+                            #print(value2["ห้องเรียน"])
+                            #print(value2["เวลาสิ้นสุด"])
+                            #print(value2["เวลาเริ่มต้น"])
+                            
+                        print(start_row_for_80x)
+                        start_row_for_80x+=1
+                    elif "83" in key2:
+                        #print(key2) #sec
+                        
+                        # for key3,value3 in value2.items():
+                        #     print(key3)
+                        #     print(value3)
+                        
+                        writer.insert_data(start_row_for_83x,15,cap_timing_for_83x[0])
+                        writer.insert_data(start_row_for_83x,16,cap_timing_for_83x[1])
+                        writer.insert_data(start_row_for_83x,17,key2)
+                        writer.insert_data(start_row_for_83x,18,value2["วันเปิดสอน"])
+                        writer.insert_data(start_row_for_83x,19,value2["เวลาเริ่มต้น"])
+                        writer.insert_data(start_row_for_83x,20,"-")
+                        writer.insert_data(start_row_for_83x,21,value2["เวลาสิ้นสุด"])
+                        writer.insert_data(start_row_for_83x,22,value2["ห้องเรียน"])
+                        
+                        year = ""
+                        for i in value2["ชั้นปีที่เปิดสอน"]:
+                            jer = i[:3]
+                            year += i[4:]
+                        pack_year = jer+"/"+year[:1]+"-"+year[-1:]
+                        writer.insert_data(start_row_for_83x,23,pack_year)
+                        
+                        writer.insert_data(start_row_for_83x,24,value2["จำนวนที่เปิดรับ"])
+                        
+                        #print(value2["จำนวนที่เปิดรับ"])
+                        #print(value2["ชั้นปีที่เปิดสอน"])
+                        #print(value2["วันเปิดสอน"])
+                        #print(value2["หมู่เรียน"])
+                        #print(value2["ห้องเรียน"])
+                        #print(value2["เวลาสิ้นสุด"])
+                        #print(value2["เวลาเริ่มต้น"])
+                        
+                        print(start_row_for_83x)
+                        start_row_for_83x+=1
+                    else:
+                        #print(value2) #อาจารย์ผู้สอน
+                        teacher = value2
+                        #writer.insert_data(start_row_for_80x,25,value2)
+                    #print("-------------------------------------------------------------")
+                #writer.insert_data(start_row_for_80x,26,"-")
+                
+                b_s = ",".join(basic_subject) 
+                #writer.insert_data(start_row_for_80x,27,b_s) #วิชาพื้นฐาน
+                
+                start_row_previous = start_row_at
+                if start_row_for_80x < start_row_for_83x:
+                    #print(start_row_for_83x)
+                    start_row_for_80x = start_row_for_83x
+                    start_row_at = start_row_for_80x
+                elif start_row_for_80x > start_row_for_83x:
+                    #print(start_row_for_80x)
+                    start_row_for_83x = start_row_for_80x
+                    start_row_at = start_row_for_83x
+                else:
+                    #print(start_row_for_80x)
+                    start_row_for_80x = start_row_for_83x
+                    start_row_at = start_row_for_80x
+                
+                for t in range(start_row_previous,start_row_at):
+                    writer.insert_data(t,25,teacher)
+                    writer.insert_data(t,26,"-")
+                    writer.insert_data(t,27,b_s)
+                
+    writer.save_file()
+
 print_to_excel()
 # path = "D:/หลักสูตร.xlsx"
 # #OnExcel(path,("รายวิชา","เปิดการสอน"))
