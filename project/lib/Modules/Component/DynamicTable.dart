@@ -25,12 +25,16 @@ class _DynamicDataTableState extends State<DynamicDataTable> {
     return FutureBuilder(
         // future: fetchData(),
         future: null,
-        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+        builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator(); // แสดงแถบโหลดข้อมูล
+            // ถ้าข้อมูลกำลังโหลด
+            return const Center(
+                child: CircularProgressIndicator()); // แสดงแถบโหลดข้อมูล
           } else if (snapshot.hasError) {
-            return Text('เกิดข้อผิดพลาด: ${snapshot.error}');
+            // ถ้าเกิดข้อผิดพลาดในการดึงข้อมูล
+            return Center(child: Text('เกิดข้อผิดพลาด: ${snapshot.error}'));
           } else {
+            // ถ้าข้อมูลโหลดสำเร็จ
             return Builder(builder: (context) {
               return SizedBox(
                 // width: MediaQuery.of(context).size.width * 0.8,
@@ -51,7 +55,7 @@ class _DynamicDataTableState extends State<DynamicDataTable> {
                     /// newValue[0] คือคอลัมน์รหัสวิชา
 
                     // ถ้าข้อมูลเป็น null
-                    if (newValue[0] == null || newValue[0].isEmpty) {
+                    if (newValue[0].isEmpty) {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text("กรุณากรอกรหัสวิชา เช่น '01234567-60'"),
@@ -70,6 +74,21 @@ class _DynamicDataTableState extends State<DynamicDataTable> {
                         ),
                       );
                       return null;
+                    }
+
+                    // ถ้าข้อมูลไม่เป็น null และปีหลักสูตร2ตัวสุดท้ายไม่เป็นตัวเลข
+                    if (newValue[0].isNotEmpty && newValue[0].length == 11) {
+                      final lastTwoChars = newValue[0].substring(9);
+                      if (!RegExp(r'[0-9]').hasMatch(lastTwoChars[0]) &&
+                          !RegExp(r'[0-9]').hasMatch(lastTwoChars[1])) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                                "กรุณากรอกรหัสวิชาเป็นตัวเลข เช่น '01234567-60'"),
+                          ),
+                        );
+                        return null;
+                      }
                     }
 
                     // ถ้าข้อมูลเป็นตัวเลขและไม่ครบ
@@ -163,7 +182,7 @@ class _DynamicDataTableState extends State<DynamicDataTable> {
                   headingRowHeight: 60,
                   dataRowMinHeight: 60,
                   dataRowMaxHeight: 60,
-                  columnSpacing: 60,
+                  // columnSpacing: 60,
                   actionColumnTitle: "",
                   showCheckboxColumn: true,
                   actions: [
@@ -284,6 +303,33 @@ class _DynamicDataTableState extends State<DynamicDataTable> {
                           hintText: "วิชาพื้นฐาน",
                           border: OutlineInputBorder(),
                         ),
+                      ),
+                    ),
+                    DynamicTableDataColumn(
+                      label: const Text(
+                        "ชั้นปีตามหลักสูตร",
+                        style: TextStyle(
+                            fontSize: 14, fontWeight: FontWeight.bold),
+                      ),
+                      dynamicTableInputType:
+                          DynamicTableInputType.dropDown<String>(
+                        items: yearDropdown
+                            .map((e) => DropdownMenuItem(
+                                  value: e,
+                                  child: Text(e),
+                                ))
+                            .toList(growable: false),
+                        selectedItemBuilder: (context) {
+                          return yearDropdown
+                              .map((e) => Text(e))
+                              .toList(growable: false);
+                        },
+                        decoration: const InputDecoration(
+                            hintText: "Select year",
+                            border: OutlineInputBorder()),
+                        displayBuilder: (value) =>
+                            value ??
+                            "", // How the string will be displayed in non editing mode
                       ),
                     ),
                   ],

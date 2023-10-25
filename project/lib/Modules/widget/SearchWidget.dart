@@ -50,7 +50,7 @@ class _SearchWidgetState extends State<SearchWidget> {
     return FutureBuilder(
         // future: fetchData(),
         future: null,
-        builder: (BuildContext context, AsyncSnapshot<void> snapshot) {
+        builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return CircularProgressIndicator(); // แสดงแถบโหลดข้อมูล
           } else if (snapshot.hasError) {
