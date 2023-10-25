@@ -25,7 +25,6 @@
 //   bool thirdValue = false;
 //   bool fourthValue = false;
 
-
 //   Widget cancellIcon() => const Padding(
 //     padding: EdgeInsets.only(bottom: 20,top: 20),
 //     child: SizedBox());
@@ -505,7 +504,7 @@
 //                         height: 16,
 //                       ),
 //                     ],),
-                    
+
 //                 ]
 //               ),
 //               TableRow(
@@ -709,8 +708,6 @@ import 'package:flutter/material.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:timetable_view/timetable_view.dart';
 
-
-
 class TimetablePage extends StatefulWidget {
   TimetablePage({Key? key}) : super(key: key);
 
@@ -726,10 +723,7 @@ class _TimetablePageState extends State<TimetablePage> {
       body: TimetableView(
         laneEventsList: _buildLaneEvents(),
         onEventTap: onEventTapCallBack,
-        timetableStyle: TimetableStyle(
-          startHour: 8,
-          endHour: 21
-        ),
+        timetableStyle: TimetableStyle(startHour: 8, endHour: 21),
         onEmptySlotTap: onTimeSlotTappedCallBack,
       ),
     );

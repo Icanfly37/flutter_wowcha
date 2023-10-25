@@ -42,6 +42,7 @@ def sub_object_send(id,header,slave):
     for i in range(len(header)):
         #sub_object_1[header[i]] = slave[i]  
         if header[i] == "รหัสวิชา":
+            all_subject[slave[i]] = sub_object_1["S_ID"] #new
             if slave[i] is not None:
                 if "-" in slave[i]:
                     target_year = slave[i].index("-")
@@ -49,18 +50,18 @@ def sub_object_send(id,header,slave):
                     real_year = "25"+str(catch_year)
                     sub_object_1[header[i]] = slave[i][:target_year]
                     
-                    all_subject[slave[i][:target_year]] = sub_object_1["S_ID"] #new
+                    #all_subject[slave[i][:target_year]] = sub_object_1["S_ID"] #new
                     
-                    sub_object_1["ปีการศึกษา"] = real_year
+                    sub_object_1["ปีหลักสูตร"] = real_year
                 else:
                     sub_object_1[header[i]] = slave[i]
                     
-                    all_subject[slave[i]] = sub_object_1["S_ID"] #new
+                    #all_subject[slave[i]] = sub_object_1["S_ID"] #new
                     
-                    sub_object_1["ปีการศึกษา"] = None
+                    sub_object_1["ปีหลักสูตร"] = None
             else:
                 sub_object_1[header[i]] = slave[i]
-                sub_object_1["ปีการศึกษา"] = None
+                sub_object_1["ปีหลักสูตร"] = None
         elif header[i] == "อาจารย์ผู้สอน":
             if slave[i] is not None:
                 if "," in slave[i]:

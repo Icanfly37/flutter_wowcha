@@ -50,8 +50,8 @@ async def update_item(data: dict):
     #print(item.description)
     elif keys[0] == "Update_Course":
         print("Update_Course")
-        print(data[keys[0]])
-        #update_course(data[keys[0]])
+        #print(data[keys[0]])
+        update_course(data[keys[0]])
     return {"message": "Data received and processed successfully"}
 
 #getExcelFile

@@ -73,10 +73,32 @@ class Database():
             all_subject[detail["รหัสวิชา"]] = id
         return all_subject
 
+class Multi_Collection(Database):
+    def __init__(self,path):
+        self.path = path
+        super().__init__(self.path)
+        super().get_db()
+    def instance_read_filed(self,collection,doc):
+        On_collection = self.db.collection(collection)
+        result = On_collection.document(doc).get()
+        if result.exists:
+            return result.to_dict()
+        else:
+            return None
+    def instance_get_all_docs(self,collection):
+        list_stack = []
+        On_collection = self.db.collection(collection)
+        doc_target = On_collection.stream()
+        for doc in doc_target:
+            list_stack.append({doc.id:doc.to_dict()})
+        return list_stack
+            
 
 # #Initialize database
-# db = Database(get_Current_Path("/database/serviceAccountKey.json"))
-
+# db = Multi_Collection(get_Current_Path("/database/serviceAccountKey.json"))
+# collection = "เปิดการสอน"
+# db.instance_get_all_docs(collection)
+# db.close_db()
 # #test Create Database
 # data = {'basicsubject':'Wow',
 #          'coursecode':4442,
