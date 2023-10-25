@@ -413,7 +413,7 @@ def print_to_excel():
                 
     writer.save_file()
 
-print_to_excel()
+# print_to_excel()
 # path = "D:/หลักสูตร.xlsx"
 # #OnExcel(path,("รายวิชา","เปิดการสอน"))
 # OnExcel(path)
