@@ -22,7 +22,8 @@ app.add_middleware(
 
 @app.get("/")
 def read_root():
-    return {"message": "Hello, World!"}
+    #subject = OnJson(get_file_path("\Total_course.json"),"r",)
+    return {"message": "Hello World"}
 
 #get status data
 @app.post("/detect_collection")
@@ -39,10 +40,18 @@ def read_root():
     return {"getjson": send}
 
 #getdata
-@app.post("/items/")
-async def create_item(data: dict):
-    print(data)
+@app.post("/update/")
+async def update_item(data: dict):
+    #print(data)
+    keys = list(data.keys())
+    if keys[0] == "Update_Subject":
+        print("update")
+        update_subject(data[keys[0]])
     #print(item.description)
+    elif keys[0] == "Update_Course":
+        print("Update_Course")
+        #print(data[keys[0]])
+        update_course(data[keys[0]])
     return {"message": "Data received and processed successfully"}
 
 #getExcelFile

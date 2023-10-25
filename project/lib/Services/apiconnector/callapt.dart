@@ -146,17 +146,17 @@ Future<dynamic> getdata() async{
 }
 
 //send data from frontend to backend
-Future<void> senddata(final Map<dynamic, dynamic> data) async {
-  final url = Uri.parse('http://127.0.0.1:8000/items/'); // Replace with your FastAPI endpoint
+Future<void> updates_data(String what_to_do, final Map<dynamic, dynamic> data) async {
+  final url = Uri.parse('http://127.0.0.1:8000/update/'); // Replace with your FastAPI endpoint
   final Map<String, String> headers = {
     'Content-Type': 'application/json',
   };
   //this is what do you want to send
-
+  final Map<String,dynamic> onsite = {what_to_do:data};
   final response = await http.post(
     url,
     headers: headers,
-    body: json.encode(data),
+    body: json.encode(onsite),
   );
 
   if (response.statusCode == 200) {

@@ -50,15 +50,52 @@ class Database():
         # Check if the target collection exists
         for coll_ref in collections:
             if coll_ref.id == collection_target:
-                return True
+                is_collection = self.db.collection(collection_target)
+                docs = is_collection.stream()
+                if not docs:
+                    return False
+                else:
+                    return True
         return False
-    def get_all_doc(self):
-        return self.collection.stream()
+    def get_all_docs(self):
+        all_subject = {}
+        docs = self.collection.stream()
+        #docs = self.db.collection(doc_target).stream()
+        for doc in docs:
+            #all_docs.append(doc)
+            #print(f'Document ID: {doc.id}')
+            #print(f'Document Data: {doc.to_dict()}')
+            id = doc.id
+            detail = doc.to_dict()
+            all_subject[detail["รหัสวิชา"]] = id
+        return all_subject
 
+class Multi_Collection(Database):
+    def __init__(self,path):
+        self.path = path
+        super().__init__(self.path)
+        super().get_db()
+    def instance_read_filed(self,collection,doc):
+        On_collection = self.db.collection(collection)
+        result = On_collection.document(doc).get()
+        if result.exists:
+            return result.to_dict()
+        else:
+            return None
+    def instance_get_all_docs(self,collection):
+        list_stack = []
+        On_collection = self.db.collection(collection)
+        doc_target = On_collection.stream()
+        for doc in doc_target:
+            list_stack.append({doc.id:doc.to_dict()})
+        return list_stack
+            
 
 # #Initialize database
-# db = Database(get_Current_Path("/backend/database/serviceAccountKey.json"))
-
+# db = Multi_Collection(get_Current_Path("/database/serviceAccountKey.json"))
+# collection = "เปิดการสอน"
+# db.instance_get_all_docs(collection)
+# db.close_db()
 # #test Create Database
 # data = {'basicsubject':'Wow',
 #          'coursecode':4442,
@@ -82,4 +119,7 @@ class Database():
 # #db.delete_field(doc,"Pre")
 # #db.delete_document(doc)
 # #close database
+
+# db.get_collection("รายวิชา")
+# print(db.get_all_docs())
 # db.close_db()

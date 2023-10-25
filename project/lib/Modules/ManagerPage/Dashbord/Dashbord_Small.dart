@@ -4,7 +4,7 @@ import 'package:ku_t/Modules/Component/DynamicTable.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Modules/Component/PaginatedDataTable.dart';
 import 'package:ku_t/Modules/Dropdown/YearModel.dart';
-import 'package:ku_t/Modules/ManagerPage/Dashbord/PopUp.dart';
+import 'package:ku_t/Modules/ManagerPage/Dashbord/PopUp_AddCourse.dart';
 import 'package:ku_t/Modules/ManagerPage/Dashbord/viewmodel.dart';
 import 'package:ku_t/Modules/widget/SearchWidget.dart';
 import 'package:ku_t/Services/apiconnector/callapt.dart';
