@@ -72,6 +72,19 @@ class Database():
             detail = doc.to_dict()
             all_subject[detail["รหัสวิชา"]] = id
         return all_subject
+    
+    def all_docs(self):
+        all_subject = {}
+        docs = self.collection.stream()
+        #docs = self.db.collection(doc_target).stream()
+        for doc in docs:
+            #all_docs.append(doc)
+            #print(f'Document ID: {doc.id}')
+            #print(f'Document Data: {doc.to_dict()}')
+            id = doc.id #Subject_01 เป็นต้นไป
+            detail = doc.to_dict() #ข้อมูลในแต่ละ Subject_01 เป็นต้นไป
+            all_subject[id] = detail
+        return all_subject
 
 
 # #Initialize database

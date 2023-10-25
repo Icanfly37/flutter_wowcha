@@ -86,7 +86,7 @@ def Delete_Item(Collection: str, Document: str):
     return {"Delete json":Item}
 
 #Read
-@app.get("/Fetch_Data/{Collection}/{Document}") 
+@app.post("/Fetch_Data/{Collection}/{Document}") 
 def Fetch_Data(Collection: str, Document: str):
     FetchAD = Database(get_file_path("\database\serviceAccountKey.json")) 
     FetchAD.get_db()
@@ -95,7 +95,7 @@ def Fetch_Data(Collection: str, Document: str):
     FetchAD.close_db()
     return {"get json":Item}
     
-@app.get("/Fetch_All_Data/{Collection}") 
+@app.post("/Fetch_All_Data/{Collection}") 
 def Fetch_All_Data(Collection: str):
     Item = test(Collection)
     # FetchAD = Database(get_file_path("\database\serviceAccountKey.json")) 

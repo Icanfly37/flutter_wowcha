@@ -126,16 +126,18 @@ def update_subject(data):
 def test(Collection):
     FetchAD = Database(get_file_path("\database\serviceAccountKey.json")) 
     FetchAD.get_db()
-    if Collection == "รายวิชา":
-        key = "Subject_"
-        for i in 10:
-            if i < 10:
-                key = key + "0" + i
-                print(FetchAD.read_field(key))
-    Item = FetchAD.get_all_data(Collection) 
+    FetchAD.get_collection(Collection)
+    Item = FetchAD.all_docs()
+    # if Collection == "รายวิชา":
+    #     key = "Subject_"
+    #     for i in 10:
+    #         if i < 10:
+    #             key = key + "0" + i
+    #             print(FetchAD.read_field(key))
+    # Item = FetchAD.get_all_data(Collection) 
     FetchAD.close_db()
     return Item
-print(test("รายวิชา"))
+# print(test("รายวิชา"))
 
 # path = "D:/หลักสูตร.xlsx"
 # #OnExcel(path,("รายวิชา","เปิดการสอน"))
