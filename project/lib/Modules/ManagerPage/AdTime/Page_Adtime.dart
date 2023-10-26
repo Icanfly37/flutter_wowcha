@@ -308,8 +308,7 @@ import 'package:flutter/material.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Modules/Dropdown/SemesterModel.dart';
 import 'package:ku_t/Modules/Dropdown/YearSModel.dart';
-
-import 'package:ku_t/Modules/ManagerPage/Teachingtime/timesubject.dart';
+import 'package:ku_t/Modules/ManagerPage/AdTime/ListSubject.dart';
 import 'package:ku_t/Modules/widget/search_bar_widget.dart';
 
 class Tabletime extends StatefulWidget {
