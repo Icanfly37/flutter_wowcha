@@ -5,6 +5,10 @@ import 'package:http/http.dart'as http;
 import 'package:http_parser/http_parser.dart';
 import 'package:flutter/services.dart';
 
+import 'dart:typed_data';
+import 'dart:convert';
+import 'package:universal_html/html.dart' as html;
+
 //How to use it
 // void main() async{
 //   var op = api_operator();
@@ -104,18 +108,15 @@ Future<void> sendExcelFile(Stream<List<int>> stream,int size) async {
   }
 }
 //get Excel file from backend to frontend
-Future<void> getExcelFile(String path_for_export) async {
+Future<void> getExcelFile() async {
   final response = await http.post(Uri.parse('http://127.0.0.1:8000/uploadfile/'));
-
   if (response.statusCode == 200) {
-    // final appDocDir = await getApplicationDocumentsDirectory();
-    // final excelFilePath = '${appDocDir.path}/sample_excel.xlsx';
-    String excelFilePath = path_for_export;
-
-    // Save the downloaded file to the app's documents directory
-    final file = File(excelFilePath);
-    await file.writeAsBytes(response.bodyBytes);
-
+    final excelBlob = html.Blob([Uint8List.fromList(response.bodyBytes)]);
+    final excelUrl = html.Url.createObjectUrlFromBlob(excelBlob);
+    final a = html.AnchorElement(href: excelUrl)
+    ..setAttribute("download", "ตารางเวลา.xlsx")
+    ..click();
+    html.Url.revokeObjectUrl(excelUrl);
     // Handle the downloaded file as needed, e.g., open it with a plugin or display it.
   } else {
     throw Exception('Failed to download Excel file');

@@ -69,6 +69,7 @@ async def create_file(file: Annotated[bytes, File()]):
 @app.post("/uploadfile/")
 def upload_file():
     path = get_file_path("\\file_export\\file_extract.xlsx")
+    print(path)
     print_to_excel(path)
     #excel_send = "D:/excel_test/ontester.xlsx"
     return FileResponse(path, media_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')

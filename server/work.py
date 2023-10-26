@@ -305,7 +305,7 @@ def test(Collection):
     return Item
 # print(test("รายวิชา"))
 
-def print_to_excel():
+def print_to_excel(output_path):
     #limiter = list(OnJson(get_file_path("\last_status.json"),'r').values())[0]
     db = Multi_Collection(get_file_path("\database\serviceAccountKey.json"))
     collection_1 = "เปิดการสอน"
@@ -443,8 +443,10 @@ def print_to_excel():
                         #writer.insert_data(start_row_for_80x,25,value2)
                     #print("-------------------------------------------------------------")
                 #writer.insert_data(start_row_for_80x,26,"-")
-                
-                b_s = ",".join(basic_subject) 
+                if basic_subject[0] is None: #ถ้ามี None หมายความว่า basic_subject = [None] เท่านั้น
+                    b_s = None
+                else:
+                    b_s = ",".join(basic_subject) 
                 #writer.insert_data(start_row_for_80x,27,b_s) #วิชาพื้นฐาน
                 
                 start_row_previous = start_row_at
@@ -467,8 +469,8 @@ def print_to_excel():
                     writer.insert_data(t,27,b_s)
                 
     writer.save_file()
-
-#print_to_excel()
+#header(get_file_path("\\file_export\\file_extract.xlsx"))
+#print_to_excel(get_file_path("\\file_export\\file_extract.xlsx"))
 #test_data = {'รหัสวิชา': '01417167-65', 'ชื่อรายวิชาภาษาอังกฤษ': 'E', 'หน่วยกิต': '2(2-0-6)', 'วิชาพื้นฐาน': 'S', 'ชั้นปีที่เปิดสอน': 'T12(2)'}
 #edit_subject(test_data)
 # path = "D:/หลักสูตร.xlsx"

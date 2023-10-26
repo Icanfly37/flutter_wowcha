@@ -1,9 +1,18 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_colorpicker/flutter_colorpicker.dart';
+import 'package:http/http.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
+import 'package:ku_t/Modules/ManagerPage/Timetable/operate.dart';
+import 'package:ku_t/Services/apiconnector/callapt.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:timetable_view/timetable_view.dart';
 import 'package:ku_t/Modules/Dropdown/SemesterModel.dart';
 import 'package:ku_t/Modules/Dropdown/YearSModel.dart';
+
+
 
 class Event {
   String title;
@@ -40,6 +49,8 @@ class _TimetablePageState extends State<TimetablePage> {
   bool fourthValue = false;
   List<Event> events = [];
   
+  //get_excel _geter = get_excel();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -300,6 +311,7 @@ Column _checkBox() {
 }
   Container _DownloadFileExcel() {
     final orientation = MediaQuery.of(context).orientation;
+    //String? FolderPath;
     return Container(
         margin: orientation == Orientation.portrait
             ? null
@@ -310,7 +322,10 @@ Column _checkBox() {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         decoration: decorationgreen(),
         child: TextButton(
-          onPressed: () {},
+          onPressed: () {
+            getExcelFile();
+            //getExcelFile("C:/Users/Icanfly37/Desktop/testexcelrecieve/test.xlsx");
+          },
           child: Text(
             'ดาวน์โหลดไฟล์ excel',
             style: textStylewhite(),
@@ -318,8 +333,8 @@ Column _checkBox() {
 
         ));
   }
-
 }
+
 
 
 class Timetable extends StatefulWidget {
