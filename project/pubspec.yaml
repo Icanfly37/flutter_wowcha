@@ -34,6 +34,12 @@ dependencies:
   day_schedule_list: ^0.4.6
   calendar_day_view: ^3.2.0
   multiselect: ^0.1.0
+
+  # time_range_picker: ^2.2.0
+  # time_range: ^3.0.0
+  fluttertoast: ^8.0.8
+  # flutter_datetime_picker: ^2.2.4
+  # modal_bottom_sheet: ^1.6.0
   
   firebase_core: ^2.16.0
   network_request: ^0.0.2
