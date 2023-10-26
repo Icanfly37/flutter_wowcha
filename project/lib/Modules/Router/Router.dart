@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:ku_t/Modules/Component/SideAppBar.dart';
+import 'package:ku_t/Modules/ManagerPage/AdTime/Page_Adtime.dart';
 import 'package:ku_t/Modules/ManagerPage/ManagerPageRoute.dart';
-import 'package:ku_t/Modules/ManagerPage/Teachingtime/tabletime.dart';
-// import 'package:ku_t/Modules/ManagerPage/ManagerImportPage.dart';
 import 'package:ku_t/Modules/ManagerPage/Timetable/TimetablePage.dart';
 import 'package:sidebarx/sidebarx.dart';
 
@@ -44,7 +43,7 @@ class _router extends State<router> {
                         //----------------------------------------------------------------
                         case 1:
                           _key.currentState?.closeDrawer();
-                          return Tabletime();
+                          return const Tabletime();
                         case 2:
                           _key.currentState?.closeDrawer();
                           return TimetablePage();
