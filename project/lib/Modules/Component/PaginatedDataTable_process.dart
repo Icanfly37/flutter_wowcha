@@ -34,6 +34,9 @@ class _PaginatedTableProcessState extends State<PaginatedTableProcess> {
     const DataColumn(
         label: Text('วิชาพื้นฐาน',
             style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14))),
+    const DataColumn(
+        label: Text('ชั้นปีตามหลักสูตร',
+            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14))),
   ];
 
   @override
@@ -74,6 +77,7 @@ class MyDataSource extends DataTableSource {
         DataCell(Text(rowData['name_subject'].toString())),
         DataCell(Text(rowData['credit'].toString())),
         DataCell(Text(rowData['pre'].toString())),
+        DataCell(Text(rowData['year'].toString())),
       ],
     );
   }

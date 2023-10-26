@@ -7,8 +7,8 @@ import 'package:ku_t/Modules/ManagerPage/Dashbord/viewmodel.dart';
 import 'package:ku_t/Services/apiconnector/callapt.dart';
 import 'package:unicons/unicons.dart';
 import 'package:http_parser/http_parser.dart';
-// import 'package:file_picker/file_picker.dart';
-// import 'package:mime/mime.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:mime/mime.dart';
 
 class DropZoneWidget extends StatefulWidget {
   const DropZoneWidget({super.key});

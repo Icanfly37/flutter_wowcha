@@ -701,7 +701,6 @@ class _AddEventFormState extends State<AddEventForm> {
         );
       },
     );
-
     if (selectedColor != null) {
       setState(() {
         eventColor = selectedColor!;

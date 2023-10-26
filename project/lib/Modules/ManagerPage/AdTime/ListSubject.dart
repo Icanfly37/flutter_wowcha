@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Modules/ManagerPage/Teachingtime/PopUp_Addtime.dart';
-
+import 'package:ku_t/Modules/ManagerPage/Teachingtime/value_for_time.dart';
 // import '../../Component/Header_web.dart';
 
 class Addtime extends StatefulWidget {
@@ -13,6 +13,8 @@ class Addtime extends StatefulWidget {
 }
 
 class _AddtimeState extends State<Addtime> {
+
+  Variable _variable = Variable();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class _AddtimeState extends State<Addtime> {
                     Container(
                       alignment: Alignment.center,
                       width: 100,
-                      child: Text("รหัสวิชา",
+                      child: Text(/*"รหัสวิชา"*/_variable.course_code,
                       style: textStylehintbold(),),
                     ),
                     Expanded(
@@ -41,22 +43,22 @@ class _AddtimeState extends State<Addtime> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text("ชื่อวิชา",
+                          Text(/*"ชื่อวิชา"*/_variable.course_name,
                           style: textStylehintbold(),),
-                          Text('3' + ' หน่วยกิต',
+                          Text(/*'3'*/_variable.credit_value + ' หน่วยกิต',
                           style: textStylehint(),
                           ),
                           Row(
                             children: [
                               Text('อาจารย์ผู้สอน ',
                               style: textStylehintbold(),),
-                              Text("ชื่ออาจารย์",
+                              Text(/*"ชื่ออาจารย์"*/_variable.teacher_name,
                               style: textStylehint(),
                               ),
                             ],
                           ),
                           Text(
-                            'ชั้นปีที่มีสิทธิ์',
+                            /*'ชั้นปีที่มีสิทธิ์'*/_variable.student_year,
                             style: textStylehintbold(),
                           )
                         ],
