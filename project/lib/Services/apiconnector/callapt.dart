@@ -126,8 +126,9 @@ Future<void> getExcelFile(String path_for_export) async {
 Future<dynamic> getdata() async{
   //final url = Uri.parse('http://127.0.0.1:8000/test_send',Headers()); // Replace with your FastAPI endpoint
   //final response = await http.post(url);
+  String Collection = "รายวิชา";
   final response = await http.post(
-    Uri.parse('http://127.0.0.1:8000/test_send'),
+    Uri.parse('http://127.0.0.1:8000/Fetch_All_Data/'+Collection),
     headers: {"Accept-Charset": "utf-8"}, // Set the charset header
   );
   if (response.statusCode == 200) {
@@ -135,7 +136,7 @@ Future<dynamic> getdata() async{
     //String data = response.body;
     //final jsonData = json.decode(utf8.decode(response.body));
     final jsonResponse = json.decode(utf8.decode(response.bodyBytes));
-    return jsonResponse['getjson'];
+    return jsonResponse['get json'];
     // Process the data as needed
     // print(jsonData);
     //return jsonData;

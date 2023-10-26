@@ -4,10 +4,8 @@ import 'package:ku_t/Modules/Dropdown/DaysModel.dart';
 import 'package:ku_t/Modules/Dropdown/TeachernameModel.dart';
 import 'package:ku_t/Modules/Dropdown/TimeEndModel.dart';
 import 'package:ku_t/Modules/Dropdown/TimeStartModel.dart';
-import 'package:ku_t/Modules/ManagerPage/Teachingtime/value_for_time.dart';
+import 'package:ku_t/Modules/ManagerPage/AdTime/value_for_time.dart';
 import 'package:ku_t/Services/apiconnector/callapt.dart';
-import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
-import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:unicons/unicons.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -490,6 +488,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   groupValue: _checkbox4[index], 
                                   onChanged: (value) {
                                     setState(() {
+                                      if (value != null) {
+                                        _checkbox4[index] = value;
+                                      }
                                       _checkbox4[index] = value;
                                     });
                                   },),

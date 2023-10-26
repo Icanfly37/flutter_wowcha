@@ -289,7 +289,23 @@ def update_course(data):
     #print({"S_ID":course_code})
     db.close_db()
     
-def print_to_excel(output_path):
+def test(Collection):
+    FetchAD = Database(get_file_path("\database\serviceAccountKey.json")) 
+    FetchAD.get_db()
+    FetchAD.get_collection(Collection)
+    Item = FetchAD.all_docs()
+    # if Collection == "รายวิชา":
+    #     key = "Subject_"
+    #     for i in 10:
+    #         if i < 10:
+    #             key = key + "0" + i
+    #             print(FetchAD.read_field(key))
+    # Item = FetchAD.get_all_data(Collection) 
+    FetchAD.close_db()
+    return Item
+# print(test("รายวิชา"))
+
+def print_to_excel():
     #limiter = list(OnJson(get_file_path("\last_status.json"),'r').values())[0]
     db = Multi_Collection(get_file_path("\database\serviceAccountKey.json"))
     collection_1 = "เปิดการสอน"
