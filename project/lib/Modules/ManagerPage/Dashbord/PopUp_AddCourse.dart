@@ -308,45 +308,45 @@ class _PopupManagerViewState extends State<PopupManagerView> {
 
   Column _teacher() {
     return Column(
-                    children: [
-                      Container(
-                              alignment: Alignment.bottomLeft,
-                              child: Text(
-                                "ชั้นปี",
-                                style: textStylehintbold(),
-                              ),
-                            ),
-                      Container(
-                        height: 55,
-                        padding: EdgeInsets.symmetric(horizontal: 5),
-                        decoration: decoration(),
-                        child: Row(
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                              _showMultiSelectTeacher();
-                            }, child: Container(
-                              alignment: Alignment.centerLeft,
-                              child: Text(
-                                'อาจารย์ผู้สอน',style: textStylehint()),
-                            )),
-                            
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 5),
-                      Wrap(
-                            clipBehavior: Clip.none,
-                            spacing: 2,
-                            children: _selectedItemsTeacher
-                        .map((e) => Container(
-                          padding: EdgeInsets.all(5),
-                          decoration: decorationgc(),
-                          child: Text(e)))
-                        .toList(),
-                                          )
-                    ],
-                  );
+      children: [
+        Container(
+                alignment: Alignment.bottomLeft,
+                child: Text(
+                  "อาจารย์ผู้สอน",
+                  style: textStylehintbold(),
+                ),
+              ),
+        Container(
+          height: 55,
+          padding: EdgeInsets.symmetric(horizontal: 5),
+          decoration: decoration(),
+          child: Row(
+            children: [
+              TextButton(
+                onPressed: () {
+                _showMultiSelectTeacher();
+              }, child: Container(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'อาจารย์ผู้สอน',style: textStylehint()),
+              )),
+              
+            ],
+          ),
+        ),
+        SizedBox(height: 5),
+        Wrap(
+              clipBehavior: Clip.none,
+              spacing: 2,
+              children: _selectedItemsTeacher
+          .map((e) => Container(
+            padding: EdgeInsets.all(5),
+            decoration: decorationgc(),
+            child: Text(e)))
+          .toList(),
+                            )
+      ],
+    );
   }
 
   Column _basicSubject() {
