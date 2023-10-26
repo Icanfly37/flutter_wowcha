@@ -17,33 +17,11 @@ class DashbordSmall extends StatefulWidget {
 }
 
 class _DashbordSmallState extends State<DashbordSmall> {
-  // CollectionReference addsubject =
-  //     FirebaseFirestore.instance.collection('subject');
-  // late TextEditingController controller;
   String? selectedValue; //N
 
-  // bool isImport = true;
-
-  // ถ้า false จะเป็นไม่พบหลักสูตร ถ้า true คือมีข้อมูลหลักสูตรแล้ว (ข้อมูลจะขึ้นในตาราง)
-  //var isExist;
   final ViewModel _viewModel = ViewModel();
 
   @override
-
-  //Future<bool> get_status_db() async {
-  //  isExist = await _viewModel.get_status();
-  //  return isExist;
-  //}
-
-  //TextEditingController coursecodeC = TextEditingController(); //y
-  //TextEditingController coursenameC = TextEditingController();
-
-  // @override
-  // void dispose() {
-  //   controller.dispose();
-
-  //   super.dispose();
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -126,11 +104,12 @@ class _DashbordSmallState extends State<DashbordSmall> {
           //   child: _textCourseStructure(),
           // ),
           // Container(child: table),
-          const SizedBox(height: 10),
-          Container(
-            // child: PaginatedTable(),
-            child: DynamicDataTable(),
-          ),
+          // const SizedBox(height: 10),
+          // Container(
+          //   // child: PaginatedTable(),
+          //   child: DynamicDataTable(),
+          // ),
+          table
         ],
       ),
     );
@@ -268,11 +247,8 @@ class _DashbordSmallState extends State<DashbordSmall> {
   }
 
   Container _foundCourse() {
-    // return ChangeNotifierProvider(
-    //   create: (context) => ItemProvider(),
-    //   child: DataTableWithCRUD(),
     return Container(
-      child: PaginatedTable(),
+      child: DynamicDataTable(),
     );
   }
 

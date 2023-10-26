@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:dynamic_table/dynamic_table.dart';
+import 'package:ku_t/Modules/Component/viewModel_update.dart';
 import 'package:ku_t/Modules/Data/data_test.dart';
 // import 'package:ku_t/Modules/Data/dummy_data.dart';
 
@@ -19,7 +20,7 @@ class _DynamicDataTableState extends State<DynamicDataTable> {
   // var myData = dummyData.toList();
   List<List<dynamic>> myData =
       data.map((item) => item.values.toList()).toList();
-
+  Update_Data _update_data = Update_Data();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -164,9 +165,10 @@ class _DynamicDataTableState extends State<DynamicDataTable> {
                       return null;
                     }
 
-                    print('Update Data! index:$index');
-                    print('old:$old');
-                    print('new:$newValue');
+                    //print('Update Data! index:$index');
+                    //print('old:$old');
+                    //print('new:$newValue');
+                    _update_data.row_update(newValue);
                     return newValue;
                   },
                   showActions: true,

@@ -46,12 +46,15 @@ async def update_item(data: dict):
     keys = list(data.keys())
     if keys[0] == "Update_Subject":
         print("update")
+        #print(data[keys[0]])
         update_subject(data[keys[0]])
     #print(item.description)
     elif keys[0] == "Update_Course":
         print("Update_Course")
-        #print(data[keys[0]])
         update_course(data[keys[0]])
+    elif keys[0] == "Edit_Subject":
+        print("edit_subject")
+        edit_subject(data[keys[0]])
     return {"message": "Data received and processed successfully"}
 
 #getExcelFile
@@ -65,8 +68,10 @@ async def create_file(file: Annotated[bytes, File()]):
 #sendExcelFile
 @app.post("/uploadfile/")
 def upload_file():
-    excel_send = "D:/excel_test/ontester.xlsx"
-    return FileResponse(excel_send, media_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+    path = get_file_path("\\file_export\\file_extract.xlsx")
+    print_to_excel(path)
+    #excel_send = "D:/excel_test/ontester.xlsx"
+    return FileResponse(path, media_type='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
 
 #get_status when finish import
 @app.post("/status_import")
