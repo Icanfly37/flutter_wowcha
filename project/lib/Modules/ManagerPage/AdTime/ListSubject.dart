@@ -1,9 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
-import 'package:ku_t/Modules/ManagerPage/Teachingtime/PopUp_Addtime.dart';
-import 'package:ku_t/Modules/ManagerPage/Teachingtime/value_for_time.dart';
-// import '../../Component/Header_web.dart';
+import 'package:ku_t/Modules/ManagerPage/AdTime/PopUp_Addtime.dart';
+import 'package:ku_t/Modules/ManagerPage/AdTime/value_for_time.dart';
 
 class Addtime extends StatefulWidget {
   const Addtime({Key? key}) : super(key: key);
