@@ -473,6 +473,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                   groupValue: _checkbox4[index], 
                                   onChanged: (value) {
                                     setState(() {
+                                      if (value != null) {
+                                        _checkbox4[index] = value;
+                                      }
                                       _checkbox4[index] = value;
                                     });
                                   },),
