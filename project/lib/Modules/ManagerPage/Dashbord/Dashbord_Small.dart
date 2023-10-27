@@ -162,6 +162,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
               onChanged: (value) {
                 setState(() {
                   selectedValue = value.toString();
+                  print(selectedValue = value.toString());
                 });
               }),
         ),
