@@ -5,7 +5,7 @@ List<Map<String, dynamic>> data = [
   {
     'id': '01417167-60',
     'name_subject': 'Engineering Mathematics I',
-    'credit': creditDropdown[2],
+    'credit': "3(3-0-6)",
     'pre': '',
     'year': yearDropdown[0],
   },
