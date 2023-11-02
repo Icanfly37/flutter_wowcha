@@ -1,14 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'dart:io';
-
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Modules/Dropdown/TimeEndModel.dart';
 import 'package:ku_t/Modules/Dropdown/TimeStartModel.dart';
-import 'package:ku_t/Modules/ManagerPage/Timetable/utils.dart';
 import 'package:ku_t/Modules/Dropdown/SemesterModel.dart';
 import 'package:ku_t/Modules/Dropdown/YearSModel.dart';
+import 'package:ku_t/Services/apiconnector/callapt.dart';
 import 'package:timetable_view/timetable_view.dart';
 
 // class Event {
@@ -27,15 +24,22 @@ import 'package:timetable_view/timetable_view.dart';
 // }
 
 
-
 class TimetablePage extends StatefulWidget {
+  TimetablePage({Key? key}) : super(key: key);
+
+  @override
+  _TimetablePageState createState() => _TimetablePageState();
+}
+
+class _TimetablePageState extends State<TimetablePage> {
 
   bool firstValue = false;
   bool secondValue = false;
   bool thirdValue = false;
   bool fourthValue = false;
   List<Event> events = [];
-  
+  String? semesterValue;
+  String? yearsValue;
   //get_excel _geter = get_excel();
 
   @override
