@@ -47,20 +47,12 @@ dependencies:
   numberpicker: ^2.1.2
   flutter_dropzone: ^3.0.6
   dotted_border: ^2.0.0
-  time_planner: ^0.0.3
-  dynamic_timeline: ^0.1.2
-  flutter_colorpicker: ^1.0.3
-  horizontal_data_table: ^4.3.1
-  get: ^4.6.6
-  multi_select_flutter: ^4.1.3
 
   csv: ^5.0.1
-  path_provider: ^2.1.1
+  path_provider: ^2.0.10
   open_file: ^3.2.1
 
   excel: ^2.1.0
-
-  dynamic_table: ^0.0.1-beta.2
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -81,6 +73,10 @@ dependencies:
   autocomplete_textfield: ^2.0.1
   file_picker: ^5.5.0
   mime: ^1.0.4
+  dynamic_table: ^0.0.1-beta.2
+  multi_select_flutter: ^4.1.3
+  flutter_colorpicker: ^1.0.3
+  universal_html: ^2.2.4
 
 dev_dependencies:
   flutter_test:

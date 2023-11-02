@@ -1,4 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Modules/Dropdown/TimeEndModel.dart';
@@ -21,22 +24,11 @@ import 'package:timetable_view/timetable_view.dart';
 //     required this.endTime,
 //     required this.daysOfWeek,
 //     required this.color,
-//   });
 // }
 
 
 
 class TimetablePage extends StatefulWidget {
-  TimetablePage({Key? key}) : super(key: key);
-
-  @override
-  _TimetablePageState createState() => _TimetablePageState();
-}
-
-class _TimetablePageState extends State<TimetablePage> {
-
-  String? semesterValue;
-  String? yearsValue;
 
   bool firstValue = false;
   bool secondValue = false;
@@ -44,6 +36,8 @@ class _TimetablePageState extends State<TimetablePage> {
   bool fourthValue = false;
   List<Event> events = [];
   
+  //get_excel _geter = get_excel();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -306,6 +300,7 @@ Column _checkBox() {
 }
   Container _DownloadFileExcel() {
     final orientation = MediaQuery.of(context).orientation;
+    //String? FolderPath;
     return Container(
         margin: orientation == Orientation.portrait
             ? null
@@ -316,7 +311,10 @@ Column _checkBox() {
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
         decoration: decorationgreen(),
         child: TextButton(
-          onPressed: () {},
+          onPressed: () {
+            getExcelFile();
+            //getExcelFile("C:/Users/Icanfly37/Desktop/testexcelrecieve/test.xlsx");
+          },
           child: Text(
             'ดาวน์โหลดไฟล์ excel',
             style: textStylewhite(),
@@ -324,7 +322,6 @@ Column _checkBox() {
 
         ));
   }
-
 }
 
 class Timetable extends StatefulWidget {

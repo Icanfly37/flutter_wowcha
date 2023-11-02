@@ -1,7 +1,9 @@
 // import 'dart:math';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:dynamic_table/dynamic_table.dart';
+import 'package:ku_t/Modules/Component/viewModel_update.dart';
 import 'package:ku_t/Modules/Data/data_test.dart';
 // import 'package:ku_t/Modules/Data/dummy_data.dart';
 
@@ -19,7 +21,7 @@ class _DynamicDataTableState extends State<DynamicDataTable> {
   // var myData = dummyData.toList();
   List<List<dynamic>> myData =
       data.map((item) => item.values.toList()).toList();
-
+  Update_Data _update_data = Update_Data();
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -49,6 +51,13 @@ class _DynamicDataTableState extends State<DynamicDataTable> {
                     print('edit row');
                     return true;
                   },
+
+                  onRowDelete: (index, row) {
+                    print("Row Deleted index:$index row:$row");
+                    myData.removeAt(index);
+                    return true;
+                  },
+
                   onRowSave: (index, old, newValue) {
                     /// validate ข้อมูลหลังจากการแก้ไข ///
 
@@ -164,9 +173,10 @@ class _DynamicDataTableState extends State<DynamicDataTable> {
                       return null;
                     }
 
-                    print('Update Data! index:$index');
-                    print('old:$old');
-                    print('new:$newValue');
+                    //print('Update Data! index:$index');
+                    //print('old:$old');
+                    //print('new:$newValue');
+                    _update_data.row_update(newValue);
                     return newValue;
                   },
                   showActions: true,
@@ -184,41 +194,44 @@ class _DynamicDataTableState extends State<DynamicDataTable> {
                   dataRowMaxHeight: 60,
                   // columnSpacing: 60,
                   actionColumnTitle: "",
-                  showCheckboxColumn: true,
-                  actions: [
-                    IconButton(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: Text('ลบรายวิชา'),
-                              content: Text('คุณต้องการลบรายวิชาใช่หรือไม่?'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('ยกเลิก'),
-                                ),
-                                TextButton(
-                                  onPressed: () {
-                                    tableKey.currentState?.deleteSelectedRows();
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text('ยืนยัน'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                        // tableKey.currentState?.deleteAllRows();
-                        print('Delete row!');
-                      },
-                      icon: const Icon(Icons.delete),
-                      // tooltip: "Delete!",
-                    ),
-                  ],
+                  showCheckboxColumn: false,
+                  showDeleteAction: true,
+                  // actions: [
+                  //   IconButton(
+                  //     onPressed: () {
+                  //       showDialog(
+                  //         context: context,
+                  //         builder: (context) {
+                  //           return AlertDialog(
+                  //             title: const Text('ลบรายวิชา'),
+                  //             content:
+                  //                 const Text('คุณต้องการลบรายวิชาใช่หรือไม่?'),
+                  //             actions: [
+                  //               TextButton(
+                  //                 onPressed: () {
+                  //                   Navigator.of(context).pop();
+                  //                 },
+                  //                 child: const Text('ยกเลิก'),
+                  //               ),
+                  //               TextButton(
+                  //                 onPressed: () {
+                  //                   tableKey.currentState?.deleteSelectedRows();
+                  //                   // print("Deleted row: $row");
+                  //                   Navigator.of(context).pop();
+                  //                 },
+                  //                 child: const Text('ยืนยัน'),
+                  //               ),
+                  //             ],
+                  //           );
+                  //         },
+                  //       );
+                  //       // tableKey.currentState?.deleteAllRows();
+                  //       print('Delete row!');
+                  //     },
+                  //     icon: const Icon(Icons.delete),
+                  //     // tooltip: "Delete!",
+                  //   ),
+                  // ],
 
                   // rows
                   rows: List.generate(

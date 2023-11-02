@@ -54,6 +54,13 @@ def add_field_db(cred,collection_name,doc,data):
     db.create_doc(data,doc)
     db.close_db()
 
+def edit_field_db(cred,collection_name,doc,data):
+    db = Database(cred)
+    db.get_db()
+    db.get_collection(collection_name)
+    db.update_db(doc,data)
+    db.close_db()
+
 def get_status(cred,collection):   
     db = Database(cred)
     db.get_db()
@@ -88,6 +95,53 @@ def reset_status():
     send = finish_import
     finish_import = False
     return send
+
+def edit_subject(data):
+    subject = {}
+    course = {}
+    #print(data)
+    Current_Subject = OnJson(get_file_path("\Total_Course.json"),"r")
+    current_subject = data['รหัสวิชา']
+    data["ปีหลักสูตร"] = "25"+data['รหัสวิชา'][-2:]
+    data['รหัสวิชา'] = data['รหัสวิชา'][:8]
+    num_target_change = ""
+    New_key = current_subject
+    for key,value in Current_Subject.items(): #value == Subject_xx
+        if New_key == key:
+            break
+        elif New_key[:8] in key:
+            old_key = key
+            current_value = value
+            Current_Subject[New_key] = current_value
+            del Current_Subject[old_key]
+            target_change = Current_Subject[New_key]
+            num_target_change = target_change.replace("Subject_","")
+            OnJson(get_file_path("\Total_Course.json"),'w',Current_Subject)
+            break
+    for skey,svalue in data.items(): #O(1) cause of input is constance lenght
+        if skey == "ชั้นปีที่เปิดสอน":
+            course[skey] = [svalue]
+        elif skey == "วิชาพื้นฐาน":
+            if type(svalue) is list:
+                subject[skey] = svalue
+            elif svalue == "" or svalue is None:
+                subject[skey] = []
+            else:
+                subject[skey] = [svalue]
+        else:
+            subject[skey] = svalue
+            #break
+    edit_field_db(
+        get_file_path("\database\serviceAccountKey.json"),
+        "เปิดการสอน",
+        "Course_"+num_target_change,
+        course)
+    edit_field_db(
+        get_file_path("\database\serviceAccountKey.json"),
+        "รายวิชา",
+        target_change,
+        subject)
+    #OnJson(get_file_path("\Total_Course.json"),'w',Current_Subject)
 
 def update_subject(data):
     subject = {}
@@ -251,7 +305,7 @@ def test(Collection):
     return Item
 # print(test("รายวิชา"))
 
-def print_to_excel():
+def print_to_excel(output_path):
     #limiter = list(OnJson(get_file_path("\last_status.json"),'r').values())[0]
     db = Multi_Collection(get_file_path("\database\serviceAccountKey.json"))
     collection_1 = "เปิดการสอน"
@@ -264,7 +318,8 @@ def print_to_excel():
     start_row_for_83x = 8
     start_row_at = 8
     
-    writer = header(get_file_path("\\file_export\\file_extract.xlsx"))
+    #writer = header(get_file_path("\\file_export\\file_extract.xlsx"))
+    writer = header(output_path)
     for i in data1:
         for key1,value1 in i.items():
             try:
@@ -388,8 +443,10 @@ def print_to_excel():
                         #writer.insert_data(start_row_for_80x,25,value2)
                     #print("-------------------------------------------------------------")
                 #writer.insert_data(start_row_for_80x,26,"-")
-                
-                b_s = ",".join(basic_subject) 
+                if basic_subject[0] is None: #ถ้ามี None หมายความว่า basic_subject = [None] เท่านั้น
+                    b_s = None
+                else:
+                    b_s = ",".join(basic_subject) 
                 #writer.insert_data(start_row_for_80x,27,b_s) #วิชาพื้นฐาน
                 
                 start_row_previous = start_row_at
@@ -412,8 +469,10 @@ def print_to_excel():
                     writer.insert_data(t,27,b_s)
                 
     writer.save_file()
-
-# print_to_excel()
+#header(get_file_path("\\file_export\\file_extract.xlsx"))
+#print_to_excel(get_file_path("\\file_export\\file_extract.xlsx"))
+#test_data = {'รหัสวิชา': '01417167-65', 'ชื่อรายวิชาภาษาอังกฤษ': 'E', 'หน่วยกิต': '2(2-0-6)', 'วิชาพื้นฐาน': 'S', 'ชั้นปีที่เปิดสอน': 'T12(2)'}
+#edit_subject(test_data)
 # path = "D:/หลักสูตร.xlsx"
 # #OnExcel(path,("รายวิชา","เปิดการสอน"))
 # OnExcel(path)
