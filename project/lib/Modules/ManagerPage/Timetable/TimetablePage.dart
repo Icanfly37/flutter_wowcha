@@ -1,34 +1,27 @@
-import 'dart:io';
-
-import 'package:file_picker/file_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_colorpicker/flutter_colorpicker.dart';
-import 'package:http/http.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
-import 'package:ku_t/Modules/ManagerPage/Timetable/operate.dart';
-import 'package:ku_t/Services/apiconnector/callapt.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:timetable_view/timetable_view.dart';
+import 'package:ku_t/Modules/Dropdown/TimeEndModel.dart';
+import 'package:ku_t/Modules/Dropdown/TimeStartModel.dart';
 import 'package:ku_t/Modules/Dropdown/SemesterModel.dart';
 import 'package:ku_t/Modules/Dropdown/YearSModel.dart';
+import 'package:ku_t/Services/apiconnector/callapt.dart';
+import 'package:timetable_view/timetable_view.dart';
 
+// class Event {
+//   String title;
+//   TimeOfDay startTime;
+//   TimeOfDay endTime;
+//   List<int> daysOfWeek;
+//   Color color;
 
-
-class Event {
-  String title;
-  TimeOfDay startTime;
-  TimeOfDay endTime;
-  List<int> daysOfWeek;
-  Color color; // Color attribute for the event
-
-  Event({
-    required this.title,
-    required this.startTime,
-    required this.endTime,
-    required this.daysOfWeek,
-    required this.color,
-  });
-}
+//   Event({
+//     required this.title,
+//     required this.startTime,
+//     required this.endTime,
+//     required this.daysOfWeek,
+//     required this.color,
+// }
 
 
 class TimetablePage extends StatefulWidget {
@@ -40,15 +33,13 @@ class TimetablePage extends StatefulWidget {
 
 class _TimetablePageState extends State<TimetablePage> {
 
-  String? semesterValue;
-  String? yearsValue;
-
   bool firstValue = false;
   bool secondValue = false;
   bool thirdValue = false;
   bool fourthValue = false;
   List<Event> events = [];
-  
+  String? semesterValue;
+  String? yearsValue;
   //get_excel _geter = get_excel();
 
   @override
@@ -76,7 +67,9 @@ class _TimetablePageState extends State<TimetablePage> {
               ],
             ),
             const SizedBox(height: 20),
-            Timetable()
+            Container(
+              height: 500,
+              child: Timetable())
           ]),
       ),
     );
@@ -335,418 +328,349 @@ Column _checkBox() {
   }
 }
 
-
-
 class Timetable extends StatefulWidget {
+  Timetable({Key? key}) : super(key: key);
+
   @override
   _TimetableState createState() => _TimetableState();
 }
 
 class _TimetableState extends State<Timetable> {
-  List<Event> events = [];
+  List<LaneEvents> weekEvents = _buildWeekEvents();
+  String? selectedDay ; // Initialize with a default day
+  int timeIncrement = 30;
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: 480,
-      decoration: BoxDecoration(
-        border: Border.all(
-          color: const Color.fromRGBO(0, 102, 94, 1),
-        ),
-      ),
-      child: Scaffold(
-        body: Table(
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          children: [
-            TableRow(
-              children: [
-                TableCell(
-                  child: Container(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'วัน/เวลา',
-                      style: textStylehintbold(),
-                    ),
-                  ),
-                ), // Empty cell to fill the gap
-                for (var hour = 8; hour <= 20; hour++)
-                  Container(
-                    height: 50,
-                    alignment: Alignment.center,
-                    child: TableCell(
-                      child: Text(
-                        '$hour:00',
-                        style: const TextStyle(),
-                      ),
-                    ),
-                  ),
-              ],
-            ),
-            for (var day = 0; day < 7; day++)
-              TableRow(
-                children: [
-                  Container(
-                    alignment: Alignment.center,
-                    child: TableCell(
-                      child: Text(getDayName(day),
-                          style: textStylehintbold()),
-                    ),
-                  ),
-                  for (var hour = 8; hour <= 20; hour++)
-                    TableCell(
-                      child: EventCell(
-                        day: day,
-                        hour: hour,
-                        events: events,
-                      ),
-                    ),
-                ],
-              ),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => _showAddEventDialog(context),
-          child: const Icon(Icons.add),
-        ),
-      ),
-    );
-  }
-
-  String getDayName(int day) {
-    return ['จันทร์', 'อังคาร', 'พุธ', 'พฤหัสบดี', 'ศุกร์', 'เสาร์', 'อาทิตย์'][day];
-  }
-
-  void _showAddEventDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('เพิ่มเวลา'),
-          content: AddEventForm(
-            onEventAdded: (event) {
-              setState(() {
-                events.add(event);
-              });
-              Navigator.of(context).pop();
-            },
-          ),
-        );
-      },
-    );
-  }
-}
-
-
-class EventCell extends StatelessWidget {
-  final int day;
-  final int hour;
-  final List<Event> events;
-
-  EventCell({
-    required this.day,
-    required this.hour,
-    required this.events,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final now = DateTime.now();
-    final currentDateTime = DateTime(now.year, now.month, now.day, hour);
-    final currentDayOfWeek = currentDateTime.weekday;
-
-    final cellEvents = events.where((event) {
-      return event.daysOfWeek.contains(day) &&
-          event.startTime.hour <= hour &&
-          event.endTime.hour >= hour;
-    }).toList();
-
-    return GestureDetector(
-      onTap: () {
-        _showEventDetails(context, cellEvents);
-      },
-      child: Container(
-        height: 60,
-        decoration: BoxDecoration(
-          borderRadius: cellEvents.isNotEmpty ? BorderRadius.circular(15) : null,
-          color: cellEvents.isNotEmpty ? cellEvents[0].color : Colors.white,
-        ),
-        child: Column(
-          children: cellEvents.map((event) {
-            return Text(event.title, style: const TextStyle(color: Colors.black));
-          }).toList(),
-        ),
-      ),
-    );
-  }
-
-  void _showEventDetails(BuildContext context, List<Event> cellEvents) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: const Text('Event Details'),
-          content: Column(
-            children: cellEvents.map((event) {
-              return Container(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                decoration: BoxDecoration(
-                  color: event.color,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Text(
-                  event.title,
-                  style: const TextStyle(color: Colors.black),
-                ),
-              );
-            }).toList(),
-          ),
-        );
-      },
-    );
-  }
-}
-
-
-class AddEventForm extends StatefulWidget {
-  final Function(Event) onEventAdded;
-
-  AddEventForm({required this.onEventAdded});
-
-  @override
-  _AddEventFormState createState() => _AddEventFormState();
-}
-
-class _AddEventFormState extends State<AddEventForm> {
-  String title = '';
-  TimeOfDay startTime = const TimeOfDay(hour: 8, minute: 0);
-  TimeOfDay endTime = const TimeOfDay(hour: 9, minute: 0);
-  List<int> daysOfWeek = [0];
-  Color eventColor = Colors.white;
-
-  final Map<int, Color> dayOfWeekColors = {
-    0: Color.fromRGBO(253, 255, 228, 1), // Monday
-    1: Color.fromRGBO(255, 232, 241, 1),  
-    2: Color.fromRGBO(236, 255, 225, 1), 
-    3: Color.fromRGBO(255, 237, 226, 1), 
-    4: Color.fromRGBO(229, 249, 254, 1), 
-    5: Color.fromRGBO(242, 241, 255, 1), 
-    6: Color.fromRGBO(255, 227, 227, 1), 
+  Map<String, Color> dayColors = {
+    'Monday': const Color.fromRGBO(253, 255, 228, 1),
+    'Tuesday': const Color.fromRGBO(255, 232, 241, 1),
+    'Wednesday': const Color.fromRGBO(236, 255, 225, 1),
+    'Thursday': const Color.fromRGBO(255, 237, 226, 1),
+    'Friday': const Color.fromRGBO(229, 249, 254, 1),
+    'Saturday': const Color.fromRGBO(242, 241, 255, 1),
+    'Sunday': const Color.fromRGBO(255, 227, 227, 1),
   };
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        TextField(
-          onChanged: (value) => title = value,
-          decoration: const InputDecoration(labelText: 'วิชา'),
+    return Scaffold(
+      body: TimetableView(
+        laneEventsList: weekEvents,
+        onEventTap: onEventTapCallBack,
+        timetableStyle: const TimetableStyle(
+          timeItemHeight: 30,
+          laneWidth: 170,
+          laneHeight: 50,
+          startHour: 8,
+          endHour: 21,
+          timeItemTextColor: Colors.black,
+          visibleTimeBorder: false,
+          // cornerColor: Colors.black,
+          // laneColor: Colors.black,
+          // timelineColor: Colors.black,
+          // timelineItemColor: Colors.black,
+          // mainBackgroundColor: Colors.black,
+
         ),
-        Row(
-          children: [
-            Text('เวลาเริ่มต้น : ${startTime.format(context)}'),
-            IconButton(
-              onPressed: () => _selectStartTime(context),
-              icon: const Icon(Icons.access_time),
-            ),
-          ],
-        ),
-        Row(
-          children: [
-            Text('เวลาสิ้นสุด : ${endTime.format(context)}'),
-            IconButton(
-              onPressed: () => _selectEndTime(context),
-              icon: const Icon(Icons.access_time),
-            ),
-          ],
-        ),
-        CheckboxListTile(
-          title: const Text('จันทร์'),
-          value: daysOfWeek.contains(0),
-          onChanged: (value) {
-            setState(() {
-              if (value!) {
-                daysOfWeek.add(0);
-              } else {
-                daysOfWeek.remove(0);
-              }
-            });
-          },
-        ),
-        CheckboxListTile(
-          title: const Text('อังคาร'),
-          value: daysOfWeek.contains(1),
-          onChanged: (value) {
-            setState(() {
-              if (value!) {
-                daysOfWeek.add(1);
-              } else {
-                daysOfWeek.remove(1);
-              }
-            });
-          },
-        ),
-        CheckboxListTile(
-          title: const Text('พุธ'),
-          value: daysOfWeek.contains(2),
-          onChanged: (value) {
-            setState(() {
-              if (value!) {
-                daysOfWeek.add(2);
-              } else {
-                daysOfWeek.remove(2);
-              }
-            });
-          },
-        ),
-        CheckboxListTile(
-          title: const Text('พฤหัสบดี'),
-          value: daysOfWeek.contains(3),
-          onChanged: (value) {
-            setState(() {
-              if (value!) {
-                daysOfWeek.add(3);
-              } else {
-                daysOfWeek.remove(3);
-              }
-            });
-          },
-        ),
-        CheckboxListTile(
-          title: const Text('ศุกร์'),
-          value: daysOfWeek.contains(4),
-          onChanged: (value) {
-            setState(() {
-              if (value!) {
-                daysOfWeek.add(4);
-              } else {
-                daysOfWeek.remove(4);
-              }
-            });
-          },
-        ),
-        CheckboxListTile(
-          title: const Text('เสาร์'),
-          value: daysOfWeek.contains(5),
-          onChanged: (value) {
-            setState(() {
-              if (value!) {
-                daysOfWeek.add(5);
-              } else {
-                daysOfWeek.remove(5);
-              }
-            });
-          },
-        ),
-        CheckboxListTile(
-          title: const Text('อาทิตย์'),
-          value: daysOfWeek.contains(6),
-          onChanged: (value) {
-            setState(() {
-              if (value!) {
-                daysOfWeek.add(6);
-              } else {
-                daysOfWeek.remove(6);
-              }
-            });
-          },
-        ),
-        ElevatedButton(
-      onPressed: () {
-        final dayOfWeek = daysOfWeek.first;
-        final eventColor = dayOfWeekColors[dayOfWeek] ??  Colors.white; // Default to blue
-        final event = Event(
-          title: title,
-          startTime: startTime,
-          endTime: endTime,
-          daysOfWeek: daysOfWeek,
-          color: eventColor, // Use the calculated color
+        onEmptySlotTap: onTimeSlotTappedCallBack,
+        
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showEventDialog(context);
+        },
+        child: const Icon(Icons.add),
+      ),
+    );
+  }
+
+  void showEventDialog(BuildContext context) {
+    Event newEvent = Event();
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Colors.white,
+          surfaceTintColor: Colors.white,
+          title: Text("หมู่เรียน",style: textStylehintbold(),),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                decoration: InputDecoration(labelText: "800"),
+                onChanged: (value) {
+                  newEvent.title = value;
+                },
+              ),
+              Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              alignment: Alignment.bottomLeft,
+                              child: Text(
+                                "เวลาสิ้นสุด",
+                                style: textStylehintbold(),
+                              ),
+                            ),
+                            DropdownButtonFormField(
+                              decoration: InputDecoration(
+                                hintText: "00:00",
+                                filled: true,
+                                fillColor: Color.fromRGBO(230, 230, 230, 1),
+                                errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1)))
+                                ),
+
+                              validator: (value) {
+                                if (value == null) {
+                                  return "กรุณากรอก";
+                                }
+                                return null;
+                              },
+                              focusColor: Colors.white,
+                              dropdownColor: Colors.white,
+                              isExpanded: false,
+                              // value: _daysvalue,
+                              items: timeStart
+                                  .map((e) => DropdownMenuItem<String>(
+                                        value: e.title,
+                                        child: Text(
+                                          e.title!,
+                                          style: textStylehint(),
+                                        ),
+                                      ))
+                                  .toList(),
+                              onChanged: (value) {
+                               var parts = value!.split(':');
+                              if (parts.length == 2) {
+                                newEvent.startTime = TableEventTime(
+                                  hour: int.parse(parts[0]),
+                                  minute: int.parse(parts[1]),
+                                );
+                              }
+                              },
+                            ),
+                          ],
+                        ),
+            Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              alignment: Alignment.bottomLeft,
+                              child: Text(
+                                "เวลาสิ้นสุด",
+                                style: textStylehintbold(),
+                              ),
+                            ),
+                            DropdownButtonFormField(
+                              decoration: InputDecoration(
+                                hintText: "00:00",
+                                filled: true,
+                                fillColor: Color.fromRGBO(230, 230, 230, 1),
+                                errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1)))
+                                ),
+
+                              validator: (value) {
+                                if (value == null) {
+                                  return "กรุณากรอก";
+                                }
+                                return null;
+                              },
+                              focusColor: Colors.white,
+                              dropdownColor: Colors.white,
+                              isExpanded: false,
+                              // value: _daysvalue,
+                              items: timeEnd
+                                  .map((e) => DropdownMenuItem<String>(
+                                        value: e.title,
+                                        child: Text(
+                                          e.title!,
+                                          style: textStylehint(),
+                                        ),
+                                      ))
+                                  .toList(),
+                              onChanged: (value) {
+                                var parts = value!.split(':');
+                                if (parts.length == 2) {
+                                  newEvent.endTime = TableEventTime(
+                                    hour: int.parse(parts[0]),
+                                    minute: int.parse(parts[1]),
+                                  );
+                                }
+                              },
+                            ),
+                          ],
+                        ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      "วัน",
+                      style: textStylehintbold(),
+                    ),
+                  ),
+                  DropdownButtonFormField(
+                    decoration: InputDecoration(
+                                hintText: "เลือก",
+                                filled: true,
+                                fillColor: Color.fromRGBO(230, 230, 230, 1),
+                                errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1)))
+                                ),
+                    value: selectedDay,
+                    items: dayColors.keys.map((day) {
+                      return DropdownMenuItem<String>(
+                        value: day,
+                        child: Text(day),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        selectedDay = value!;
+                      });
+                    },
+                  ),
+                ],
+              ),
+              // Add a similar DropdownButtonFormField for end time here
+              ElevatedButton(
+                onPressed: () {
+                  String selectedDayName = selectedDay!;
+                  Color backgroundColor = dayColors[selectedDayName]!;
+                  setState(() {
+                    weekEvents
+                        .firstWhere((element) => element.lane.name == selectedDayName)
+                        .events
+                        .add(TableEvent(
+                          title: newEvent.title,
+                          
+                          textStyle: textStylehintbold(),
+                          startTime: newEvent.startTime,
+                          endTime: newEvent.endTime,
+                          laneIndex: 1,
+                          eventId: weekEvents
+                              .firstWhere((element) => element.lane.name == selectedDayName)
+                              .events
+                              .length +
+                              1,
+                          backgroundColor: backgroundColor,
+                        ));
+                  });
+                  Navigator.of(context).pop();
+                  showEventDetailsDialog(context, newEvent, timeIncrement);
+                },
+                child: Text("Add Event"),
+              ),
+            ],
+          ),
         );
-        widget.onEventAdded(event);
       },
-      child: const Text('Add Event'),
-    ),
-      ],
     );
   }
 
-  Future<void> _selectStartTime(BuildContext context) async {
-    final newTime = await showTimePicker(
+  String getDayName(int dayIndex) {
+    List<String> days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    return days[dayIndex];
+  }
+
+  int getTimeIncrement(int dayIndex) {
+    // Define time increments for each day
+    List<int> timeIncrements = [30, 45, 60, 75, 90, 120, 60];
+    return timeIncrements[dayIndex];
+  }
+
+  void showEventDetailsDialog(BuildContext context, Event event, int timeIncrement) {
+    showDialog(
       context: context,
-      initialTime: startTime,
-    );
-    if (newTime != null) {
-      setState(() {
-        startTime = newTime;
-      });
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Event Details"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text("Event Title: ${event.title}"),
+              Text("Start Time: ${event.startTime.hour}:${event.startTime.minute}"),
+              Text("End Time: ${event.endTime.hour}:${event.endTime.minute}"),
+              Text("Time Increment: $timeIncrement minutes"),
+            ],
+          ),
+          actions: <Widget>[
+            ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text("Close"),)
+            ],
+          );
+        }
+      );
     }
   }
 
-  Future<void> _selectEndTime(BuildContext context) async {
-    final newTime = await showTimePicker(
-      context: context,
-      initialTime: endTime,
-    );
-    if (newTime != null) {
-      setState(() {
-        endTime = newTime;
-      });
+  List<LaneEvents> _buildWeekEvents() {
+    List<LaneEvents> weekEvents = [];
+
+    // Define the names of the days
+    List<String> days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+    for (int day = 0; day < 7; day++) { // 7 days for Monday to Sunday
+      weekEvents.add(LaneEvents(
+        lane: Lane(name: days[day], laneIndex: 1,textStyle: textStylehintbold()),
+        events: [],
+      ));
     }
+
+    return weekEvents;
   }
 
   void onEventTapCallBack(TableEvent event) {
     print(
         "Event Clicked!! LaneIndex ${event.laneIndex} Title: ${event.title} StartHour: ${event.startTime.hour} EndHour: ${event.endTime.hour}");
-  Future<void> _selectEndTime(BuildContext context) async {
-    final newTime = await showTimePicker(
-      context: context,
-      initialTime: endTime,
-    );
-    if (newTime != null) {
-      setState(() {
-        endTime = newTime;
-      });
-    }
   }
 
   void onTimeSlotTappedCallBack(
       int laneIndex, TableEventTime start, TableEventTime end) {
     print(
         "Empty Slot Clicked !! LaneIndex: $laneIndex StartHour: ${start.hour} EndHour: ${end.hour}");
-  Future<void> _selectEventColor(BuildContext context) async {
-    Color? selectedColor = eventColor;
-
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Select Event Color'),
-          content: ColorPicker(
-            pickerColor: selectedColor!,
-            onColorChanged: (color) {
-              selectedColor = color;
-            },
-            colorPickerWidth: 300.0,
-            pickerAreaHeightPercent: 0.7,
-          ),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop(selectedColor);
-              },
-              child: const Text('Select'),
-            ),
-          ],
-        );
-      },
-    );
-
-    if (selectedColor != null) {
-      setState(() {
-        eventColor = selectedColor!;
-      });
-    }
   }
+
+
+class Event {
+  String title = "";
+  TableEventTime startTime = TableEventTime(hour: 0, minute: 0);
+  TableEventTime endTime = TableEventTime(hour: 0, minute: 0);
 }
-}}
+
