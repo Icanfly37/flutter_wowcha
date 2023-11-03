@@ -25,7 +25,7 @@ import 'package:timetable_view/timetable_view.dart';
 
 
 class TimetablePage extends StatefulWidget {
-  TimetablePage({Key? key}) : super(key: key);
+  const TimetablePage({Key? key}) : super(key: key);
 
   @override
   _TimetablePageState createState() => _TimetablePageState();
