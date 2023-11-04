@@ -126,6 +126,8 @@ def edit_subject(data):
                 subject[skey] = svalue
             elif svalue == "" or svalue is None:
                 subject[skey] = []
+            elif "," in svalue:
+                subject[skey] = svalue.split(",")
             else:
                 subject[skey] = [svalue]
         else:
@@ -142,6 +144,13 @@ def edit_subject(data):
         target_change,
         subject)
     #OnJson(get_file_path("\Total_Course.json"),'w',Current_Subject)
+
+# edit_subject({
+#     'รหัสวิชา': '01417167-60', 
+#     'ชื่อรายวิชาภาษาอังกฤษ': 'Engineering Mathematics I', 
+#     'หน่วยกิต': '3(3-0-6)', 
+#     'วิชาพื้นฐาน': 'A,B,C,D',
+#     'ชั้นปีที่เปิดสอน': 'T12(1)'})
 
 def update_subject(data):
     subject = {}
@@ -289,21 +298,54 @@ def update_course(data):
     #print({"S_ID":course_code})
     db.close_db()
     
-def test(Collection):
-    FetchAD = Database(get_file_path("\database\serviceAccountKey.json")) 
-    FetchAD.get_db()
-    FetchAD.get_collection(Collection)
-    Item = FetchAD.all_docs()
-    # if Collection == "รายวิชา":
-    #     key = "Subject_"
-    #     for i in 10:
-    #         if i < 10:
-    #             key = key + "0" + i
-    #             print(FetchAD.read_field(key))
-    # Item = FetchAD.get_all_data(Collection) 
+def FetchAll(Collection_1,Collection_2):
+    l = []
+    #pre = ""
+    FetchAD = Multi_Collection(get_file_path("\database\serviceAccountKey.json")) 
+    Item_1 = FetchAD.instance_get_all_docs(Collection_1)
+    Item_2 = FetchAD.instance_get_all_docs(Collection_2)
     FetchAD.close_db()
-    return Item
-# print(test("รายวิชา"))
+    number = OnJson(get_file_path("\last_status.json"),"r")["last_id"]
+    for i in range(0,number):
+        pre = ""
+        nn = str(i+1)
+        if len(nn) < 2:
+            subject = "Subject_0"+str(i+1)
+            course = "Course_0"+str(i+1)
+        else:
+            subject = "Subject_"+str(i+1)
+            course = "Course_"+str(i+1)
+        data1 = Item_1[i][subject]
+        data2 = Item_2[i][course]
+        for j in data1["วิชาพื้นฐาน"]:
+            if j is not None:
+                if j == data1["วิชาพื้นฐาน"][-1]:
+                    pre += j
+                else:
+                    pre += j+","
+            else:
+                break
+        pre.replace("หรือเรียนพร้อมกัน","")
+        if data1["ปีหลักสูตร"] is not None:
+            l.append({
+                'id': data1["รหัสวิชา"]+"-"+data1["ปีหลักสูตร"][-2:],
+                'name_subject': data1["ชื่อรายวิชาภาษาอังกฤษ"],
+                'credit': data1["หน่วยกิต"],
+                #'pre': pre.replace("หรือเรียนพร้อมกัน","").replace(" ",""),
+                'pre': pre,
+                'year': data2["ชั้นปีที่เปิดสอน"][0]
+            })
+        else:
+            l.append({
+                'id': data1["รหัสวิชา"],
+                'name_subject': data1["ชื่อรายวิชาภาษาอังกฤษ"],
+                'credit': data1["หน่วยกิต"],
+                #'pre': pre.replace("หรือเรียนพร้อมกัน","").replace(" ",""),
+                'pre': pre,
+                'year': data2["ชั้นปีที่เปิดสอน"][0]
+            })
+    return l
+#print(FetchAll("รายวิชา","เปิดการสอน"))
 
 def print_to_excel(output_path):
     #limiter = list(OnJson(get_file_path("\last_status.json"),'r').values())[0]
