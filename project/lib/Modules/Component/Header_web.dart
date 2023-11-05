@@ -52,6 +52,14 @@ TextStyle textStylegray() {
   );
 }
 
+
+TextStyle textStyleblack() {
+  return TextStyle(
+    color: Colors.black,
+    fontSize: 12,
+  );
+}
+
 TextStyle textStylegreen() {
   return TextStyle(
       color: Color.fromRGBO(0, 102, 94, 1),

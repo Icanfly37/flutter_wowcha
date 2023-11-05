@@ -3,28 +3,13 @@ import 'dart:js_interop_unsafe';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
-import 'package:ku_t/Modules/Component/showDialogSubject.dart';
+import 'package:ku_t/Modules/Dropdown/TeachernameModel.dart';
 import 'package:ku_t/Modules/Dropdown/TimeEndModel.dart';
 import 'package:ku_t/Modules/Dropdown/TimeStartModel.dart';
 import 'package:ku_t/Modules/Dropdown/SemesterModel.dart';
 import 'package:ku_t/Modules/Dropdown/YearSModel.dart';
 import 'package:ku_t/Services/apiconnector/callapt.dart';
 import 'package:timetable_view/timetable_view.dart';
-
-// class Event {
-//   String title;
-//   TimeOfDay startTime;
-//   TimeOfDay endTime;
-//   List<int> daysOfWeek;
-//   Color color;
-
-//   Event({
-//     required this.title,
-//     required this.startTime,
-//     required this.endTime,
-//     required this.daysOfWeek,
-//     required this.color,
-// }
 
 class TimetablePage extends StatefulWidget {
   const TimetablePage({Key? key}) : super(key: key);
@@ -48,24 +33,29 @@ class _TimetablePageState extends State<TimetablePage> {
     return Scaffold(
       appBar: NavBar(),
       body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: Column(children: [
-          _header(),
-          const Divider(height: 26),
-          Row(
-            children: [
-              _selectSemester(),
-              const SizedBox(width: 10),
-              _selectYearS(),
-              const SizedBox(width: 10),
-              Expanded(flex: 2, child: _checkBox()),
-              const SizedBox(width: 200),
-              Expanded(child: _DownloadFileExcel())
-            ],
-          ),
-          const SizedBox(height: 15),
-          Container(height: 500, child: Timetable())
-        ]),
+        padding: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            _header(),
+          const Divider(height: 30),
+            Row(
+              children: [
+                _selectSemester(),
+                const SizedBox(width: 10),
+                _selectYearS(),
+                const SizedBox(width: 10),
+                Expanded(
+                  flex: 2,
+                  child: _checkBox()),
+                const SizedBox(width: 200),
+                Expanded(
+                  child: _DownloadFileExcel())
+              ],
+            ),
+            const SizedBox(height: 10),
+             Expanded(
+              child: Timetable())
+          ]),
       ),
     );
   }
@@ -300,7 +290,7 @@ class _TimetablePageState extends State<TimetablePage> {
         margin: orientation == Orientation.portrait
             ? null
             : const EdgeInsets.only(top: 20),
-        width: MediaQuery.of(context).size.width,
+        width: double.infinity,
         height: 50,
         // width: 100,
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -319,7 +309,7 @@ class _TimetablePageState extends State<TimetablePage> {
 }
 
 class Timetable extends StatefulWidget {
-  Timetable({Key? key}) : super(key: key);
+  const Timetable({Key? key}) : super(key: key);
 
   @override
   _TimetableState createState() => _TimetableState();
@@ -329,7 +319,9 @@ class _TimetableState extends State<Timetable> {
   List<LaneEvents> weekEvents = _buildWeekEvents();
   String? selectedDay; // Initialize with a default day
   int timeIncrement = 30;
-
+  String? _room;
+  String? _timeEnd;
+  String? _timeStart;
   Map<String, Color> dayColors = {
     'Monday': const Color.fromRGBO(253, 255, 228, 1),
     'Tuesday': const Color.fromRGBO(255, 232, 241, 1),
@@ -355,7 +347,6 @@ class _TimetableState extends State<Timetable> {
           timeItemTextColor: Colors.black,
           visibleTimeBorder: false,
         ),
-        onEmptySlotTap: onTimeSlotTappedCallBack,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -375,64 +366,210 @@ class _TimetableState extends State<Timetable> {
         return AlertDialog(
           backgroundColor: Colors.white,
           surfaceTintColor: Colors.white,
-          title: Text(
-            "หมู่เรียน",
-            style: textStylehintbold(),
-          ),
+          title: Text("เพิ่มเวลาสอน",style: textStyleHeadDrop(),textAlign: TextAlign.center,),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              TextFormField(
-                decoration: const InputDecoration(labelText: "800"),
-                onChanged: (value) {
-                  newEvent.title = value;
-                },
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              Row(
                 children: [
-                  Container(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      "เวลาเริ่มต้น",
-                      style: textStylehintbold(),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Container(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                "หมู่เรียน",
+                                style: textStylehintbold(),
+                              ),
+                            ),
+                        TextFormField(
+                          decoration: InputDecoration(
+                                hintText: "800",
+                                filled: true,
+                                fillColor: Color.fromRGBO(230, 230, 230, 1),
+                                errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1)))
+                                ),
+                          onChanged: (value) {
+                            newEvent.studygroup = value;
+                          },
+                        ),
+                      ],
                     ),
                   ),
-                  DropdownButtonFormField(
-                    decoration: InputDecoration(
-                        hintText: "00:00",
-                        filled: true,
-                        fillColor: const Color.fromRGBO(230, 230, 230, 1),
-                        errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(230, 230, 230, 1))),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(230, 230, 230, 1))),
-                        focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(230, 230, 230, 1))),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(230, 230, 230, 1)))),
+                  const SizedBox(width: 10),
+                  Expanded(
+                    child: Column(
+                      children: [
+                        Container(
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                "จำนวนที่เปิดรับ",
+                                style: textStylehintbold(),
+                              ),
+                            ),
+                        TextFormField(
+                                decoration: InputDecoration(
+                                hintText: "จำนวนที่เปิดรับ",
+                                filled: true,
+                                fillColor: Color.fromRGBO(230, 230, 230, 1),
+                                errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1)))
+                                ),
+                                      onChanged: (value) {
+                        newEvent.numberopen = value;
+                                      },
+                                    ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+              Expanded(
+                child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                alignment: Alignment.bottomLeft,
+                                child: Text(
+                                  "ห้องเรียน",
+                                  style: textStylehintbold(),
+                                ),
+                              ),
+                              DropdownButtonFormField(
+                                decoration: InputDecoration(
+                                hintText: "ห้อง",
+                                filled: true,
+                                fillColor: Color.fromRGBO(230, 230, 230, 1),
+                                errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1)))
+                                ),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return "เลือก";
+                                  }
+                                  return null;
+                                },
+                                focusColor: Colors.white,
+                                dropdownColor: Colors.white,
+                                isExpanded: false,
+                                value: _room,
+                                items: rooms
+                                    .map((e) => DropdownMenuItem<String>(
+                                          value: e.title,
+                                          child: Text(
+                                            e.title!,
+                                            style: textStylehint(),
+                                          ),
+                                        ))
+                                    .toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    newEvent.rooms = value!;
+                                  });
+                                },
+                              ),
+                            ],
+                          ),
+              ),
+                ],
+              ),
+              
+              Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
 
-                    validator: (value) {
-                      if (value == null) {
-                        return "กรุณากรอก";
-                      }
-                      return null;
-                    },
-                    focusColor: Colors.white,
-                    dropdownColor: Colors.white,
-                    isExpanded: false,
-                    // value: _daysvalue,
-                    items: timeStart
-                        .map((e) => DropdownMenuItem<String>(
-                              value: e.title,
+                            Container(
+                              alignment: Alignment.bottomLeft,
+                              child: Text(
+                                "เวลาเริ่มต้น",
+                                style: textStylehintbold(),
+                              ),
+                            ),
+                            DropdownButtonFormField(
+                              decoration: InputDecoration(
+                                hintText: "00:00",
+                                filled: true,
+                                fillColor: Color.fromRGBO(230, 230, 230, 1),
+                                errorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(15),
+                                borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1)))
+                                ),
+
+                              validator: (value) {
+                                if (value == null) {
+                                  return "กรุณากรอก";
+                                }
+                                return null;
+                              },
+                              focusColor: Colors.white,
+                              dropdownColor: Colors.white,
+                              isExpanded: false,
+                              value: _timeStart,
+                              items: timeStart
+                                  .map((e) => DropdownMenuItem<String>(
+                                        value: e.title,
+                                        child: Text(
+                                          e.title!,
+                                          style: textStylehint(),
+                                        ),
+                                      ))
+                                  .toList(),
+                              onChanged: (value) {
+                               var parts = value!.split(':');
+                              if (parts.length == 2) {
+                                newEvent.startTime = TableEventTime(
+                                  hour: int.parse(parts[0]),
+                                  minute: int.parse(parts[1]),
+                                );
+                              }
+                              },
+                            ),
+                          ],
+                        ),
+            Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              alignment: Alignment.bottomLeft,
                               child: Text(
                                 e.title!,
                                 style: textStylehint(),
@@ -483,37 +620,37 @@ class _TimetableState extends State<Timetable> {
                             borderSide: const BorderSide(
                                 color: Color.fromRGBO(230, 230, 230, 1)))),
 
-                    validator: (value) {
-                      if (value == null) {
-                        return "กรุณากรอก";
-                      }
-                      return null;
-                    },
-                    focusColor: Colors.white,
-                    dropdownColor: Colors.white,
-                    isExpanded: false,
-                    // value: _daysvalue,
-                    items: timeEnd
-                        .map((e) => DropdownMenuItem<String>(
-                              value: e.title,
-                              child: Text(
-                                e.title!,
-                                style: textStylehint(),
-                              ),
-                            ))
-                        .toList(),
-                    onChanged: (value) {
-                      var parts = value!.split(':');
-                      if (parts.length == 2) {
-                        newEvent.endTime = TableEventTime(
-                          hour: int.parse(parts[0]),
-                          minute: int.parse(parts[1]),
-                        );
-                      }
-                    },
-                  ),
-                ],
-              ),
+                              validator: (value) {
+                                if (value == null) {
+                                  return "กรุณากรอก";
+                                }
+                                return null;
+                              },
+                              focusColor: Colors.white,
+                              dropdownColor: Colors.white,
+                              isExpanded: false,
+                              value: _timeEnd,
+                              items: timeEnd
+                                  .map((e) => DropdownMenuItem<String>(
+                                        value: e.title,
+                                        child: Text(
+                                          e.title!,
+                                          style: textStylehint(),
+                                        ),
+                                      ))
+                                  .toList(),
+                              onChanged: (value) {
+                                var parts = value!.split(':');
+                                if (parts.length == 2) {
+                                  newEvent.endTime = TableEventTime(
+                                    hour: int.parse(parts[0]),
+                                    minute: int.parse(parts[1]),
+                                  );
+                                }
+                              },
+                            ),
+                          ],
+                        ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -560,89 +697,81 @@ class _TimetableState extends State<Timetable> {
                   ),
                 ],
               ),
-              // Add a similar DropdownButtonFormField for end time here
-              ElevatedButton(
-                onPressed: () {
-                  String selectedDayName = selectedDay!;
-                  Color backgroundColor = dayColors[selectedDayName]!;
-                  setState(() {
-                    weekEvents
-                        .firstWhere(
-                            (element) => element.lane.name == selectedDayName)
-                        .events
-                        .add(TableEvent(
-                          title: newEvent.title,
-                          textStyle: textStylehintbold(),
-                          startTime: newEvent.startTime,
-                          endTime: newEvent.endTime,
-                          laneIndex: 1,
-                          eventId: weekEvents
-                                  .firstWhere((element) =>
-                                      element.lane.name == selectedDayName)
-                                  .events
-                                  .length +
-                              1,
-                          backgroundColor: backgroundColor,
-                        ));
-                  });
-                  Navigator.of(context).pop();
-                  showEventDetailsDialog(context, newEvent, timeIncrement);
-                },
-                child: const Text("Add Event"),
+              const SizedBox(height: 10,),
+              Row(
+                children: [
+                  Expanded(
+              child: Container(
+                height: 55,
+                decoration: decorationredborder(),
+                child: TextButton(
+                  onPressed: (){
+                    Navigator.pop(context);
+                  },
+                  child: Text('ยกเลิก',
+                  style: textStylered()),
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+                  Expanded(
+                    flex: 2,
+                    child: Container(
+                      height: 55,
+                      decoration: decorationgreen(),
+                      child: TextButton(
+                        onPressed: () {
+                          String selectedDayName = selectedDay!;
+                          Color backgroundColor = dayColors[selectedDayName]!;
+                          setState(() {
+                            weekEvents
+                                .firstWhere((element) => element.lane.name == selectedDayName)
+                                .events
+                                .add(TableEvent(
+                                  title: "03603392-65\nSoftware Engineering\nกาญจนา เอี่ยมสอาด\nหมู่เรียน ${newEvent.studygroup}\nห้อง ${newEvent.rooms}",
+                                  textStyle: textStyleblack(),
+                                  startTime: newEvent.startTime,
+                                  endTime: newEvent.endTime,
+                                  laneIndex: 3,
+                                  eventId: weekEvents
+                                      .firstWhere((element) => element.lane.name == selectedDayName)
+                                      .events
+                                      .length +
+                                      1,
+                                  backgroundColor: backgroundColor,
+                                ));
+                          });
+                          Navigator.of(context).pop();
+                        },
+                        child: Text('ตกลง',
+                  style: textStylewhite(),),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
         );
-      },
-    );
+        }
+      );
+    }
   }
 
-  String getDayName(int dayIndex) {
-    List<String> days = [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-      'Sunday'
-    ];
-    return days[dayIndex];
-  }
+  List<LaneEvents> _buildWeekEvents() {
+    List<LaneEvents> weekEvents = [];
 
-  int getTimeIncrement(int dayIndex) {
-    // Define time increments for each day
-    List<int> timeIncrements = [30, 45, 60, 75, 90, 120, 60];
-    return timeIncrements[dayIndex];
-  }
+    // Define the names of the days
+    List<String> days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-  void showEventDetailsDialog(
-      BuildContext context, Event event, int timeIncrement) {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text("Event Details"),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text("Event Title: ${event.title}"),
-                Text(
-                    "Start Time: ${event.startTime.hour}:${event.startTime.minute}"),
-                Text("End Time: ${event.endTime.hour}:${event.endTime.minute}"),
-                Text("Time Increment: $timeIncrement minutes"),
-              ],
-            ),
-            actions: <Widget>[
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text("Close"),
-              )
-            ],
-          );
-        });
+    for (int day = 0; day < 7; day++) { // 7 days for Monday to Sunday
+      weekEvents.add(LaneEvents(
+        lane: Lane(name: days[day], laneIndex: 1,textStyle: textStylehintbold()),
+        events: [],
+      ));
+    }
+
+    return weekEvents;
   }
 
   void onEventTapCallBack(TableEvent event) {
@@ -708,6 +837,9 @@ void onTimeSlotTappedCallBack(
 
 class Event {
   String title = "";
+  String studygroup = "";
+  String numberopen = "";
+  String rooms = "";
   TableEventTime startTime = TableEventTime(hour: 0, minute: 0);
   TableEventTime endTime = TableEventTime(hour: 0, minute: 0);
 }
