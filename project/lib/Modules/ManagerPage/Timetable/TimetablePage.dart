@@ -357,6 +357,17 @@ class _TimetableState extends State<Timetable> {
           ),
           onEmptySlotTap: onTimeSlotTappedCallBack,
           
+      body: TimetableView(
+        laneEventsList: weekEvents,
+        onEventTap: onEventTapCallBack,
+        timetableStyle: const TimetableStyle(
+          timeItemHeight: 30,
+          laneWidth: 170,
+          laneHeight: 50,
+          startHour: 8,
+          endHour: 21,
+          timeItemTextColor: Colors.black,
+          visibleTimeBorder: false,
         ),
       ),
       floatingActionButton: FloatingActionButton(
