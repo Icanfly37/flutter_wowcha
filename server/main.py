@@ -55,6 +55,7 @@ async def update_item(data: dict):
     elif keys[0] == "Edit_Subject":
         print("edit_subject")
         edit_subject(data[keys[0]])
+        #print(data[keys[0]])
     return {"message": "Data received and processed successfully"}
 
 #getExcelFile
@@ -101,17 +102,7 @@ def Fetch_Data(Collection: str, Document: str):
     FetchAD.close_db()
     return {"get json":Item}
     
-@app.post("/Fetch_All_Data/{Collection}") 
-def Fetch_All_Data(Collection: str):
-    Item = test(Collection)
-    # FetchAD = Database(get_file_path("\database\serviceAccountKey.json")) 
-    # FetchAD.get_db()
-    # if Collection == "รายวิชา":
-    #     key = "Subject_ๅ"
-    #     for i in 10:
-    #         if i < 10:
-    #             key = key + "0" + i
-    #             print(FetchAD.read_field(key))
-    # Item = FetchAD.get_all_data(Collection) 
-    # FetchAD.close_db()
+@app.post("/Fetch_All_Data/") 
+def Fetch_All_Data():
+    Item = FetchAll("รายวิชา","เปิดการสอน")
     return {"get json":Item}

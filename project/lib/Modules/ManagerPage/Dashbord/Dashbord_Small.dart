@@ -22,7 +22,6 @@ class _DashbordSmallState extends State<DashbordSmall> {
   final ViewModel _viewModel = ViewModel();
 
   @override
-
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
@@ -109,6 +108,7 @@ class _DashbordSmallState extends State<DashbordSmall> {
           //   // child: PaginatedTable(),
           //   child: DynamicDataTable(),
           // ),
+          const SizedBox(height: 8),
           table
         ],
       ),
