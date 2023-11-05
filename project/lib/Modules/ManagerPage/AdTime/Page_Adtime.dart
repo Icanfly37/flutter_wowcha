@@ -23,7 +23,6 @@ class _TabletimeState extends State<Tabletime> {
 
   @override
   Widget build(BuildContext context) {
-    
     final orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       appBar: NavBar(),
@@ -34,7 +33,7 @@ class _TabletimeState extends State<Tabletime> {
             alignment: Alignment.topLeft,
             child: Text("กำหนดเวลาสอน", style: textStyleHeader()),
           ),
-          Divider(height: 30),
+          const Divider(height: 26),
           Container(
               child: orientation == Orientation.portrait
                   ? Column(
@@ -49,7 +48,7 @@ class _TabletimeState extends State<Tabletime> {
                           isReadOnly: true,
                           hasBackButton: false,
                         ),
-                        const SizedBox(height: 10),
+                        const SizedBox(height: 8),
                         Container(height: 200, child: Addtime())
                       ],
                     )
@@ -58,18 +57,18 @@ class _TabletimeState extends State<Tabletime> {
                         Row(
                           children: [
                             _selectSemester(),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             _selectYearS(),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             Expanded(child: _checkBox()),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
-                            Expanded(
+                            const Expanded(
                               child: SearchBarWidget(
                                 isReadOnly: true,
                                 hasBackButton: false,
@@ -77,8 +76,8 @@ class _TabletimeState extends State<Tabletime> {
                             ),
                           ],
                         ),
-                        SizedBox(
-                          height: 10,
+                        const SizedBox(
+                          height: 8,
                         ),
                         Container(height: 450, child: Addtime())
                       ],
@@ -87,17 +86,16 @@ class _TabletimeState extends State<Tabletime> {
       ),
     );
   }
-  
 
   Container _selectSemester() {
     final orientation = MediaQuery.of(context).orientation;
     return Container(
-        child: Column(children: [
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Container(
-        alignment: Alignment.bottomLeft,
+        // alignment: Alignment.bottomLeft,
         child: Text(
           "ภาคการศึกษา",
-          style: textStyleHeadDrop(),
+          style: textStylehintbold(),
         ),
       ),
       Container(
@@ -138,7 +136,7 @@ class _TabletimeState extends State<Tabletime> {
         Container(
           child: Text(
             "ปีการศึกษา",
-            style: textStyleHeadDrop(),
+            style: textStylehintbold(),
           ),
         ),
         Container(
@@ -296,7 +294,6 @@ class _TabletimeState extends State<Tabletime> {
                 ),
               ),
             ),
-
           ],
         ),
       ],

@@ -75,6 +75,21 @@ TextStyle textStylered() {
       fontSize: 14);
 }
 
+TextStyle textStyleDayTime() {
+  return TextStyle(
+      fontWeight: FontWeight.bold,
+      // color: Color.fromRGBO(255, 93, 93, 1),
+      fontSize: 13);
+}
+
+TextStyle textStyleDBoxSub() {
+  return TextStyle(fontWeight: FontWeight.bold, fontSize: 13);
+}
+
+TextStyle textStyleDBoxSubAns() {
+  return TextStyle(fontSize: 13);
+}
+
 BoxDecoration decoration() {
   return BoxDecoration(
       color: Color.fromRGBO(230, 230, 230, 1),
@@ -97,6 +112,20 @@ BoxDecoration decorationadd() {
             blurRadius: 15,
             offset: Offset(4, 4))
       ]);
+}
+
+BoxDecoration decorationpop_sub() {
+  return BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(15),
+    border: Border.all(width: 2.0, color: Color.fromARGB(255, 214, 214, 214)),
+    // boxShadow: [
+    //   BoxShadow(
+    //       color: Color.fromRGBO(230, 230, 230, 1),
+    //       blurRadius: 15,
+    //       offset: Offset(4, 4))
+    // ]
+  );
 }
 
 BoxDecoration decorationpop() {
@@ -176,18 +205,18 @@ InputDecoration inputdecoration() {
 
 InputDecoration inputdecorationtext() {
   return InputDecoration(
-      filled: true,
-      fillColor: Color.fromRGBO(230, 230, 230, 1),
-      errorBorder: OutlineInputBorder(
+    filled: true,
+    fillColor: Color.fromRGBO(230, 230, 230, 1),
+    errorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
         borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
-      enabledBorder: OutlineInputBorder(
+    enabledBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
         borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
-      focusedErrorBorder: OutlineInputBorder(
+    focusedErrorBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
         borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
-      focusedBorder: OutlineInputBorder(
+    focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(15),
         borderSide: BorderSide(color: Color.fromRGBO(230, 230, 230, 1))),
   );
