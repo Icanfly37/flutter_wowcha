@@ -333,17 +333,21 @@ class _TimetableState extends State<Timetable> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: TimetableView(
-        laneEventsList: weekEvents,
-        onEventTap: onEventTapCallBack,
-        timetableStyle: const TimetableStyle(
-          timeItemHeight: 30,
-          laneWidth: 170,
-          laneHeight: 50,
-          startHour: 8,
-          endHour: 21,
-          timeItemTextColor: Colors.black,
-          visibleTimeBorder: false,
+      body: Container(
+        decoration: BoxDecoration(border: Border.all(width: 1, color: Color.fromRGBO(0, 102, 94, 1))),
+        child: TimetableView(
+          laneEventsList: weekEvents,
+          onEventTap: onEventTapCallBack,
+          timetableStyle: const TimetableStyle(
+            timeItemHeight: 35,
+            laneWidth: 170,
+            laneHeight: 40,
+            startHour: 8,
+            endHour: 21,
+            timeItemTextColor: Colors.black,
+            visibleTimeBorder: false,
+          ),
+          onEmptySlotTap: onTimeSlotTappedCallBack,
         ),
       ),
       floatingActionButton: FloatingActionButton(
@@ -563,30 +567,7 @@ class _TimetableState extends State<Timetable> {
                             ),
                           ],
                         ),
-            Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              alignment: Alignment.bottomLeft,
-                              child: Text(
-                                e.title!,
-                                style: textStylehint(),
-                              ),
-                            ))
-                        .toList(),
-                    onChanged: (value) {
-                      var parts = value!.split(':');
-                      if (parts.length == 2) {
-                        newEvent.startTime = TableEventTime(
-                          hour: int.parse(parts[0]),
-                          minute: int.parse(parts[1]),
-                        );
-                      }
-                    },
-                  ),
-                ],
-              ),
-              Column(
+                        Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
@@ -748,30 +729,12 @@ class _TimetableState extends State<Timetable> {
                   ),
                 ],
               ),
-    
-            ],
-          ),
-        );
+            ]
+          )
+          );}
+          );
+        
         }
-      );
-    }
-  }
-
-  List<LaneEvents> _buildWeekEvents() {
-    List<LaneEvents> weekEvents = [];
-
-    // Define the names of the days
-    List<String> days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
-
-    for (int day = 0; day < 7; day++) { // 7 days for Monday to Sunday
-      weekEvents.add(LaneEvents(
-        lane: Lane(name: days[day], laneIndex: 1,textStyle: textStylehintbold()),
-        events: [],
-      ));
-    }
-
-    return weekEvents;
-  }
 
     void onEventTapCallBack(TableEvent event) {
     showDialog(
@@ -803,10 +766,10 @@ class _TimetableState extends State<Timetable> {
 
     
   }
-}
-
-List<LaneEvents> _buildWeekEvents() {
-  List<LaneEvents> weekEvents = [];
+    }
+  
+  List<LaneEvents> _buildWeekEvents() {
+    List<LaneEvents> weekEvents = [];
 
     // Define the names of the days
     List<String> days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
@@ -818,8 +781,9 @@ List<LaneEvents> _buildWeekEvents() {
       ));
     }
 
-  return weekEvents;
-}
+    return weekEvents;
+  }
+
 
 void onTimeSlotTappedCallBack(
     int laneIndex, TableEventTime start, TableEventTime end) {
