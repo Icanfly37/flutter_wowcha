@@ -343,22 +343,22 @@ class _TimetableState extends State<Timetable> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: TimetableView(
-        laneEventsList: weekEvents,
-        onEventTap: onEventTapCallBack,
-        timetableStyle: const TimetableStyle(
-          timeItemHeight: 30,
-          laneWidth: 170,
-          laneHeight: 50,
-          startHour: 8,
-          endHour: 21,
-          timeItemTextColor: Colors.black,
-          visibleTimeBorder: false,
-          // cornerColor: Colors.black,
-          // laneColor: Colors.black,
-          // timelineColor: Colors.black,
-          // timelineItemColor: Colors.black,
-          // mainBackgroundColor: Colors.black,
+      body: Container(
+        decoration: BoxDecoration(
+            border: Border.all(width: 1, color: Color.fromRGBO(0, 102, 94, 1))),
+        child: TimetableView(
+          laneEventsList: weekEvents,
+          onEventTap: onEventTapCallBack,
+          timetableStyle: const TimetableStyle(
+            timeItemHeight: 35,
+            laneWidth: 170,
+            laneHeight: 40,
+            startHour: 8,
+            endHour: 21,
+            timeItemTextColor: Colors.black,
+            visibleTimeBorder: false,
+          ),
+          onEmptySlotTap: onTimeSlotTappedCallBack,
         ),
         onEmptySlotTap: onTimeSlotTappedCallBack,
       ),
@@ -375,278 +375,402 @@ class _TimetableState extends State<Timetable> {
     Event newEvent = Event();
 
     showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          surfaceTintColor: Colors.white,
-          title: Text(
-            "หมู่เรียน",
-            style: textStylehintbold(),
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              TextFormField(
-                decoration: const InputDecoration(labelText: "800"),
-                onChanged: (value) {
-                  newEvent.title = value;
-                },
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      "เวลาเริ่มต้น",
-                      style: textStylehintbold(),
-                    ),
-                  ),
-                  DropdownButtonFormField(
-                    decoration: InputDecoration(
-                        hintText: "00:00",
-                        filled: true,
-                        fillColor: const Color.fromRGBO(230, 230, 230, 1),
-                        errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(230, 230, 230, 1))),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(230, 230, 230, 1))),
-                        focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(230, 230, 230, 1))),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(230, 230, 230, 1)))),
-
-                    validator: (value) {
-                      if (value == null) {
-                        return "กรุณากรอก";
-                      }
-                      return null;
-                    },
-                    focusColor: Colors.white,
-                    dropdownColor: Colors.white,
-                    isExpanded: false,
-                    // value: _daysvalue,
-                    items: timeStart
-                        .map((e) => DropdownMenuItem<String>(
-                              value: e.title,
-                              child: Text(
-                                e.title!,
-                                style: textStylehint(),
-                              ),
-                            ))
-                        .toList(),
-                    onChanged: (value) {
-                      var parts = value!.split(':');
-                      if (parts.length == 2) {
-                        newEvent.startTime = TableEventTime(
-                          hour: int.parse(parts[0]),
-                          minute: int.parse(parts[1]),
-                        );
-                      }
-                    },
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      "เวลาสิ้นสุด",
-                      style: textStylehintbold(),
-                    ),
-                  ),
-                  DropdownButtonFormField(
-                    decoration: InputDecoration(
-                        hintText: "00:00",
-                        filled: true,
-                        fillColor: const Color.fromRGBO(230, 230, 230, 1),
-                        errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(230, 230, 230, 1))),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(230, 230, 230, 1))),
-                        focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(230, 230, 230, 1))),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(230, 230, 230, 1)))),
-
-                    validator: (value) {
-                      if (value == null) {
-                        return "กรุณากรอก";
-                      }
-                      return null;
-                    },
-                    focusColor: Colors.white,
-                    dropdownColor: Colors.white,
-                    isExpanded: false,
-                    // value: _daysvalue,
-                    items: timeEnd
-                        .map((e) => DropdownMenuItem<String>(
-                              value: e.title,
-                              child: Text(
-                                e.title!,
-                                style: textStylehint(),
-                              ),
-                            ))
-                        .toList(),
-                    onChanged: (value) {
-                      var parts = value!.split(':');
-                      if (parts.length == 2) {
-                        newEvent.endTime = TableEventTime(
-                          hour: int.parse(parts[0]),
-                          minute: int.parse(parts[1]),
-                        );
-                      }
-                    },
-                  ),
-                ],
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Container(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      "วัน",
-                      style: textStylehintbold(),
-                    ),
-                  ),
-                  DropdownButtonFormField(
-                    decoration: InputDecoration(
-                        hintText: "เลือก",
-                        filled: true,
-                        fillColor: const Color.fromRGBO(230, 230, 230, 1),
-                        errorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(230, 230, 230, 1))),
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(230, 230, 230, 1))),
-                        focusedErrorBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(230, 230, 230, 1))),
-                        focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: const BorderSide(
-                                color: Color.fromRGBO(230, 230, 230, 1)))),
-                    value: selectedDay,
-                    items: dayColors.keys.map((day) {
-                      return DropdownMenuItem<String>(
-                        value: day,
-                        child: Text(day),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        selectedDay = value!;
-                      });
-                    },
-                  ),
-                ],
-              ),
-              // Add a similar DropdownButtonFormField for end time here
-              ElevatedButton(
-                onPressed: () {
-                  String selectedDayName = selectedDay!;
-                  Color backgroundColor = dayColors[selectedDayName]!;
-                  setState(() {
-                    weekEvents
-                        .firstWhere(
-                            (element) => element.lane.name == selectedDayName)
-                        .events
-                        .add(TableEvent(
-                          title: newEvent.title,
-                          textStyle: textStylehintbold(),
-                          startTime: newEvent.startTime,
-                          endTime: newEvent.endTime,
-                          laneIndex: 1,
-                          eventId: weekEvents
-                                  .firstWhere((element) =>
-                                      element.lane.name == selectedDayName)
-                                  .events
-                                  .length +
-                              1,
-                          backgroundColor: backgroundColor,
-                        ));
-                  });
-                  Navigator.of(context).pop();
-                  showEventDetailsDialog(context, newEvent, timeIncrement);
-                },
-                child: const Text("Add Event"),
-              ),
-            ],
-          ),
-        );
-      },
-    );
-  }
-
-  String getDayName(int dayIndex) {
-    List<String> days = [
-      'Monday',
-      'Tuesday',
-      'Wednesday',
-      'Thursday',
-      'Friday',
-      'Saturday',
-      'Sunday'
-    ];
-    return days[dayIndex];
-  }
-
-  int getTimeIncrement(int dayIndex) {
-    // Define time increments for each day
-    List<int> timeIncrements = [30, 45, 60, 75, 90, 120, 60];
-    return timeIncrements[dayIndex];
-  }
-
-  void showEventDetailsDialog(
-      BuildContext context, Event event, int timeIncrement) {
-    showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
-            title: Text("Event Details"),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text("Event Title: ${event.title}"),
-                Text(
-                    "Start Time: ${event.startTime.hour}:${event.startTime.minute}"),
-                Text("End Time: ${event.endTime.hour}:${event.endTime.minute}"),
-                Text("Time Increment: $timeIncrement minutes"),
-              ],
-            ),
-            actions: <Widget>[
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text("Close"),
-              )
-            ],
-          );
+              backgroundColor: Colors.white,
+              surfaceTintColor: Colors.white,
+              title: Text(
+                "เพิ่มเวลาสอน",
+                style: textStyleHeadDrop(),
+                textAlign: TextAlign.center,
+              ),
+              content: Column(mainAxisSize: MainAxisSize.min, children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Container(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "หมู่เรียน",
+                              style: textStylehintbold(),
+                            ),
+                          ),
+                          TextFormField(
+                            decoration: InputDecoration(
+                                hintText: "800",
+                                filled: true,
+                                fillColor: Color.fromRGBO(230, 230, 230, 1),
+                                errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromRGBO(230, 230, 230, 1))),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromRGBO(230, 230, 230, 1))),
+                                focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromRGBO(230, 230, 230, 1))),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromRGBO(230, 230, 230, 1)))),
+                            onChanged: (value) {
+                              newEvent.studygroup = value;
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Container(
+                            alignment: Alignment.topLeft,
+                            child: Text(
+                              "จำนวนที่เปิดรับ",
+                              style: textStylehintbold(),
+                            ),
+                          ),
+                          TextFormField(
+                            decoration: InputDecoration(
+                                hintText: "จำนวนที่เปิดรับ",
+                                filled: true,
+                                fillColor: Color.fromRGBO(230, 230, 230, 1),
+                                errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromRGBO(230, 230, 230, 1))),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromRGBO(230, 230, 230, 1))),
+                                focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromRGBO(230, 230, 230, 1))),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromRGBO(230, 230, 230, 1)))),
+                            onChanged: (value) {
+                              newEvent.numberopen = value;
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            alignment: Alignment.bottomLeft,
+                            child: Text(
+                              "ห้องเรียน",
+                              style: textStylehintbold(),
+                            ),
+                          ),
+                          DropdownButtonFormField(
+                            decoration: InputDecoration(
+                                hintText: "ห้อง",
+                                filled: true,
+                                fillColor: Color.fromRGBO(230, 230, 230, 1),
+                                errorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromRGBO(230, 230, 230, 1))),
+                                enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromRGBO(230, 230, 230, 1))),
+                                focusedErrorBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromRGBO(230, 230, 230, 1))),
+                                focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide: BorderSide(
+                                        color:
+                                            Color.fromRGBO(230, 230, 230, 1)))),
+                            validator: (value) {
+                              if (value == null) {
+                                return "เลือก";
+                              }
+                              return null;
+                            },
+                            focusColor: Colors.white,
+                            dropdownColor: Colors.white,
+                            isExpanded: false,
+                            value: _room,
+                            items: rooms
+                                .map((e) => DropdownMenuItem<String>(
+                                      value: e.title,
+                                      child: Text(
+                                        e.title!,
+                                        style: textStylehint(),
+                                      ),
+                                    ))
+                                .toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                newEvent.rooms = value!;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        "เวลาเริ่มต้น",
+                        style: textStylehintbold(),
+                      ),
+                    ),
+                    DropdownButtonFormField(
+                      decoration: InputDecoration(
+                          hintText: "00:00",
+                          filled: true,
+                          fillColor: Color.fromRGBO(230, 230, 230, 1),
+                          errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide(
+                                  color: Color.fromRGBO(230, 230, 230, 1))),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide(
+                                  color: Color.fromRGBO(230, 230, 230, 1))),
+                          focusedErrorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide(
+                                  color: Color.fromRGBO(230, 230, 230, 1))),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: BorderSide(
+                                  color: Color.fromRGBO(230, 230, 230, 1)))),
+                      validator: (value) {
+                        if (value == null) {
+                          return "กรุณากรอก";
+                        }
+                        return null;
+                      },
+                      focusColor: Colors.white,
+                      dropdownColor: Colors.white,
+                      isExpanded: false,
+                      value: _timeStart,
+                      items: timeStart
+                          .map((e) => DropdownMenuItem<String>(
+                                value: e.title,
+                                child: Text(
+                                  e.title!,
+                                  style: textStylehint(),
+                                ),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        var parts = value!.split(':');
+                        if (parts.length == 2) {
+                          newEvent.startTime = TableEventTime(
+                            hour: int.parse(parts[0]),
+                            minute: int.parse(parts[1]),
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        "เวลาสิ้นสุด",
+                        style: textStylehintbold(),
+                      ),
+                    ),
+                    DropdownButtonFormField(
+                      decoration: InputDecoration(
+                          hintText: "00:00",
+                          filled: true,
+                          fillColor: const Color.fromRGBO(230, 230, 230, 1),
+                          errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                  color: Color.fromRGBO(230, 230, 230, 1))),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                  color: Color.fromRGBO(230, 230, 230, 1))),
+                          focusedErrorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                  color: Color.fromRGBO(230, 230, 230, 1))),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                  color: Color.fromRGBO(230, 230, 230, 1)))),
+                      validator: (value) {
+                        if (value == null) {
+                          return "กรุณากรอก";
+                        }
+                        return null;
+                      },
+                      focusColor: Colors.white,
+                      dropdownColor: Colors.white,
+                      isExpanded: false,
+                      value: _timeEnd,
+                      items: timeEnd
+                          .map((e) => DropdownMenuItem<String>(
+                                value: e.title,
+                                child: Text(
+                                  e.title!,
+                                  style: textStylehint(),
+                                ),
+                              ))
+                          .toList(),
+                      onChanged: (value) {
+                        var parts = value!.split(':');
+                        if (parts.length == 2) {
+                          newEvent.endTime = TableEventTime(
+                            hour: int.parse(parts[0]),
+                            minute: int.parse(parts[1]),
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        "วัน",
+                        style: textStylehintbold(),
+                      ),
+                    ),
+                    DropdownButtonFormField(
+                      decoration: InputDecoration(
+                          hintText: "เลือก",
+                          filled: true,
+                          fillColor: const Color.fromRGBO(230, 230, 230, 1),
+                          errorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                  color: Color.fromRGBO(230, 230, 230, 1))),
+                          enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                  color: Color.fromRGBO(230, 230, 230, 1))),
+                          focusedErrorBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                  color: Color.fromRGBO(230, 230, 230, 1))),
+                          focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15),
+                              borderSide: const BorderSide(
+                                  color: Color.fromRGBO(230, 230, 230, 1)))),
+                      value: selectedDay,
+                      items: dayColors.keys.map((day) {
+                        return DropdownMenuItem<String>(
+                          value: day,
+                          child: Text(day),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          selectedDay = value!;
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Container(
+                        height: 55,
+                        decoration: decorationredborder(),
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text('ยกเลิก', style: textStylered()),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 10),
+                    Expanded(
+                      flex: 2,
+                      child: Container(
+                        height: 55,
+                        decoration: decorationgreen(),
+                        child: TextButton(
+                          onPressed: () {
+                            String selectedDayName = selectedDay!;
+                            Color backgroundColor = dayColors[selectedDayName]!;
+                            setState(() {
+                              weekEvents
+                                  .firstWhere((element) =>
+                                      element.lane.name == selectedDayName)
+                                  .events
+                                  .add(TableEvent(
+                                    title:
+                                        "03603392-65\nSoftware Engineering\nกาญจนา เอี่ยมสอาด\nหมู่เรียน ${newEvent.studygroup}\nห้อง ${newEvent.rooms}",
+                                    textStyle: textStyleblack(),
+                                    startTime: newEvent.startTime,
+                                    endTime: newEvent.endTime,
+                                    laneIndex: 3,
+                                    eventId: weekEvents
+                                            .firstWhere((element) =>
+                                                element.lane.name ==
+                                                selectedDayName)
+                                            .events
+                                            .length +
+                                        1,
+                                    backgroundColor: backgroundColor,
+                                  ));
+                            });
+                            Navigator.of(context).pop();
+                          },
+                          child: Text(
+                            'ตกลง',
+                            style: textStylewhite(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ]));
         });
   }
 
