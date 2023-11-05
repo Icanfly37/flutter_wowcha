@@ -1,30 +1,13 @@
-import 'dart:js_interop_unsafe';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ku_t/Modules/Component/Header_web.dart';
 import 'package:ku_t/Modules/Component/showDialogSubject.dart';
+import 'package:ku_t/Modules/Dropdown/TeachernameModel.dart';
 import 'package:ku_t/Modules/Dropdown/TimeEndModel.dart';
 import 'package:ku_t/Modules/Dropdown/TimeStartModel.dart';
 import 'package:ku_t/Modules/Dropdown/SemesterModel.dart';
 import 'package:ku_t/Modules/Dropdown/YearSModel.dart';
 import 'package:ku_t/Services/apiconnector/callapt.dart';
 import 'package:timetable_view/timetable_view.dart';
-
-// class Event {
-//   String title;
-//   TimeOfDay startTime;
-//   TimeOfDay endTime;
-//   List<int> daysOfWeek;
-//   Color color;
-
-//   Event({
-//     required this.title,
-//     required this.startTime,
-//     required this.endTime,
-//     required this.daysOfWeek,
-//     required this.color,
-// }
 
 class TimetablePage extends StatefulWidget {
   const TimetablePage({Key? key}) : super(key: key);
@@ -48,10 +31,10 @@ class _TimetablePageState extends State<TimetablePage> {
     return Scaffold(
       appBar: NavBar(),
       body: Padding(
-        padding: const EdgeInsets.all(15.0),
+        padding: const EdgeInsets.all(20),
         child: Column(children: [
           _header(),
-          const Divider(height: 26),
+          const Divider(height: 30),
           Row(
             children: [
               _selectSemester(),
@@ -63,8 +46,8 @@ class _TimetablePageState extends State<TimetablePage> {
               Expanded(child: _DownloadFileExcel())
             ],
           ),
-          const SizedBox(height: 15),
-          Container(height: 500, child: Timetable())
+          const SizedBox(height: 10),
+          const Expanded(child: Timetable())
         ]),
       ),
     );
@@ -300,7 +283,7 @@ class _TimetablePageState extends State<TimetablePage> {
         margin: orientation == Orientation.portrait
             ? null
             : const EdgeInsets.only(top: 20),
-        width: MediaQuery.of(context).size.width,
+        width: double.infinity,
         height: 50,
         // width: 100,
         padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -319,7 +302,7 @@ class _TimetablePageState extends State<TimetablePage> {
 }
 
 class Timetable extends StatefulWidget {
-  Timetable({Key? key}) : super(key: key);
+  const Timetable({Key? key}) : super(key: key);
 
   @override
   _TimetableState createState() => _TimetableState();
@@ -329,7 +312,9 @@ class _TimetableState extends State<Timetable> {
   List<LaneEvents> weekEvents = _buildWeekEvents();
   String? selectedDay; // Initialize with a default day
   int timeIncrement = 30;
-
+  String? _room;
+  String? _timeEnd;
+  String? _timeStart;
   Map<String, Color> dayColors = {
     'Monday': const Color.fromRGBO(253, 255, 228, 1),
     'Tuesday': const Color.fromRGBO(255, 232, 241, 1),
@@ -360,7 +345,6 @@ class _TimetableState extends State<Timetable> {
           ),
           onEmptySlotTap: onTimeSlotTappedCallBack,
         ),
-        onEmptySlotTap: onTimeSlotTappedCallBack,
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
@@ -837,6 +821,9 @@ void onTimeSlotTappedCallBack(
 
 class Event {
   String title = "";
+  String studygroup = "";
+  String numberopen = "";
+  String rooms = "";
   TableEventTime startTime = TableEventTime(hour: 0, minute: 0);
   TableEventTime endTime = TableEventTime(hour: 0, minute: 0);
 }
